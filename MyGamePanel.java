@@ -8,6 +8,7 @@
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
@@ -16,8 +17,17 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	private int x, y, delay;
 	private Timer timer;
 	private MovingBG bgP;
+	
+	private ImageIcon img;
+	private Player player;
+	
+	private boolean onGround;
 
 	public MyGamePanel() {
+
+		this.setFocusable(true);
+		this.requestFocus();
+		this.addKeyListener(this);
 		
 		x = 100; // initialize variables
 		y = 400;
@@ -31,12 +41,14 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		this.setBackground(Color.BLUE);
 		this.add(bgP, BorderLayout.NORTH);
 
-		this.setFocusable(true);
-		this.requestFocusInWindow();
-		this.addKeyListener(this);
 
 		timer = new Timer(delay, this); // add and start a timer
 		timer.start();
+		
+		img = new ImageIcon("Images/cube03.png");
+		player = new Player(img);
+		
+		onGround = true;
 
 	} // end of constructor
 
@@ -45,33 +57,37 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		if (e.getSource() == goMenu)
 			JeometryDash.cardsL.first(JeometryDash.c);
 		repaint();
+		
 	} // end of actionPerformed
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		bgP.paintComponent(g);
-
+		
+		g.drawImage(player.getImg().getImage(), x, y, 50, 50, null);
+		
 		g.setColor(Color.white);
-		g.fillRect(x, y, 50, 50); // create the character
+		g.fillRect(400, 400, 50, 50);
 
 	} // end of paintComponent
 
 	// KeyListener event handlers
-
 	public void keyTyped(KeyEvent e) { // uses keyChar
 	} // end of keyTyped
 	
 	public void keyPressed(KeyEvent e) { // uses keyCode
-		if (e.getKeyCode() == 32) { // 32 is key code for space
-			y -= 100;
+		if (e.getKeyCode() == 32 && onGround) { // 32 is key code for space
+			y -= 50;
 			repaint();
+			onGround = false;
 		}
 	} // end of keyPressed
 
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == 32) { // 32 is key code for space
-			y += 100;
+			y = 400;
 			repaint();
+			onGround = true;
 		}
 	} // end of keyReleased
 
