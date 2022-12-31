@@ -100,9 +100,11 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		bgP.actionPerformed(e);
 		if (e.getSource() == goMenu)
 			JeometryDash.cardsL.first(JeometryDash.c);
-		else if (e.getSource() == play)
+		else if (e.getSource() == play) {
 			JeometryDash.cardsL.next(JeometryDash.c);
-		else if (e.getSource() == next){
+			JeometryDash.gameP.setFocusable(true);
+			JeometryDash.gameP.requestFocus();
+		} else if (e.getSource() == next){
 			++lvl;
 			if (lvl == 3)
 				lvl = 0;
@@ -113,6 +115,7 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 				lvl = 2;
 		}
 		repaint();
+		
 	} // end of actionPerformed
 
 	public void paintComponent(Graphics g) {

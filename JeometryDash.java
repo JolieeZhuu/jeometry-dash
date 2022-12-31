@@ -14,10 +14,10 @@ public class JeometryDash extends JFrame {
 	static CardLayout cardsL; // declare variables
 	static Container c;
 
-	MyMenuPanel menuP;
-	MyLvlPanel lvlP;
-	MyGamePanel gameP;
-	MyInstPanel instP;
+	static MyMenuPanel menuP;
+	static MyLvlPanel lvlP;
+	static MyGamePanel gameP;
+	static MyInstPanel instP;
 
 	public JeometryDash() {
 		
