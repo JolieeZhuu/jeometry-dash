@@ -18,8 +18,6 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	private Timer timer;
 	private MovingBG bgP;
 	private Player player;
-	
-	//private long lastPressProcessed = 0L;
 
 	public MyGamePanel() {
 
@@ -62,19 +60,9 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	} // end of keyTyped
 	
 	public void keyPressed(KeyEvent e) { // uses keyCode
-		if (e.getKeyCode() == 32) { // 32 = space bar
+		if (e.getKeyCode() == 32) //32=spacebar
 			player.jump();
 		repaint();
-			/*
-			if (System.currentTimeMillis() - lastPressProcessed > 1000) {
-				player.fall();
-				repaint();
-				lastPressProcessed = System.currentTimeMillis();
-				System.out.println("Key was pressed");
-			}
-			*/
-		}
-		
 	} // end of keyPressed
 
 	public void keyReleased(KeyEvent e) {

@@ -30,16 +30,17 @@ public class Player {
 	}
 	
 	public void jump() {
-		if (y == 400)
-			y -= 75;
+		if (y==400)
+			y-=75;
 	}
 
 	public void fall() {
-		while (y + fallingSpeed <= 400) {
-			fallingSpeed += gravity;
-			y += fallingSpeed;			
+		fallingSpeed += gravity;
+		if (y+fallingSpeed <= 400)
+			y+= fallingSpeed;
+		else {
+			y=400;
+			fallingSpeed = 0;
 		}
-		y = 400;
-		fallingSpeed = 0;
 	}
 }
