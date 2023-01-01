@@ -31,7 +31,7 @@ public class Player {
 	
 	public void jump() {
 		if (y == 400)
-			y -= 75;
+			y -= 100;
 	}
 
 	public void fall() {
