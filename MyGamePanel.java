@@ -17,6 +17,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	private int delay;
 	private Timer timer;
 	private MovingBG bgP;
+	private Platforms lvl01;
 	private Player player;
 	
 	//private long lastPressProcessed = 0L;
@@ -31,12 +32,14 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		goMenu = new JButton("Levels");
 		bgP = new MovingBG();
 		player = new Player();
+		lvl01 = new Platforms();
 		
 		goMenu.addActionListener(this); // formatting and adding interfaces
 		this.setLayout(new FlowLayout());
 		this.add(goMenu);
 		this.setBackground(Color.BLUE);
 		this.add(bgP, BorderLayout.NORTH);
+		this.add(lvl01, BorderLayout.NORTH);
 
 		timer = new Timer(delay, this); // add and start a timer
 		timer.start();
@@ -53,6 +56,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		bgP.paintComponent(g);
+		lvl01.paintComponent(g);
 		
 		g.drawImage(player.getImg().getImage(), player.getX(), player.getY(), 50, 50, null);
 	} // end of paintComponent
