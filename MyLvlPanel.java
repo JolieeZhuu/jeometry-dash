@@ -23,7 +23,7 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 	
 	private Timer timer;
 
-	public MyLvlPanel() {
+	public MyLvlPanel() throws Exception {
 		
 		northP = new JPanel();
 		centerP = new JPanel();

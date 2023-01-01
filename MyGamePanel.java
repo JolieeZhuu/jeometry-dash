@@ -21,7 +21,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	//private long lastPressProcessed = 0L;
 
-	public MyGamePanel() {
+	public MyGamePanel() throws Exception {
 
 		this.setFocusable(true);
 		this.requestFocus();
