@@ -23,7 +23,7 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 	
 	private int delay;
 
-	public MyMenuPanel() {
+	public MyMenuPanel() throws Exception {
 
 		buttonP = new JPanel(); // initialize variables
 		bgP = new MovingBG();

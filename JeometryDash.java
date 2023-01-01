@@ -19,7 +19,7 @@ public class JeometryDash extends JFrame {
 	static MyGamePanel gameP;
 	static MyInstPanel instP;
 
-	public JeometryDash() {
+	public JeometryDash() throws Exception {
 		
 		c = getContentPane(); // initialize variables
 		cardsL = new CardLayout();
@@ -39,7 +39,7 @@ public class JeometryDash extends JFrame {
 
 	} // end of constructor
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		JeometryDash frame = new JeometryDash(); // create object frame
 		frame.setSize(600, 600);
 		frame.setVisible(true);
