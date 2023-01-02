@@ -17,29 +17,24 @@ public class MovingBG extends JPanel implements ActionListener {
 	private ArrayList<ImageIcon> bg; // declare instance variables
 	private ArrayList<ImageIcon> ground;
 	
-	private Platforms lvl01;
 	
 	private int bg_x, g_x, delay;
 	private Timer timer;
 
-	public MovingBG() throws Exception {
+	public MovingBG() throws Exception{
 		bg = new ArrayList <ImageIcon>(); // initialize variables
 		ground = new ArrayList <ImageIcon>();
 		
 		bg_x = 0;
 		g_x = 0;
 		delay = 1000/30;
-		
-		lvl01 = new Platforms();
-		
+				
 		for (int i = 0; i < 2; i++){
 			bg.add(new ImageIcon("Images/bg01.png"));
 			ground.add(new ImageIcon("Images/ground01.png"));
 		}
-
-		this.setLayout(new BorderLayout(0, 0));
-		this.add(lvl01, BorderLayout.NORTH);
 		
+		this.setLayout(new BorderLayout(0, 0));
 		timer = new Timer(delay, this);
 		timer.start();
 				
@@ -47,8 +42,6 @@ public class MovingBG extends JPanel implements ActionListener {
 	
 	// animation 
 	public void actionPerformed(ActionEvent e){
-		
-		lvl01.actionPerformed(e);
 		
 		if (e.getSource() == timer){
 			bg_x -= 10;
@@ -72,13 +65,10 @@ public class MovingBG extends JPanel implements ActionListener {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
 		for (int i = 0; i < 2; i++) {
 			g.drawImage(bg.get(i).getImage(), bg_x + (i * 600), 0, null);
 			g.drawImage(ground.get(i).getImage(), g_x + (i * 600), 450, null);
 		}
-		
-		lvl01.paintComponent(g);
 		
 	} // end of paintComponent
 	
