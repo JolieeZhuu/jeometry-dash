@@ -8,8 +8,8 @@
 
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	
@@ -60,8 +60,43 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		lvl01.paintComponent(g);
 		g.drawImage(player.getImg().getImage(), player.getX(), player.getY(), 50, 50, null);
 	} // end of paintComponent
-
-	// KeyListener event handlers
+	
+	// COLLISIONS ------------------------------------------------------------------------------------------------
+	/*
+	public boolean checkCollision(int i, int j) {
+		boolean noXOverlap = player.getRight() <= lvl01.getLeft(i, j) || player.getLeft() >= lvl01.getRight(i, j);
+		boolean noYOverlap = player.getBottom() <= lvl01.getTop(i, j) || player.getTop() >= lvl01.getBottom(i, j);
+		if (noXOverlap || noYOverlap)
+			return false;
+		return true;
+	}
+	
+	public ArrayList<ArrayList<Integer>> checkCollisionList(int[][] list) {
+		ArrayList<ArrayList<Integer>> collisionList = new ArrayList<ArrayList<Integer>>();
+		for (int i = 0; i < list.length; i++) {
+			for (int j = 0; j < list[0].length; j++) {
+				if (checkCollision(i, j)) {
+					ArrayList<Integer> iJ = new ArrayList<Integer>();
+					iJ.add(i);
+					iJ.add(j);
+					collisionList.add(iJ);
+				}
+			}
+		}
+		return collisionList;
+	}
+	
+	public void resolvePlatformCollisions(int[][] platforms) {
+		ArrayList<ArrayList<Integer>> collisionList = checkCollisionList(platforms);
+		if (collisionList.size() > 0) {
+			
+		}
+	}
+	*/
+	//-----------------------------------------------------------------------------------------------------------
+	
+	
+	// KEYLISTENER-----------------------------------------------------------------------------------------------
 	public void keyTyped(KeyEvent e) { // uses keyChar
 	} // end of keyTyped
 	

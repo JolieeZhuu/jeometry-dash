@@ -21,12 +21,44 @@ public class Player {
 		return img;
 	}
 	
-	public int getX () {
+	public int getX() {
 		return x;
 	}
 	
-	public int getY () {
+	public int getY() {
 		return y;
+	}
+	
+	public int getLeft() {
+		return x;
+	}
+	
+	public int getRight() {
+		return x + 50;
+	}
+	
+	public int getTop() {
+		return y;
+	}
+	
+	public int getBottom() {
+		return y + 50;
+	}
+	
+	public void setLeft(int x) {
+		this.x = x; 
+	}
+	
+	public void setRight(int x) {
+		this.x = x; 
+	}
+	
+	public void setTop(int y) {
+		this.y = y; 
+	}
+	
+	public void setBottom(int y) {
+		this.y = y; 
 	}
 	
 	public void jump() {
