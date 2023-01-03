@@ -32,6 +32,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		goMenu = new JButton("Levels");
 		bgP = new MovingBG();
 		player = new Player();
+		
 		lvl01 = new Platforms();
 		
 		goMenu.addActionListener(this); // formatting and adding interfaces
@@ -43,11 +44,13 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 
 		timer = new Timer(delay, this); // add and start a timer
 		timer.start();
+
 	} // end of constructor
 
 	public void actionPerformed(ActionEvent e) {
 		bgP.actionPerformed(e);
 		lvl01.actionPerformed(e);
+		player.actionPerformed(e);
 		if (e.getSource() == goMenu)
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
 		repaint();
@@ -62,7 +65,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	} // end of paintComponent
 	
 	// COLLISIONS ------------------------------------------------------------------------------------------------
-	/*
+	
 	public boolean checkCollision(int i, int j) {
 		boolean noXOverlap = player.getRight() <= lvl01.getLeft(i, j) || player.getLeft() >= lvl01.getRight(i, j);
 		boolean noYOverlap = player.getBottom() <= lvl01.getTop(i, j) || player.getTop() >= lvl01.getBottom(i, j);
@@ -92,7 +95,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 			
 		}
 	}
-	*/
+	
 	//-----------------------------------------------------------------------------------------------------------
 	
 	
@@ -101,25 +104,13 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	} // end of keyTyped
 	
 	public void keyPressed(KeyEvent e) { // uses keyCode
-		if (e.getKeyCode() == 32) { // 32 = space bar
-			player.jump();
-		repaint();
-			/*
-			if (System.currentTimeMillis() - lastPressProcessed > 1000) {
-				player.fall();
-				repaint();
-				lastPressProcessed = System.currentTimeMillis();
-				System.out.println("Key was pressed");
-			}
-			*/
-		}
-		
+		if (e.getKeyCode() == 32)  // 32 = space bar
+			player.setIsJump(true);
+			
 	} // end of keyPressed
 
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == 32)
-			player.fall();
-		repaint();
+		
 	} // end of keyReleased
 
 } // end of MyGamePanel class

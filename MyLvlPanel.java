@@ -101,6 +101,7 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		if (e.getSource() == goMenu)
 			JeometryDash.cardsL.first(JeometryDash.c);
 		else if (e.getSource() == play) {
+			//JeometryDash.isGameP = true;
 			JeometryDash.cardsL.next(JeometryDash.c);
 			JeometryDash.gameP.setFocusable(true);
 			JeometryDash.gameP.requestFocus();

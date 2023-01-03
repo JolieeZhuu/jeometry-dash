@@ -21,6 +21,7 @@ public class Platforms extends JPanel implements ActionListener {
 	private ImageIcon triangle, triangle02, square, grid, rect, spike, spike02;
 	private int row, col, cnt, delay, myX, myY;
 	private int[][] platforms;
+	private int[][] old;
 	private int[][] x;
 	private int[][] y;
 	private Timer timer;
@@ -31,6 +32,7 @@ public class Platforms extends JPanel implements ActionListener {
 		cnt = 0;
 		delay = 1000/30;
 		platforms = new int[row][col];
+		old = new int[row][col];
 		x = new int[row][col];
 		y = new int[row][col];
 		
@@ -55,22 +57,35 @@ public class Platforms extends JPanel implements ActionListener {
 		while(sc.hasNextLine()) {
 			for (int i = 0; i < platforms.length; i++) {
 				String[] line = sc.nextLine().trim().split(",");
-				for (int j = 0; j < line.length; j++)
+				for (int j = 0; j < line.length; j++) {
 					platforms[i][j] = Integer.parseInt(line[j]);
+					old[i][j] = platforms[i][j];
+				}
 			}	
 		}
 	}
 	
 	// animation 
-	public void actionPerformed(ActionEvent e){
+	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == timer) {
-			cnt++;
 			for (int i = 0; i < row; i++) {
 				for (int j = 0; j < col; j++) {
 					x[i][j] = (j * 50) - (cnt * 15);
 					y[i][j] = i * 50;
+					
+					if (x[i][j] < -75)
+						platforms[i][j] = 0;
 				}
 			}
+			if (cnt > 1200) {
+				cnt=0;
+				for (int i = 0; i < row; i++) {
+					for (int j = 0; j < col; j++) 
+						platforms[i][j] = old[i][j];
+				}
+			}
+			else
+				cnt++;
 		}
 	} // end of actionPerformed
 	

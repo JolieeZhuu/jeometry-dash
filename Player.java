@@ -2,19 +2,51 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Player {
+public class Player implements ActionListener{
 	
 	private ImageIcon img;
-	private int x, y, fallingSpeed, gravity;
+	private int x, y, speed, gravity, delay;
+	private boolean isJump;
+	private Timer timer;
+	private long lastPressProcessed = 0L;
 	
-	public Player(){
+	public Player() {
 		x = 100; // initialize variables
 		y = 400;
+		speed = 0;
+		gravity = 5;
+		delay = 1000/30;
 		
-		fallingSpeed = 0;
-		gravity = 1;
+		isJump = false;
 		
 		img = new ImageIcon("Images/cube03.png");
+		
+		timer = new Timer(delay, this); // add and start a timer
+		timer.start();
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == timer && !isJump) {
+			if (y+speed<=400) {
+				speed += gravity;
+				y += speed;
+			} else {
+				speed = 0;
+				y = 400;
+			}
+		}
+		if (e.getSource() == timer && isJump) {
+			if (y-speed>=325) {
+				speed += gravity;
+				y -= speed;
+			} else {
+				speed = 0;
+				y = 325;
+			}
+			isJump = false;
+		}
+		else 
+			y=400;
 	}
 	
 	public ImageIcon getImg () {
@@ -61,17 +93,7 @@ public class Player {
 		this.y = y; 
 	}
 	
-	public void jump() {
-		if (y == 400)
-			y -= 100;
-	}
-
-	public void fall() {
-		while (y + fallingSpeed <= 400) {
-			fallingSpeed += gravity;
-			y += fallingSpeed;			
-		}
-		y = 400;
-		fallingSpeed = 0;
+	public void setIsJump (boolean tf) {
+		isJump = tf;
 	}
 }
