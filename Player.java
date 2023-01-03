@@ -2,29 +2,31 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Player implements ActionListener{
+public class Player { // remember to add ActionListener
 	
 	private ImageIcon img;
-	private int x, y, speed, gravity, delay;
-	private boolean isJump;
-	private Timer timer;
-	private long lastPressProcessed = 0L;
+	private int x, y;
+	
+	//private int speed, gravity, delay;
+	//private boolean isJump;
+	//private Timer timer;
+	//private long lastPressProcessed = 0L;
 	
 	public Player() {
 		x = 100; // initialize variables
 		y = 400;
-		speed = 0;
-		gravity = 5;
-		delay = 1000/30;
+		//speed = 0;
+		//gravity = 5;
+		//delay = 1000/30;
 		
-		isJump = false;
+		//isJump = false;
 		
 		img = new ImageIcon("Images/cube03.png");
 		
-		timer = new Timer(delay, this); // add and start a timer
-		timer.start();
+		//timer = new Timer(delay, this); // add and start a timer
+		//timer.start();
 	}
-	
+	/*
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == timer && !isJump) {
 			if (y+speed<=400) {
@@ -48,6 +50,7 @@ public class Player implements ActionListener{
 		else 
 			y=400;
 	}
+	*/
 	
 	public ImageIcon getImg () {
 		return img;
@@ -59,6 +62,10 @@ public class Player implements ActionListener{
 	
 	public int getY() {
 		return y;
+	}
+	
+	public void setY(int changeY) {
+		y += changeY;
 	}
 	
 	public int getLeft() {
@@ -82,7 +89,7 @@ public class Player implements ActionListener{
 	}
 	
 	public void setRight(int x) {
-		this.x = x; 
+		this.x = x + 50; 
 	}
 	
 	public void setTop(int y) {
@@ -90,10 +97,10 @@ public class Player implements ActionListener{
 	}
 	
 	public void setBottom(int y) {
-		this.y = y; 
+		this.y = y - 50; 
 	}
 	
-	public void setIsJump (boolean tf) {
-		isJump = tf;
-	}
+	//public void setIsJump (boolean tf) {
+	//	isJump = tf;
+	//}
 }

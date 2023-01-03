@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	private JButton goMenu; // declare instance variables
-	private int delay;
+	private int delay, gravity = 4, changeY = 150;
 	private Timer timer;
 	private MovingBG bgP;
 	private Player player;
@@ -50,7 +50,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		bgP.actionPerformed(e);
 		lvl01.actionPerformed(e);
-		player.actionPerformed(e);
+		//player.actionPerformed(e);
 		if (e.getSource() == goMenu)
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
 		repaint();
@@ -62,54 +62,144 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		bgP.paintComponent(g);
 		lvl01.paintComponent(g);
 		g.drawImage(player.getImg().getImage(), player.getX(), player.getY(), 50, 50, null);
+		
 	} // end of paintComponent
 	
-	// COLLISIONS ------------------------------------------------------------------------------------------------
+	/*
+	// COLLISIONS -------------------------------------------------------------------------------------------------------------------------
 	
+	PSEUDOCODE ----------------------------------------------------------------------------------------------------------------------------
+	
+	METHOD 1:
+	- boolean method, checkCollision
+	- takes in the player sprite and a specific platform sprite, as parameters
+	
+	- boolean variable, noXOverlap
+		- checks if player's right <= platform's left OR if player's left >= platform's right
+	- boolean variable, noYOverlap
+		- checks if player's bottom <= platform's top OR if player's top >= platform's bottom
+	
+	- if noXOverlap OR noYOverlap, return false; otherwise, return true
+	
+	
+	
+	
+	METHOD 2:
+	- method which returns an ArrayList, checkCollisionList
+	- takes in the player sprite and an ArrayList of platform sprites
+	
+	- sprite ArrayList, collisionList
+	
+	- in a for loop, go through every sprite within the ArrayList of platform sprites
+		- if true, when you call the checkCollision method
+			- add that platform sprite element to the collisionList ArrayList
+	
+	
+	
+	METHOD 3:
+	- a void method, resolvePlatformCollisions
+	- takes in the player sprite and an ArrayList of platform sprites
+	
+	- sprite ArrayList, collisionList: call the checkCollisionList method to initialize this ArrayList
+	
+	- if there are items within collisionList (collisionList > 0): this means that the player will be colliding with these items
+		- if changeY > 0
+			- then set the player's bottom to be the specific platform's top, that you collided with
+			- Note: if there are multiple ones you collided, they are most likely on equal level, so just take the first one from the ArrayList
+			- we also need to make sure that what we are landing on is not a triangle or spike
+		- else, if changeY < 0
+			- then set the player's top to be the specific platform's bottom, that you collided with
+			- same note as the previous if statement
+			- however, in our case, we also need to make sure the game restarts (timer resets?)
+				- clarification: because the player cannot be hitting upside down spikes, etc.
+		- then change the y velocity, changeY to be 0
+			- clarification: this allows the player to stop jumping, and now the platform they are on is the "ground"
+	
+	- using the same sprite ArrayList, collisionList, initialize it again
+		- clarification: we will be doing the exact same thing, but with x
+		
+	- if there are items within collisionList (collisionList > 0): this means that the player will be colliding with these items
+		- we don't have a changeX, since the background and obstacles are moving instead of the player, so we only need to...
+		
+		- set the player's right to be the specific platform's left, that you collided with
+		- however, in our case, we also need to make sure the game restarts (timer resets?)
+			- clarification: because the player cannot be hitting the sides of platforms, spikes, etc.
+			
+	*/
+			
+	// method 1
 	public boolean checkCollision(int i, int j) {
 		boolean noXOverlap = player.getRight() <= lvl01.getLeft(i, j) || player.getLeft() >= lvl01.getRight(i, j);
 		boolean noYOverlap = player.getBottom() <= lvl01.getTop(i, j) || player.getTop() >= lvl01.getBottom(i, j);
 		if (noXOverlap || noYOverlap)
 			return false;
 		return true;
-	}
+	} // end of method 1
 	
-	public ArrayList<ArrayList<Integer>> checkCollisionList(int[][] list) {
-		ArrayList<ArrayList<Integer>> collisionList = new ArrayList<ArrayList<Integer>>();
-		for (int i = 0; i < list.length; i++) {
-			for (int j = 0; j < list[0].length; j++) {
+	
+	// method 2
+	public int[][] checkCollisionList(int[][] platforms) {
+		ArrayList<Integer> arrL1 = new ArrayList<Integer>();
+		ArrayList<Integer> arrL2 = new ArrayList<Integer>();
+		
+		for (int i = 0; i < platforms.length; i++) {
+			for (int j = 0; j < platforms[0].length; j++) {
 				if (checkCollision(i, j)) {
-					ArrayList<Integer> iJ = new ArrayList<Integer>();
-					iJ.add(i);
-					iJ.add(j);
-					collisionList.add(iJ);
+					arrL1.add(i);
+					arrL2.add(j);
 				}
-			}
+			}			
+		}
+		
+		int[][] collisionList = new int[arrL1.size()][2];
+		
+		for (int i = 0; i < arrL1.size(); i++) {
+			Integer int1 = arrL1.get(i);
+			int int2 = int1;
+			collisionList[i][0] = int2;
+			int1 = arrL2.get(i);
+			int2 = int1;
+			collisionList[i][1] = int2;
 		}
 		return collisionList;
-	}
+	} // end of method 2
 	
+	// method 3
 	public void resolvePlatformCollisions(int[][] platforms) {
-		ArrayList<ArrayList<Integer>> collisionList = checkCollisionList(platforms);
-		if (collisionList.size() > 0) {
-			
+		int[][] collisionList = checkCollisionList(platforms);
+		
+		if (collisionList.length > 0) {
+			if (changeY > 0) { // when the player is falling
+				player.setBottom(lvl01.getTop(collisionList[0][0], collisionList[0][1]));
+			} else if (changeY < 0)  { // when the player is jumping
+				player.setTop(lvl01.getBottom(collisionList[0][0], collisionList[0][1]));
+			}
+			changeY = 0;
 		}
-	}
+		
+		collisionList = checkCollisionList(platforms);
+		if (collisionList.length > 0) {
+			player.setRight(lvl01.getLeft(collisionList[0][0], collisionList[0][1]));
+		}
+	} // end of method 3
 	
-	//-----------------------------------------------------------------------------------------------------------
 	
 	
-	// KEYLISTENER-----------------------------------------------------------------------------------------------
+	// KEYLISTENER ------------------------------------------------------------------------------------------------------------------------
 	public void keyTyped(KeyEvent e) { // uses keyChar
 	} // end of keyTyped
 	
 	public void keyPressed(KeyEvent e) { // uses keyCode
-		if (e.getKeyCode() == 32)  // 32 = space bar
-			player.setIsJump(true);
+		if (e.getKeyCode() == 32) { // 32 = space bar
+			//player.setIsJump(true);
+		}
 			
 	} // end of keyPressed
 
 	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == 32) { // 32 = space bar
+			//player.setIsJump(true);
+		}
 		
 	} // end of keyReleased
 

@@ -95,32 +95,18 @@ public class Platforms extends JPanel implements ActionListener {
 			for (int j = 0; j < col; j++) {
 				if (platforms[i][j] == 1) {
 					g.drawImage(triangle.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				} else if (platforms[i][j] == 2) {
 					g.drawImage(square.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				} else if (platforms[i][j] == 3) {
 					g.drawImage(grid.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				} else if (platforms[i][j] == 4) {
 					g.drawImage(rect.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				} else if (platforms[i][j] == 5) {
 					g.drawImage(spike.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				} else if (platforms[i][j] == 6) {
 					g.drawImage(triangle02.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				} else if (platforms[i][j] == 7) {
 					g.drawImage(spike02.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				}
 			}
 		}

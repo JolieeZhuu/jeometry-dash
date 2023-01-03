@@ -31,9 +31,6 @@ public class JeometryDash extends JFrame {
 		gameP = new MyGamePanel();
 		instP = new MyInstPanel();
 		
-		gameP.addKeyListener(gameP); // gameP is focused for keyListener
-		gameP.setFocusable(true);
-		
 		c.add("MainMenu", menuP); // add panels to container
 		c.add("Levels", lvlP);
 		c.add("JeometryDash", gameP);
