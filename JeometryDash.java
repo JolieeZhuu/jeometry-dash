@@ -18,6 +18,8 @@ public class JeometryDash extends JFrame {
 	static MyLvlPanel lvlP;
 	static MyGamePanel gameP;
 	static MyInstPanel instP;
+	
+	//static boolean isGameP;
 
 	public JeometryDash() throws Exception {
 		
@@ -45,7 +47,6 @@ public class JeometryDash extends JFrame {
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // make frame closed when x button is pressed
-
 	} // end of main
 
 } // end of JeometryDash class
