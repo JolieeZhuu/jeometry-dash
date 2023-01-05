@@ -71,7 +71,6 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		
 		this.setLayout(new BorderLayout(0, 0));
 		setBackground(Color.BLUE);
-		this.add(bgP, BorderLayout.NORTH);
 		
 		this.add(buttonP, BorderLayout.CENTER); // add panel to frame
 		buttonP.setOpaque(false);

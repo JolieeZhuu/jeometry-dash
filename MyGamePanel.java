@@ -14,8 +14,12 @@ import java.util.ArrayList;
 public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	private JButton goMenu; // declare instance variables
+	private ImageIcon backImg;
+	private JPanel northP;
+	
 	private int delay;
 	private Timer timer;
+	
 	private MovingBG bgP;
 	private Player player;
 	private Platforms lvl01;
@@ -29,18 +33,26 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		this.addKeyListener(this);
 		
 		delay = 1000/30;
-		goMenu = new JButton("Levels");
+		
+		backImg = new ImageIcon("Images/backButton.png");
+		goMenu = new JButton(backImg);
+		goMenu.setOpaque(false); // make buttons transparent
+		goMenu.setContentAreaFilled(false);
+		goMenu.setBorderPainted(false);
+		
+		northP = new JPanel();
 		bgP = new MovingBG();
 		player = new Player();
-		
 		lvl01 = new Platforms();
 		
 		goMenu.addActionListener(this); // formatting and adding interfaces
 		this.setLayout(new FlowLayout());
-		this.add(goMenu);
 		this.setBackground(Color.BLUE);
-		this.add(bgP, BorderLayout.NORTH);
-		this.add(lvl01, BorderLayout.EAST);
+		
+		this.add(northP, BorderLayout.NORTH);
+		northP.setOpaque(false);
+		northP.setLayout(new BorderLayout(0,0));
+		northP.add(goMenu, BorderLayout.WEST);
 
 		timer = new Timer(delay, this); // add and start a timer
 		timer.start();
@@ -61,12 +73,12 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		super.paintComponent(g);
 		bgP.paintComponent(g);
 		lvl01.paintComponent(g);
-		g.drawImage(player.getImg().getImage(), player.getX(), player.getY(), 50, 50, null);
+		player.paintComponent(g);
 	} // end of paintComponent
 	
 	// COLLISIONS ------------------------------------------------------------------------------------------------
 	
-	public boolean checkCollision(int i, int j) {
+	/*public boolean checkCollision(int i, int j) {
 		boolean noXOverlap = player.getRight() <= lvl01.getLeft(i, j) || player.getLeft() >= lvl01.getRight(i, j);
 		boolean noYOverlap = player.getBottom() <= lvl01.getTop(i, j) || player.getTop() >= lvl01.getBottom(i, j);
 		if (noXOverlap || noYOverlap)
@@ -94,7 +106,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		if (collisionList.size() > 0) {
 			
 		}
-	}
+	}*/
 	
 	//-----------------------------------------------------------------------------------------------------------
 	
@@ -104,13 +116,10 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	} // end of keyTyped
 	
 	public void keyPressed(KeyEvent e) { // uses keyCode
-		if (e.getKeyCode() == 32)  // 32 = space bar
-			player.setIsJump(true);
-			
 	} // end of keyPressed
 
 	public void keyReleased(KeyEvent e) {
-		
+		player.keyReleased(e);
 	} // end of keyReleased
 
 } // end of MyGamePanel class
