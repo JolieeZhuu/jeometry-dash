@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+
 public class Player extends JPanel implements ActionListener, KeyListener{
 	
 	private ImageIcon player;
@@ -27,6 +28,13 @@ public class Player extends JPanel implements ActionListener, KeyListener{
 		timer.start();
 	}
 	
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(player.getImage(), 100, y, 45, 45, null);
+	} // end of paintComponent
+	
+	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == timer && willJump && System.currentTimeMillis() - lastPressProcessed > 400) {
 			for (int i=0; i<=75; i++)
@@ -44,12 +52,7 @@ public class Player extends JPanel implements ActionListener, KeyListener{
 		}
 	}
 	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.drawImage(player.getImage(), 100, y, 45, 45, null);
-	}
-	
-	public void keyTyped(KeyEvent e) { // uses keyChar
+  public void keyTyped(KeyEvent e) { // uses keyChar
 	} // end of keyTyped
 	
 	public void keyPressed(KeyEvent e) { // uses keyCode
@@ -59,4 +62,58 @@ public class Player extends JPanel implements ActionListener, KeyListener{
 		if (e.getKeyCode() == 32) // 32 = space bar
 			willJump = true;
 	} // end of keyReleased
+	
+/*	
+	public ImageIcon getImg () {
+		return img;
+	}
+	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
+	public void setY(int changeY) {
+		y += changeY;
+	}
+	
+	public int getLeft() {
+		return x;
+	}
+	
+	public int getRight() {
+		return x + 50;
+	}
+	
+	public int getTop() {
+		return y;
+	}
+	
+	public int getBottom() {
+		return y + 50;
+	}
+	
+	public void setLeft(int x) {
+		this.x = x; 
+	}
+	
+	public void setRight(int x) {
+		this.x = x + 50; 
+	}
+	
+	public void setTop(int y) {
+		this.y = y; 
+	}
+	
+	public void setBottom(int y) {
+		this.y = y - 50; 
+	}
+	
+	public void setIsJump (boolean tf) {
+		isJump = tf;
+	}
+ */
 }

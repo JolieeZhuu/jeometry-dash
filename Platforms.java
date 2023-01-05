@@ -19,7 +19,7 @@ import java.util.Scanner;
 public class Platforms extends JPanel implements ActionListener {
 	
 	private ImageIcon triangle, triangle02, square, grid, rect, spike, spike02;
-	private int row, col, cnt, delay, myX, myY;
+	private int row, col, cnt, delay;
 	private int[][] platforms;
 	private int[][] old;
 	private int[][] x;
@@ -66,6 +66,19 @@ public class Platforms extends JPanel implements ActionListener {
 	}
 	
 	// animation 
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == timer) {
+			cnt++;
+			for (int i = 0; i< row; i++) {
+				for (int j=0; j<col; j++) {
+					x[i][j] = (j*50)-(cnt*15);
+					y[i][j] = i*50;
+				}
+			}
+		}
+	} // end of actionPerformed
+	/*
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == timer) {
 			for (int i = 0; i < row; i++) {
@@ -88,6 +101,7 @@ public class Platforms extends JPanel implements ActionListener {
 				cnt++;
 		}
 	} // end of actionPerformed
+	*/
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -95,32 +109,18 @@ public class Platforms extends JPanel implements ActionListener {
 			for (int j = 0; j < col; j++) {
 				if (platforms[i][j] == 1) {
 					g.drawImage(triangle.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				} else if (platforms[i][j] == 2) {
 					g.drawImage(square.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				} else if (platforms[i][j] == 3) {
 					g.drawImage(grid.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				} else if (platforms[i][j] == 4) {
 					g.drawImage(rect.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				} else if (platforms[i][j] == 5) {
 					g.drawImage(spike.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				} else if (platforms[i][j] == 6) {
 					g.drawImage(triangle02.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				} else if (platforms[i][j] == 7) {
 					g.drawImage(spike02.getImage(), x[i][j], y[i][j], null);
-					myX = x[i][j];
-					myY = x[i][j];
 				}
 			}
 		}
