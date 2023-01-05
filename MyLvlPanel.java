@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: December 28
+ * Date: January 5, 2023
  * Description: Levels panel of Jeometry Dash
  */
 
@@ -23,11 +23,12 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 	
 	private Timer timer;
 
+	
 	public MyLvlPanel() throws Exception {
 		
-		northP = new JPanel();
+		northP = new JPanel(); // initialize variables
 		centerP = new JPanel();
-		bgP = new MovingBG(); // initialize variables
+		bgP = new MovingBG();
 		
 		lvl = 0;
 		delay = 1000/30;
@@ -37,36 +38,37 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		backImg = new ImageIcon("Images/backButton.png");
 		nextImg = new ImageIcon("Images/nextButton.png");
 		lvlImg = new ImageIcon[3];
-		for (int i = 0; i < 3; i++)
+		
+		for (int i = 0; i < 3; i++) // add the title images of each level
 			lvlImg[i] = new ImageIcon("Images/lvl" + (i + 1) + ".png");
 		
 		goMenu = new JButton(backImg);
 		next = new JButton(nextImg);
 		prev = new JButton(backImg);
-		play = new JButton(playImg) {
+		play = new JButton(playImg) { // set play button size
 			{
 				setSize(150, 150);
 				setMaximumSize(getSize());
 			}
 		};
 		
-		goMenu.setOpaque(false); // make buttons transparent
+		goMenu.setOpaque(false); // make button transparent
 		goMenu.setContentAreaFilled(false);
 		goMenu.setBorderPainted(false);
 		
-		next.setOpaque(false); // make buttons transparent
+		next.setOpaque(false); // make button transparent
 		next.setContentAreaFilled(false);
 		next.setBorderPainted(false);
 		
-		prev.setOpaque(false); // make buttons transparent
+		prev.setOpaque(false); // make button transparent
 		prev.setContentAreaFilled(false);
 		prev.setBorderPainted(false);
 		
-		play.setOpaque(false); // make buttons transparent
+		play.setOpaque(false); // make button transparent
 		play.setContentAreaFilled(false);
 		play.setBorderPainted(false);
 		
-		goMenu.addActionListener(this); // formatting
+		goMenu.addActionListener(this); // add actionListener to buttons
 		prev.addActionListener(this);
 		next.addActionListener(this);
 		play.addActionListener(this);
@@ -74,18 +76,18 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		this.setLayout(new BorderLayout(0, 0));
 		this.setBackground(Color.BLUE);
 		
-		this.add(northP, BorderLayout.NORTH);
+		this.add(northP, BorderLayout.NORTH); // add panel to panel
 		northP.setOpaque(false);
 		northP.setLayout(new BorderLayout(0,0));
-		northP.add(goMenu, BorderLayout.WEST);
+		northP.add(goMenu, BorderLayout.WEST); // add button to panel
 		
-		this.add(centerP, BorderLayout.CENTER); // add panel to frame
+		this.add(centerP, BorderLayout.CENTER); // add panel to panel
 		centerP.setOpaque(false);
 		centerP.setLayout(new BoxLayout(centerP, BoxLayout.X_AXIS));
-		prev.setAlignmentY(Component.CENTER_ALIGNMENT);
+		prev.setAlignmentY(Component.CENTER_ALIGNMENT); // center-align buttons in terms of y
 		play.setAlignmentY(Component.CENTER_ALIGNMENT);
 		next.setAlignmentY(Component.CENTER_ALIGNMENT);
-		centerP.add(Box.createRigidArea(new Dimension(120, 0)));
+		centerP.add(Box.createRigidArea(new Dimension(120, 0))); // format buttons in terms of x
 		centerP.add(prev);
 		centerP.add(Box.createRigidArea(new Dimension(40, 0)));
 		centerP.add(play);
@@ -94,23 +96,25 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		
 		timer = new Timer(delay, this);
 		timer.start();
+		
 	} // end of constructor
 
+	
 	public void actionPerformed(ActionEvent e) {
-		bgP.actionPerformed(e);
-		if (e.getSource() == goMenu)
+		
+		bgP.actionPerformed(e); // add background animation
+		
+		if (e.getSource() == goMenu) // back button
 			JeometryDash.cardsL.first(JeometryDash.c);
-		else if (e.getSource() == play) {
-			//JeometryDash.isGameP = true;
+		else if (e.getSource() == play) { // play button
 			JeometryDash.cardsL.next(JeometryDash.c);
 			JeometryDash.gameP.setFocusable(true);
 			JeometryDash.gameP.requestFocus();
-		} else if (e.getSource() == next){
+		} else if (e.getSource() == next) { // next level button
 			++lvl;
 			if (lvl == 3)
 				lvl = 0;
-		}
-		else if (e.getSource() == prev){
+		} else if (e.getSource() == prev) { // previous level button
 			--lvl;
 			if (lvl == -1)
 				lvl = 2;
@@ -119,11 +123,12 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		
 	} // end of actionPerformed
 
+	
 	public void paintComponent(Graphics g) {
+		
 		super.paintComponent(g);
-		bgP.paintComponent(g);
-		g.drawImage(bg2.getImage(), (getWidth() - 550) / 2, 50, null);
-		g.drawImage(lvlImg[lvl].getImage(), (getWidth() - 550) / 2, 100, null);
+		bgP.paintComponent(g); // add background
+		g.drawImage(lvlImg[lvl].getImage(), (getWidth() - 550) / 2, 100, null); // draw title level
 		
 	} // end of paintComponent
 	
