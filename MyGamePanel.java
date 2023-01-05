@@ -14,11 +14,15 @@ import java.util.ArrayList;
 public class MyGamePanel extends JPanel implements ActionListener {
 	
 	private JButton goMenu; // declare instance variables
+	private ImageIcon backImg;
+	private JPanel northP;
+	
 	private int delay;
 	
 	private int gravity = 10, changeY = -10;
 	
 	private Timer timer;
+	
 	private MovingBG bgP;
 	private Player player;
 	private Platforms lvl01;
@@ -29,18 +33,26 @@ public class MyGamePanel extends JPanel implements ActionListener {
 
 		
 		delay = 1000/30;
-		goMenu = new JButton("Levels");
+		
+		backImg = new ImageIcon("Images/backButton.png");
+		goMenu = new JButton(backImg);
+		goMenu.setOpaque(false); // make buttons transparent
+		goMenu.setContentAreaFilled(false);
+		goMenu.setBorderPainted(false);
+		
+		northP = new JPanel();
 		bgP = new MovingBG();
 		player = new Player();
-		
 		lvl01 = new Platforms();
 		
 		goMenu.addActionListener(this); // formatting and adding interfaces
 		this.setLayout(new FlowLayout());
-		this.add(goMenu);
 		this.setBackground(Color.BLUE);
-		this.add(bgP, BorderLayout.NORTH);
-		this.add(lvl01, BorderLayout.EAST);
+		
+		this.add(northP, BorderLayout.NORTH);
+		northP.setOpaque(false);
+		northP.setLayout(new BorderLayout(0,0));
+		northP.add(goMenu, BorderLayout.WEST);
 
 		timer = new Timer(delay, this); // add and start a timer
 		timer.start();
@@ -63,8 +75,8 @@ public class MyGamePanel extends JPanel implements ActionListener {
 		bgP.paintComponent(g);
 		lvl01.paintComponent(g);
 		player.paintComponent(g);
-		resolvePlatformCollisions(lvl01.getPlatforms());
-		
+    // resolvePlatformCollisions(lvl01.getPlatforms());
+	
 	} // end of paintComponent
 	
 	/*
@@ -127,8 +139,6 @@ public class MyGamePanel extends JPanel implements ActionListener {
 		- however, in our case, we also need to make sure the game restarts (timer resets?)
 			- clarification: because the player cannot be hitting the sides of platforms, spikes, etc.
 			
-	*/
-			
 	// method 1
 	public boolean checkCollision(int i, int j) {
 		boolean noXOverlap = player.getRight() <= lvl01.getLeft(i, j) || player.getLeft() >= lvl01.getRight(i, j);
@@ -184,6 +194,7 @@ public class MyGamePanel extends JPanel implements ActionListener {
 			}
 			changeY = 0;
 		}
+	}
 		
 		//collisionList = checkCollisionList(platforms);
 		//if (collisionList.length > 0) {
@@ -200,6 +211,7 @@ public class MyGamePanel extends JPanel implements ActionListener {
 			return true;
 		return false;
 	}
+ /*
 	
 	
 	
@@ -208,7 +220,6 @@ public class MyGamePanel extends JPanel implements ActionListener {
 	PSEUDOCODE --------------------------------------------------------------------------------------------------------------------
 	new position = old position + velocity
 	new velocity = old velocity + acceleration
-	
 	y = position (new and old)
 	changeY = velocity (new and old)
 	gravity = acceleration
@@ -225,4 +236,12 @@ public class MyGamePanel extends JPanel implements ActionListener {
 			4 + 4 = 8....8 + 4 = 12 // goes down
 	
 	*/
+  
+	public void keyPressed(KeyEvent e) { // uses keyCode
+	} // end of keyPressed
+
+	public void keyReleased(KeyEvent e) {
+		player.keyReleased(e);
+	} // end of keyReleased
+  
 } // end of MyGamePanel class
