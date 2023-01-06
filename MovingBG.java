@@ -17,7 +17,6 @@ public class MovingBG extends JPanel implements ActionListener {
 	private ArrayList<ImageIcon> ground;
 	
 	private int bg_x, g_x, delay;
-	private Timer timer;
 
 	
 	public MovingBG() throws Exception{
@@ -35,29 +34,24 @@ public class MovingBG extends JPanel implements ActionListener {
 		}
 		
 		this.setLayout(new BorderLayout(0, 0));
-		timer = new Timer(delay, this);
-		timer.start();
 				
 	} // end of constructor
 
 	
 	public void actionPerformed(ActionEvent e) {
+		bg_x -= 10;
+		g_x -= 15;
 		
-		if (e.getSource() == timer) {
-			bg_x -= 10;
-			g_x -= 15;
-			
-			if (bg_x == -600) { // remove and add background image
-				bg.remove(0);
-				bg.add(new ImageIcon("Images/bg01.png"));
-				bg_x = 0;
-			}
-			
-			if (g_x == -600) { // remove and add ground image
-				ground.remove(0);
-				ground.add(new ImageIcon("Images/ground01.png"));
-				g_x = 0;
-			}
+		if (bg_x == -600) { // remove and add background image
+			bg.remove(0);
+			bg.add(new ImageIcon("Images/bg01.png"));
+			bg_x = 0;
+		}
+		
+		if (g_x == -600) { // remove and add ground image
+			ground.remove(0);
+			ground.add(new ImageIcon("Images/ground01.png"));
+			g_x = 0;
 		}
 		
 	} // end of actionPerformed

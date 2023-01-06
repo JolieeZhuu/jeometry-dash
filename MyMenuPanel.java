@@ -20,11 +20,6 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 
 	private ImageIcon title, customImg, instImg, playImg, exitImg;
 	
-	private Timer timer;
-	
-	private int delay;
-
-	
 	public MyMenuPanel() throws Exception {
 
 		buttonP = new JPanel(); // initialize variables
@@ -55,9 +50,7 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 				setMaximumSize(getSize());
 			}
 		};
-		
-		delay = 1000/30;
-		
+				
 		custom.setOpaque(false); // make button transparent
 		custom.setContentAreaFilled(false);
 		custom.setBorderPainted(false);
@@ -82,7 +75,6 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		this.setLayout(new BorderLayout(0, 0));
 		setBackground(Color.BLUE);
 		
-		
 		this.add(buttonP, BorderLayout.CENTER);  // add panels to panel
 		buttonP.setOpaque(false);
 		buttonP.setLayout(new BoxLayout(buttonP, BoxLayout.X_AXIS));
@@ -97,10 +89,6 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		buttonP.add(exit);
 		
 		buttonP2.add(inst);
-		
-		timer = new Timer(delay, this);
-		timer.start();
-		
 	} // end of constructor
 
 	
@@ -108,8 +96,12 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		
 		bgP.actionPerformed(e); // add background animation from MovingBG class
 		
-		if (e.getSource() == play) // button to game panel
+		if (e.getSource() == play) { // button to game panel
 			JeometryDash.cardsL.next(JeometryDash.c);
+			JeometryDash.gameTimer.start();
+			JeometryDash.gameP.setFocusable(true);
+			JeometryDash.gameP.requestFocus();
+		}
 		else if (e.getSource() == inst) // button to instructions panel
 			JeometryDash.cardsL.next(JeometryDash.c);
 		else if (e.getSource() == custom) // button to customization panel
