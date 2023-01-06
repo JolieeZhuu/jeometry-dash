@@ -15,24 +15,21 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	private JButton goMenu; // declare instance variables
 	private ImageIcon backImg;
 	private JPanel northP;
-	
-	private int delay;
-	
-	private Timer timer;
-	
+		
 	private MovingBG bgP;
 	private Player player;
-	private Platforms lvl01;
+	private Platforms game;
 
-	
 	public MyGamePanel() throws Exception {
-
-		delay = 1000 / 30; // initialize variables
-
+		
+		this.setFocusable(true); // request and add focus for keyListener
+		this.requestFocus();
+		this.addKeyListener(this);
+		
 		northP = new JPanel();
 		bgP = new MovingBG();
+		game = new Platforms();
 		player = new Player();
-		lvl01 = new Platforms();
 		
 		backImg = new ImageIcon("Images/backButton.png");
 		goMenu = new JButton(backImg);
@@ -50,20 +47,21 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		northP.setLayout(new BorderLayout(0,0));
 		northP.add(goMenu, BorderLayout.WEST); // add button to panel
 
-		timer = new Timer(delay, this);
-		timer.start();
-
 	} // end of constructor
 
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		bgP.actionPerformed(e); // add background animation
-		lvl01.actionPerformed(e); // add obstacles animation
-		player.actionPerformed(e); // add player movement
+		if (e.getSource() == JeometryDash.gameTimer) {
+			bgP.actionPerformed(e); // add background animation
+			game.actionPerformed(e); // add obstacles animation
+			player.actionPerformed(e); // add player movement
+		}
 		
-		if (e.getSource() == goMenu) // back button
-			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
+		if (e.getSource() == goMenu) {// back button
+			JeometryDash.cardsL.first(JeometryDash.c);
+			JeometryDash.gameTimer.stop();
+		}
 		repaint();
 		
 	} // end of actionPerformed
@@ -73,7 +71,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 
 		super.paintComponent(g);
 		bgP.paintComponent(g); // add background
-		lvl01.paintComponent(g); // add obstacles
+		game.paintComponent(g); // add obstacles
 		player.paintComponent(g); // add player
     	// resolvePlatformCollisions(lvl01.getPlatforms());
 	
@@ -87,9 +85,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	} // end of keyPressed
 
 	public void keyReleased(KeyEvent e) {
-		
 		player.keyReleased(e); // call keyReleased method from Player class
-		
 	} // end of keyReleased
 	
 	

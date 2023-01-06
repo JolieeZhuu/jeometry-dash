@@ -7,18 +7,21 @@
  */
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
-public class JeometryDash extends JFrame {
+public class JeometryDash extends JFrame implements ActionListener {
 	
 	static CardLayout cardsL; // declare instance variables
 	static Container c;
 
 	static MyMenuPanel menuP;
-	static MyLvlPanel lvlP;
 	static MyGamePanel gameP;
 	static MyInstPanel instP;
 	static MyCustomPanel customP;
+	
+	static Timer timer, gameTimer;
+	static int delay;
 
 	public JeometryDash() throws Exception {
 		
@@ -26,7 +29,6 @@ public class JeometryDash extends JFrame {
 		cardsL = new CardLayout();
 		c.setLayout(cardsL);
 		menuP = new MyMenuPanel();
-		lvlP = new MyLvlPanel();
 		gameP = new MyGamePanel();
 		instP = new MyInstPanel();
 		customP = new MyCustomPanel();
@@ -35,12 +37,23 @@ public class JeometryDash extends JFrame {
 		gameP.setFocusable(true);
 		
 		c.add("MainMenu", menuP); // add panels to container
-		c.add("Levels", lvlP);
 		c.add("JeometryDash", gameP);
 		c.add("Instructions", instP);
 		c.add("Customization", customP);
+		
+		delay = 1000/30;
+		timer = new Timer(delay, this);
+		gameTimer = new Timer(delay, this);
+		timer.start();
 
 	} // end of constructor
+	
+	public void actionPerformed(ActionEvent e) {
+		menuP.actionPerformed(e);
+		gameP.actionPerformed(e);
+		instP.actionPerformed(e);
+		customP.actionPerformed(e);
+	} // end of actionPerformed
 
 	public static void main(String[] args) throws Exception {
 		JeometryDash frame = new JeometryDash(); // create object frame

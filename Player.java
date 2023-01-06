@@ -14,11 +14,11 @@ import java.util.ArrayList;
 public class Player extends JPanel implements ActionListener, KeyListener {
 	
 	private static ImageIcon player; // declare instance variables
-	private int x, y, delay;
+	private int x, y;
 	private double speed;
 	private boolean willJump, jumped;
-	private Timer timer;
 	private long lastPressProcessed = 0L;
+	private long lastJump = 0L;
 	private Platforms lvl01 = new Platforms();
 	
 	
@@ -30,15 +30,13 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 		
 		y = 405; // initialize variables
 		x = 100;
-		speed = 1.5;
-		delay = 1000/30;
+		speed = 1;
 		
 		if (player == null)
 			player = new ImageIcon("Images/cube01.png");
 		
 		this.setLayout(new BorderLayout(0, 0));
-		timer = new Timer(delay, this);
-		timer.start();
+
 	}
 	
 	
@@ -53,7 +51,7 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == timer && willJump && System.currentTimeMillis() - lastPressProcessed > 200) {
+		if (willJump && System.currentTimeMillis() - lastPressProcessed > 300) {
 			for (int i = 0; i <= 75; i++) // perform the jump (go up) action of the player
 				if (y >= 330)
 					y -= speed;
@@ -62,7 +60,7 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 			jumped = true;
 		}
 		
-		if (e.getSource() == timer && jumped && System.currentTimeMillis() - lastPressProcessed > 200) {
+		if (jumped && System.currentTimeMillis() - lastPressProcessed > 300) {
 			for (int i = 0; i <= 75; i++) // perform the fall (go down) action of the player
 				y += speed;
 			lastPressProcessed = System.currentTimeMillis();
@@ -79,10 +77,10 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 	} // end of keyPressed
 
 	public void keyReleased(KeyEvent e) {
-		
-		if (e.getKeyCode() == 32) // 32 is space bar
+		if (e.getKeyCode() == 32 && System.currentTimeMillis() - lastJump > 600) { // 32 is space bar
 			willJump = true;
-		
+			lastJump = System.currentTimeMillis();
+		}
 	} // end of keyReleased
 	
 	
@@ -139,13 +137,13 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 			//speed = 0;
 		}
 		
-		/*
-		 * For this, if there are obstacles the player will collide with, restart the game
+		
+		 /* For this, if there are obstacles the player will collide with, restart the game
 		collisionList = checkCollisionList(platforms);
 		if (collisionList.length > 0) {
 			player.setRight(lvl01.getLeft(collisionList[0][0], collisionList[0][1]));
-		}
-		*/
+		}*/
+		
 		
 	} // end of resolvePlatformCollisions
 	
