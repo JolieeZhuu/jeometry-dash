@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 5, 2023
+ * Date: January 6, 2023
  * Description: Levels panel of Jeometry Dash
  */
 
@@ -13,15 +13,11 @@ import javax.swing.*;
 public class MyLvlPanel extends JPanel implements ActionListener {
 
 	private JButton goMenu, play, next, prev; // declare instance variables
-	
 	private ImageIcon playImg, backImg, nextImg, lvlImg[], bg2;
-	
-	private int lvl, delay;
+	private int lvl;
 	
 	private JPanel northP, centerP;
 	private MovingBG bgP;
-	
-	private Timer timer;
 
 	
 	public MyLvlPanel() throws Exception {
@@ -31,7 +27,6 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		bgP = new MovingBG();
 		
 		lvl = 0;
-		delay = 1000/30;
 		
 		bg2 = new ImageIcon("Images/bg02.png");
 		playImg = new ImageIcon("Images/playButton.png");
@@ -94,9 +89,6 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		centerP.add(Box.createRigidArea(new Dimension(40, 0)));
 		centerP.add(next);
 		
-		timer = new Timer(delay, this);
-		timer.start();
-		
 	} // end of constructor
 
 	
@@ -107,7 +99,8 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		if (e.getSource() == goMenu) // back button
 			JeometryDash.cardsL.first(JeometryDash.c);
 		else if (e.getSource() == play) { // play button
-			JeometryDash.cardsL.next(JeometryDash.c);
+			JeometryDash.cardsL.show(JeometryDash.c, "JeometryDash");
+			JeometryDash.gameTimer.start();
 			JeometryDash.gameP.setFocusable(true);
 			JeometryDash.gameP.requestFocus();
 		} else if (e.getSource() == next) { // next level button

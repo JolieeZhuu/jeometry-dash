@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 5, 2023
+ * Date: January 6, 2023
  * Description: Obstacles and platforms of Jeometry Dash
  */
 
@@ -15,13 +15,14 @@ import java.util.Scanner;
 public class Platforms extends JPanel implements ActionListener {
 	
 	private ImageIcon triangle, triangle02, square, grid, rect, spike, spike02; // declare instance variables
-	private int row, col, cnt;
+	private int row, col, cnt, getJ;
 	boolean isRunning;
 	private int[][] platforms;
 	private int[][] old;
 	private int[][] x;
 	private int[][] y;
 
+	
 	public Platforms() throws Exception {
 		
 		row = 9; // initialize variables
@@ -43,6 +44,7 @@ public class Platforms extends JPanel implements ActionListener {
 		createPlatforms("lvl01.csv"); // call method
 		
 		this.setLayout(new BorderLayout(0, 0));	
+		
 	} // end of constructor
 	
 	
@@ -62,28 +64,35 @@ public class Platforms extends JPanel implements ActionListener {
 		
 	} // end of createPlatforms
 	
+	
 	public void actionPerformed(ActionEvent e) {
 			
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				x[i][j] = (j * 50) - (cnt * 15);
+				if (x[i][j] == 110) {
+					getJ = j;
+				}
 				y[i][j] = i * 50;
 				
 				if (x[i][j] < -75)
 					platforms[i][j] = 0;
 			}
 		}
+		cnt++; // remove this if we are doing infinite loop
+		/*
 		if (cnt > 1200) {
-			cnt=0;
+			cnt = 0;
 			for (int i = 0; i < row; i++) {
 				for (int j = 0; j < col; j++) 
 					platforms[i][j] = old[i][j];
 			}
-		}
-		else
+		} else
 			cnt++;
+		*/
 		
 	} // end of actionPerformed
+	
 	
 	public void paintComponent(Graphics g) {
 		
@@ -112,6 +121,10 @@ public class Platforms extends JPanel implements ActionListener {
 	} // end of paintComponent
 
 	
+	public int getJ() {
+		return getJ;
+	} // end of getJ
+	
 	public int[][] getPlatforms() {
 		return platforms;
 	} // end of getPlatforms
@@ -123,5 +136,17 @@ public class Platforms extends JPanel implements ActionListener {
 	public int getYs(int i, int j) {
 		return y[i][j];
 	} // end of getYs
+	
+
+	public void setXandY () {
+		
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				x[i][j] = j * 50;
+				y[i][j] = i * 50;
+			}
+		}
+		
+	} // end of setXandY
 	
 } // end of Platforms class

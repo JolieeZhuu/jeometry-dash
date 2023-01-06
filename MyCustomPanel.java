@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 5, 2023
+ * Date: January 6, 2023
  * Description: Instructions panel of Jeometry Dash
  */
 
@@ -105,7 +105,8 @@ public class MyCustomPanel extends JPanel implements ActionListener {
 			Player.setImage(cube04);
 		else if (e.getSource() == b05)
 			Player.setImage(cube05);
-
+		repaint();
+		
 	} // end of actionPerformed
 
 	

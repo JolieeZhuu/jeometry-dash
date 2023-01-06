@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 5, 2023
+ * Date: January 6, 2023
  * Description: Player class of Jeometry Dash
  */
 
@@ -15,7 +15,7 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 	
 	private static ImageIcon player; // declare instance variables
 	private int x, y;
-	private double speed;
+	private double speed, gravity;
 	private boolean willJump, jumped;
 	private long lastPressProcessed = 0L;
 	private long lastJump = 0L;
@@ -28,9 +28,11 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 		this.requestFocus();
 		this.addKeyListener(this);
 		
-		y = 405; // initialize variables
+		y = 400; // initialize variables
 		x = 100;
 		speed = 1;
+		//speed = -4;
+		//gravity = 0.5;
 		
 		if (player == null)
 			player = new ImageIcon("Images/cube01.png");
@@ -44,12 +46,18 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 		
 		super.paintComponent(g);
 		g.drawImage(player.getImage(), x, y, 50, 50, null); // draw the player
-		resolvePlatformCollisions(lvl01.getPlatforms());
 		
 	} // end of paintComponent
 	
 	
 	public void actionPerformed(ActionEvent e) {
+		
+		/*
+		while (y < 400 && !willJump) {
+			y += speed;
+			speed += gravity;
+		}
+		*/
 		
 		if (willJump && System.currentTimeMillis() - lastPressProcessed > 300) {
 			for (int i = 0; i <= 75; i++) // perform the jump (go up) action of the player
@@ -77,17 +85,64 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 	} // end of keyPressed
 
 	public void keyReleased(KeyEvent e) {
+		
 		if (e.getKeyCode() == 32 && System.currentTimeMillis() - lastJump > 600) { // 32 is space bar
 			willJump = true;
 			lastJump = System.currentTimeMillis();
 		}
+		
 	} // end of keyReleased
 	
 	
-	public boolean checkCollision(int i, int j) {
+	public static void setImage(ImageIcon img) {
+		player = img;
+	} // end of setImage
+
+	
+	public void collisions() {
 		
-		boolean noXOverlap = x <= lvl01.getXs(i, j); // check to see if player and platform overlap in terms of x
-		boolean noYOverlap = y <= lvl01.getYs(i, j) || y >= lvl01.getYs(i, j) + 50; // check to see if player and platform overlap in terms of y
+		int[] collisionListY = new int[9];
+		for (int i = 0; i < 9; i++) {
+			collisionListY[i] = lvl01.getYs(i, lvl01.getJ());
+			
+		}
+		
+		/*
+		 * PSEUDOCODE ----------------------------------------------------------------------------------------------------------------------------------
+		 
+		 * Check the platforms that are approaching the player at 150 (right bound of the player)
+		 	* From what I printed out, every platform will have an x-axis of 110, so getJ looks for x[i][j] with x = 110 (within the Platforms class)
+		 
+		 CODE STOPPED UP UNTIL HERE!
+		 * Collect every platform of x = 110, and compare x and y coordinates with player
+		 
+		 * Check to see if the player's upper bound >= platform's lower bound
+		 	* If these standards are not met, then set the y value accordingly
+		 
+		 * Check to see if the player's lower bound <= platform's upper bound
+		 	* If these standards are not met, then set the y value accordingly
+		 
+		 * Same goes for x...but leave this part out for now, because we need to figure out how to restart the game
+		 
+		 
+		 * Also, there should be another method that checks if the player is in the air
+		 	* Then gravity (basically when the player falls down in the actionPerformed method) takes the player down on to another platform
+		*/
+		
+	}
+
+	
+	
+	
+	
+	
+	
+/* RANDOM CODE YOU DON'T NEED TO USE, BUT POSSIBLY AS A REFERENCE IF IT'S OF ANY HELP -------------------------------------------------------------------
+
+	public boolean checkCollision(int i) {
+		
+		boolean noXOverlap = x <= lvl01.getXs(i, lvl01.getJ()); // check to see if player and platform overlap in terms of x
+		boolean noYOverlap = y <= lvl01.getYs(i, lvl01.getJ()) || y >= lvl01.getYs(i, lvl01.getJ()) + 50; // check to see if player and platform overlap in terms of y
 		if (noXOverlap || noYOverlap)
 			return false;
 		return true;
@@ -95,81 +150,63 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 	} // end of checkCollision
 	
 	
-	public int[][] checkCollisionList(int[][] platforms) {
+	public int[] checkCollisionList(int[] platforms) {
 		
-		ArrayList<Integer> arrL1 = new ArrayList<Integer>();
-		ArrayList<Integer> arrL2 = new ArrayList<Integer>();
+		ArrayList<Integer> arrL = new ArrayList<Integer>();
 		
-		for (int i = 0; i < platforms.length; i++) { // add the platforms that will collide with the player to ArrayLists
-			for (int j = 0; j < platforms[0].length; j++) {
-				if (checkCollision(i, j)) {
-					arrL1.add(i);
-					arrL2.add(j);
-				}
-			}			
+		for (int i = 0; i < platforms.length; i++) {
+			if (checkCollision(platforms[i]))
+				arrL.add(platforms[i]);
 		}
 		
-		int[][] collisionList = new int[arrL1.size()][2];
-		
-		for (int i = 0; i < arrL1.size(); i++) { // turn the 2 ArrayLists into a 2D array
-			Integer int1 = arrL1.get(i);
+		int[] collisionList = new int[arrL.size()];
+		for (int i = 0; i < arrL.size(); i++) {
+			Integer int1 = arrL.get(i);
 			int int2 = int1;
-			collisionList[i][0] = int2;
-			int1 = arrL2.get(i);
-			int2 = int1;
-			collisionList[i][1] = int2;
+			collisionList[i] = int2;
 		}
 		return collisionList;
 		
 	} // end of checkCollisionList
 	
 	
-	public void resolvePlatformCollisions(int[][] platforms) {
+	public void resolvePlatformCollisions(int[] platforms) {
 		
-		int[][] collisionList = checkCollisionList(platforms);
+		int[] collisionList = checkCollisionList(platforms);
 		
 		if (collisionList.length > 0) {
 			if (speed > 0) { // when the player is falling
-				y = lvl01.getYs(collisionList[0][0], collisionList[0][1]) - 50;
+				y = collisionList[0] - 50;
 			} else if (speed < 0)  { // when the player is jumping
-				y = lvl01.getYs(collisionList[0][0], collisionList[0][1]) + 50;
+				y = collisionList[0] + 50;
 			}
 			//speed = 0;
 		}
 		
 		
-		 /* For this, if there are obstacles the player will collide with, restart the game
-		collisionList = checkCollisionList(platforms);
-		if (collisionList.length > 0) {
-			player.setRight(lvl01.getLeft(collisionList[0][0], collisionList[0][1]));
-		}*/
+		//For this, if there are obstacles the player will collide with, restart the game
+		//collisionList = checkCollisionList(platforms);
+		//if (collisionList.length > 0) {
+		//	x = 110;
+		//}
 		
 		
 	} // end of resolvePlatformCollisions
 	
 	
-	public boolean isOnPlatform(int[][] platforms) {
+	public boolean isOnPlatform(int[] platforms) {
 		
 		y += 5; // move the player down and check if it is colliding with platforms
-		int[][] collisionList = checkCollisionList(platforms);
+		int[] collisionList = checkCollisionList(platforms);
 		y -= 5;
-		if (collisionList.length > 0 || y == 400)
+		if (collisionList.length > 0 || y == 405)
 			return true;
 		return false;
 		
 	} // end of isOnPlatform
-	
-	
-	public static void setImage(ImageIcon img) {
-		player = img;
-	}
-	
-	
-	/*
-	// COLLISIONS -------------------------------------------------------------------------------------------------------------------------
-	
-	
-	PSEUDOCODE ----------------------------------------------------------------------------------------------------------------------------
+
+
+PSEUDOCODE (Code above is for this pseudocode) ---------------------------------------------------------------------------------------------------
 	
 	METHOD 1:
 	- boolean method, checkCollision
