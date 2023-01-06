@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: December 28
+ * Date: January 5, 2023
  * Description: Main (running) program of Jeometry Dash
  */
 
@@ -11,15 +11,14 @@ import javax.swing.*;
 
 public class JeometryDash extends JFrame {
 	
-	static CardLayout cardsL; // declare variables
+	static CardLayout cardsL; // declare instance variables
 	static Container c;
 
 	static MyMenuPanel menuP;
 	static MyLvlPanel lvlP;
 	static MyGamePanel gameP;
 	static MyInstPanel instP;
-	
-	//static boolean isGameP;
+	static MyCustomPanel customP;
 
 	public JeometryDash() throws Exception {
 		
@@ -30,6 +29,7 @@ public class JeometryDash extends JFrame {
 		lvlP = new MyLvlPanel();
 		gameP = new MyGamePanel();
 		instP = new MyInstPanel();
+		customP = new MyCustomPanel();
 		
 		gameP.addKeyListener(gameP); // gameP is focused for keyListener
 		gameP.setFocusable(true);
@@ -38,6 +38,7 @@ public class JeometryDash extends JFrame {
 		c.add("Levels", lvlP);
 		c.add("JeometryDash", gameP);
 		c.add("Instructions", instP);
+		c.add("Customization", customP);
 
 	} // end of constructor
 
