@@ -2,24 +2,26 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 5, 2023
+ * Date: January 6, 2023
  * Description: Game panel of Jeometry Dash
  */
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	private JButton goMenu; // declare instance variables
 	private ImageIcon backImg;
 	private JPanel northP;
-		
+	
 	private MovingBG bgP;
 	private Player player;
-	private Platforms game;
-
+	private Platforms lvl01;
+	
+	
 	public MyGamePanel() throws Exception {
 		
 		this.setFocusable(true); // request and add focus for keyListener
@@ -28,7 +30,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		
 		northP = new JPanel();
 		bgP = new MovingBG();
-		game = new Platforms();
+		lvl01 = new Platforms();
 		player = new Player();
 		
 		backImg = new ImageIcon("Images/backButton.png");
@@ -54,13 +56,16 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		
 		if (e.getSource() == JeometryDash.gameTimer) {
 			bgP.actionPerformed(e); // add background animation
-			game.actionPerformed(e); // add obstacles animation
+			lvl01.actionPerformed(e); // add obstacles animation
 			player.actionPerformed(e); // add player movement
 		}
 		
-		if (e.getSource() == goMenu) {// back button
-			JeometryDash.cardsL.first(JeometryDash.c);
+		if (e.getSource() == goMenu) { // back button
+			JeometryDash.gameTimer.restart();
 			JeometryDash.gameTimer.stop();
+			lvl01.setXandY();
+			lvl01.repaint();
+			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
 		}
 		repaint();
 		
@@ -71,9 +76,8 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 
 		super.paintComponent(g);
 		bgP.paintComponent(g); // add background
-		game.paintComponent(g); // add obstacles
+		lvl01.paintComponent(g); // add obstacles
 		player.paintComponent(g); // add player
-    	// resolvePlatformCollisions(lvl01.getPlatforms());
 	
 	} // end of paintComponent
 	
@@ -87,29 +91,5 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		player.keyReleased(e); // call keyReleased method from Player class
 	} // end of keyReleased
-	
-	
-	/*
-	// KEYLISTENER ------------------------------------------------------------------------------------------------------------------------
-
-	PSEUDOCODE --------------------------------------------------------------------------------------------------------------------
-	new position = old position + velocity
-	new velocity = old velocity + acceleration
-	y = position (new and old)
-	changeY = velocity (new and old)
-	gravity = acceleration
-	
-	changeY += gravity
-	y += changeY
-	
-	Note - gravity pulls the character down (+), while changeY pulls the character up (-)
-	
-	If changeY = -12, gravity = 4...
-	- player moves 12 pixels up
-	- with gravity, there is that parabola effect: 
-			-12 + 4 = -8....-8 + 4 = -4....-4 + 4 = 0 // goes up
-			4 + 4 = 8....8 + 4 = 12 // goes down
-	
-	*/
   
 } // end of MyGamePanel class
