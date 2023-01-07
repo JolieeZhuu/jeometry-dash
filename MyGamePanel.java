@@ -63,7 +63,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		if (e.getSource() == goMenu) { // back button
 			JeometryDash.gameTimer.restart();
 			JeometryDash.gameTimer.stop();
-			lvl01.setXandY();
+			//lvl01.setXandY();
 			lvl01.repaint();
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
 		}

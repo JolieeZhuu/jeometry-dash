@@ -101,7 +101,7 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 	
 	public void collisions() {
 		
-		int[] collisionListY = new int[9];
+		/*int[] collisionListY = new int[9];
 		for (int i = 0; i < 9; i++) {
 			collisionListY[i] = lvl01.getYs(i, lvl01.getJ());
 			

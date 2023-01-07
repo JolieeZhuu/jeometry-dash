@@ -11,62 +11,71 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Platforms extends JPanel implements ActionListener {
 	
-	private ImageIcon triangle, triangle02, square, grid, rect, spike, spike02; // declare instance variables
-	private int row, col, cnt, getJ;
-	boolean isRunning;
-	private int[][] platforms;
-	private int[][] old;
-	private int[][] x;
-	private int[][] y;
+	private int row, col, x, getJ;
+	private int[][] imgID;
+	private ImageIcon[][] platforms;
 
 	
 	public Platforms() throws Exception {
 		
 		row = 9; // initialize variables
 		col = 360;
-		cnt = 0;
-		platforms = new int[row][col];
-		old = new int[row][col];
-		x = new int[row][col];
-		y = new int[row][col];
-
-		triangle = new ImageIcon("Images/triangleObst.png");
-		triangle02 = new ImageIcon("Images/triangleObst02.png");
-		square = new ImageIcon("Images/squareObst.png");
-		grid = new ImageIcon("Images/gridObst.png");
-		rect = new ImageIcon("Images/slabObst.png");
-		spike = new ImageIcon("Images/spikeObst.png");
-		spike02 = new ImageIcon("Images/spikeObst02.png");
+		x = 0;
+		imgID = new int[row][col];
+		platforms = new ImageIcon[row][col];
 		
-		createPlatforms("lvl01.csv"); // call method
+		newLvl("lvl01.csv"); // call method
+		createPlatforms();
 		
 		this.setLayout(new BorderLayout(0, 0));	
 		
 	} // end of constructor
 	
 	
-	private void createPlatforms(String fileName) throws Exception {
+	private void newLvl (String fileName) throws Exception {
 		
 		Scanner sc = new Scanner(new BufferedReader(new FileReader(fileName)));
 
 		while (sc.hasNextLine()) { // read excel file to get platforms
-			for (int i = 0; i < platforms.length; i++) {
+			for (int i = 0; i < row; i++) {
 				String[] line = sc.nextLine().trim().split(",");
 				for (int j = 0; j < line.length; j++) {
-					platforms[i][j] = Integer.parseInt(line[j]);
-					old[i][j] = platforms[i][j];
+					imgID[i][j] = Integer.parseInt(line[j]);
 				}
 			}	
 		}
 		
-	} // end of createPlatforms
+	} // end of newLvl
 	
+	private void createPlatforms () {
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				if (imgID[i][j] == 1)
+					platforms[i][j] = new ImageIcon("Images/triangleObst.png");
+				else if (imgID[i][j] == 2)
+					platforms[i][j] = new ImageIcon("Images/squareObst.png");
+				else if (imgID[i][j] == 3)
+					platforms[i][j] = new ImageIcon("Images/gridObst.png");
+				else if (imgID[i][j] == 4)
+					platforms[i][j] = new ImageIcon("Images/slabObst.png");
+				else if (imgID[i][j] == 5)
+					platforms[i][j] = new ImageIcon("Images/spikeObst.png");
+				else if (imgID[i][j] == 6)
+					platforms[i][j] = new ImageIcon("Images/spikeObst02.png");
+				else if (imgID[i][j] == 7)
+					platforms[i][j] = new ImageIcon("Images/spikeObst02.png");
+			}
+		}
+	}	
 	
 	public void actionPerformed(ActionEvent e) {
-			
+		
+		x -= 15;
+		/*
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				x[i][j] = (j * 50) - (cnt * 15);
@@ -80,7 +89,7 @@ public class Platforms extends JPanel implements ActionListener {
 			}
 		}
 		cnt++; // remove this if we are doing infinite loop
-		/*
+		
 		if (cnt > 1200) {
 			cnt = 0;
 			for (int i = 0; i < row; i++) {
@@ -100,27 +109,14 @@ public class Platforms extends JPanel implements ActionListener {
 		
 		for (int i = 0; i < row; i++) { // go through the 2D array and draw each platform and obstacle
 			for (int j = 0; j < col; j++) {
-				if (platforms[i][j] == 1) {
-					g.drawImage(triangle.getImage(), x[i][j], y[i][j], null);
-				} else if (platforms[i][j] == 2) {
-					g.drawImage(square.getImage(), x[i][j], y[i][j], null);
-				} else if (platforms[i][j] == 3) {
-					g.drawImage(grid.getImage(), x[i][j], y[i][j], null);
-				} else if (platforms[i][j] == 4) {
-					g.drawImage(rect.getImage(), x[i][j], y[i][j], null);
-				} else if (platforms[i][j] == 5) {
-					g.drawImage(spike.getImage(), x[i][j], y[i][j], null);
-				} else if (platforms[i][j] == 6) {
-					g.drawImage(triangle02.getImage(), x[i][j], y[i][j], null);
-				} else if (platforms[i][j] == 7) {
-					g.drawImage(spike02.getImage(), x[i][j], y[i][j], null);
-				}
+				if (imgID[i][j] != 0)
+					g.drawImage(platforms[i][j].getImage(), (j * 50)+x, (i * 50), null);
 			}
 		}
 		
 	} // end of paintComponent
 
-	
+	/*
 	public int getJ() {
 		return getJ;
 	} // end of getJ
@@ -147,6 +143,6 @@ public class Platforms extends JPanel implements ActionListener {
 			}
 		}
 		
-	} // end of setXandY
+	} // end of setXandY */
 	
 } // end of Platforms class
