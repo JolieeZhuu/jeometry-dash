@@ -96,15 +96,15 @@ public class MyCustomPanel extends JPanel implements ActionListener {
 		if (e.getSource() == goMenu) // back button
 			JeometryDash.cardsL.first(JeometryDash.c);
 		else if (e.getSource() == b01)
-			Player.setImage(cube01);
+			JeometryDash.player.setImage("Images/cube01.png");
 		else if (e.getSource() == b02)
-			Player.setImage(cube02);
+			JeometryDash.player.setImage("Images/cube02.png");
 		else if (e.getSource() == b03)
-			Player.setImage(cube03);
+			JeometryDash.player.setImage("Images/cube03.png");
 		else if (e.getSource() == b04)
-			Player.setImage(cube04);
+			JeometryDash.player.setImage("Images/cube04.png");
 		else if (e.getSource() == b05)
-			Player.setImage(cube05);
+			JeometryDash.player.setImage("Images/cube05.png");
 		repaint();
 		
 	} // end of actionPerformed

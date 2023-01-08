@@ -14,7 +14,7 @@ public class JeometryDash extends JFrame implements ActionListener {
 	
 	static CardLayout cardsL; // declare instance variables
 	static Container c;
-
+	
 	static MyMenuPanel menuP;
 	static MyGamePanel gameP;
 	static MyLvlPanel lvlP;
@@ -23,6 +23,7 @@ public class JeometryDash extends JFrame implements ActionListener {
 	
 	static Timer timer, gameTimer;
 	static int delay;
+	static Player player;
 
 	
 	public JeometryDash() throws Exception {
@@ -45,6 +46,7 @@ public class JeometryDash extends JFrame implements ActionListener {
 		c.add("Instructions", instP);
 		c.add("Customization", customP);
 		
+		player = new Player();
 		delay = 1000/30;
 		timer = new Timer(delay, this);
 		gameTimer = new Timer(delay, this);
