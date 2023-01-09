@@ -55,11 +55,12 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		if (e.getSource() == JeometryDash.gameTimer) {
 			bgP.actionPerformed(e); // add background animation
 			lvl01.actionPerformed(e); // add obstacles animation
+			Platforms.start();
 			JeometryDash.player.actionPerformed(e); // add player movement
 		}
 		
 		if (e.getSource() == goMenu) { // back button
-			JeometryDash.gameTimer.restart();
+			Platforms.restart();
 			JeometryDash.gameTimer.stop();
 			lvl01.setXandY();
 			lvl01.repaint();
@@ -74,7 +75,8 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 
 		super.paintComponent(g);
 		bgP.paintComponent(g); // add background
-		lvl01.paintComponent(g); // add obstacles
+		if (Platforms.getRunning())
+			lvl01.paintComponent(g); // add obstacles
 		JeometryDash.player.paintComponent(g); // add player
 	
 	} // end of paintComponent

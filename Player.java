@@ -133,11 +133,9 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 		
 		for (int i = 0; i < 8; i++) {
 			if (Platforms.getJ() > 0) {
-				System.out.println(Platforms.getJ());
 				if (y + 50 >= Platforms.getYs(i, Platforms.getJ()) && y + 50 <= Platforms.getYs(i, Platforms.getJ()) + 50) { // player lower bound >= platform upper bound
 					// works when jumping
 					yPlatform = Platforms.getYs(i, Platforms.getJ());
-					System.out.println(yPlatform);
 					jumped = true;
 				} else if (y <= Platforms.getYs(i, Platforms.getJ()) + 50 && Platforms.getYs(i, Platforms.getJ()) <= y) { // player upper bound >= platform lower bound
 					// works when jumping
