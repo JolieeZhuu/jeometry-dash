@@ -77,29 +77,6 @@ public class Platforms extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		x -= 15;
-		/*
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
-				x[i][j] = (j * 50) - (cnt * 15);
-				if (x[i][j] == 110) {
-					getJ = j;
-				}
-				y[i][j] = i * 50;
-				
-				if (x[i][j] < -75)
-					platforms[i][j] = 0;
-			}
-		}
-		cnt++; // remove this if we are doing infinite loop
-		
-		if (cnt > 1200) {
-			cnt = 0;
-			for (int i = 0; i < row; i++) {
-				for (int j = 0; j < col; j++) 
-					platforms[i][j] = old[i][j];
-			}
-		} else
-			cnt++;
 		
 	} // end of actionPerformed
 	
@@ -265,6 +242,5 @@ public class Platforms extends JPanel implements ActionListener {
 		}
 		
 	} // end of setXandY 
-	
 	
 } // end of Platforms class

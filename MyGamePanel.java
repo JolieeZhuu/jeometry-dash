@@ -18,7 +18,6 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	private JPanel northP;
 	
 	private MovingBG bgP;
-	private Player player;
 	private Platforms lvl01;
 	
 	
@@ -31,7 +30,6 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		northP = new JPanel();
 		bgP = new MovingBG();
 		lvl01 = new Platforms();
-		player = new Player();
 		
 		backImg = new ImageIcon("Images/backButton.png");
 		goMenu = new JButton(backImg);
@@ -57,13 +55,13 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		if (e.getSource() == JeometryDash.gameTimer) {
 			bgP.actionPerformed(e); // add background animation
 			lvl01.actionPerformed(e); // add obstacles animation
-			player.actionPerformed(e); // add player movement
+			JeometryDash.player.actionPerformed(e); // add player movement
 		}
 		
 		if (e.getSource() == goMenu) { // back button
 			JeometryDash.gameTimer.restart();
 			JeometryDash.gameTimer.stop();
-			//lvl01.setXandY();
+			lvl01.setXandY();
 			lvl01.repaint();
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
 		}
@@ -77,7 +75,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		super.paintComponent(g);
 		bgP.paintComponent(g); // add background
 		lvl01.paintComponent(g); // add obstacles
-		player.paintComponent(g); // add player
+		JeometryDash.player.paintComponent(g); // add player
 	
 	} // end of paintComponent
 	
@@ -89,7 +87,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	} // end of keyPressed
 
 	public void keyReleased(KeyEvent e) {
-		player.keyReleased(e); // call keyReleased method from Player class
+		JeometryDash.player.keyReleased(e); // call keyReleased method from Player class
 	} // end of keyReleased
   
 } // end of MyGamePanel class

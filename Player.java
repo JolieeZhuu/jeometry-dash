@@ -12,7 +12,7 @@ import java.awt.event.*;
 
 public class Player extends JPanel implements ActionListener, KeyListener {
 	
-	private static ImageIcon player; // declare instance variables
+	private ImageIcon player; // declare instance variables
 	private int x, y, yPlatform;
 	private double speed, gravity;
 	private boolean willJump, jumped;
@@ -29,7 +29,7 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 		y = 400; // initialize variables
 		yPlatform = 400;
 		x = 100;
-		speed = 1;
+		speed = 0;
 		gravity = 0.5;
 		
 		if (player == null)
@@ -52,7 +52,7 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if (willJump && System.currentTimeMillis() - lastPressProcessed > 300) {
-			y -= 75;
+			y -= 75; // player jumps
 			lastPressProcessed = System.currentTimeMillis();
 			willJump = false;
 			jumped = true;
@@ -60,7 +60,7 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 		
 		if (jumped && System.currentTimeMillis() - lastPressProcessed > 300) {
 			while (y < yPlatform) {
-				y += speed;
+				y += speed; // player falls
 				speed += gravity;
 			}
 			lastPressProcessed = System.currentTimeMillis();
@@ -95,8 +95,8 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 	} // end of keyReleased
 	
 	
-	public static void setImage(ImageIcon img) {
-		player = img;
+	public void setImage(String img) {
+		player = new ImageIcon(img);
 	} // end of setImage
 
 
@@ -105,7 +105,6 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 	}
 
 	/*
-	
 	public void checkCollisions() {
 		
 		Rectangle r1 = getBounds();
@@ -114,33 +113,37 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 		
 		for (ImageIcon[] row : platforms) {
 			for (ImageIcon platform : row) {
-				Rectangle r2 = ((Shape) platform).getBounds();
+				Rectangle r2 = ((Shape) platform).getBounds(); // doesn't work
 				
 				if (r1.intersects(r2)) {
-					/*
-					 * PSEUDOCODE (yet again ;-;)
-					 * 
-					 * So, since we know that the 2 platforms intersect, now we need to know where they intersect!
-					 * You can use the commented code below to help
-					 * Just dm me cuz you told me to upload before I could finish
-					 
+					if (r1.y + 50 >= r2.y && r1.y + 50 <= r2.y + 50) {
+						System.out.println("player colliding");
+					} else if (r1.y <= r2.y + 50 && r2.y <= r1.y) {
+						
+					} else {
+						
+					}
 				}
 			}
 		}
 	}
 	*/
-	
+
 	public void checkCollisions() {
 		
 		for (int i = 0; i < 8; i++) {
 			if (Platforms.getJ() > 0) {
-				if (y + 50 >= Platforms.getYs(i, Platforms.getJ()) && y <= Platforms.getYs(i, Platforms.getJ())) { // player lower bound >= platform upper bound
+				System.out.println(Platforms.getJ());
+				if (y + 50 >= Platforms.getYs(i, Platforms.getJ()) && y + 50 <= Platforms.getYs(i, Platforms.getJ()) + 50) { // player lower bound >= platform upper bound
+					// works when jumping
 					yPlatform = Platforms.getYs(i, Platforms.getJ());
-					speed = 0;
+					System.out.println(yPlatform);
+					jumped = true;
 				} else if (y <= Platforms.getYs(i, Platforms.getJ()) + 50 && Platforms.getYs(i, Platforms.getJ()) <= y) { // player upper bound >= platform lower bound
+					// works when jumping
 					
 				} else { // player x and platform x
-					
+					// works when passing through every obstacle
 				}
 			}
 		}
@@ -158,6 +161,5 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 		} return false;
 		
 	} // end of isOnPlatform
-
-
+	
 } // end of Player class
