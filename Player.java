@@ -29,8 +29,8 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 		y = 400; // initialize variables
 		yPlatform = 400;
 		x = 100;
+		gravity = 1;
 		speed = 0;
-		gravity = 0.5;
 		
 		if (player == null)
 			player = new ImageIcon("Images/cube01.png");
@@ -43,7 +43,6 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		checkCollisions();
 		g.drawImage(player.getImage(), x, y, 50, 50, null); // draw the player
 		
 	} // end of paintComponent
@@ -51,18 +50,17 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if (willJump && System.currentTimeMillis() - lastPressProcessed > 300) {
+		if (willJump) {
 			y -= 75; // player jumps
 			lastPressProcessed = System.currentTimeMillis();
 			willJump = false;
 			jumped = true;
 		}
 		
-		if (jumped && System.currentTimeMillis() - lastPressProcessed > 300) {
-			while (y < yPlatform) {
-				y += speed; // player falls
-				speed += gravity;
-			}
+		if (jumped && System.currentTimeMillis() - lastPressProcessed > 200) {
+			System.out.println(yPlatform);
+			for (int i=y; i<yPlatform; i++)
+				y++;
 			lastPressProcessed = System.currentTimeMillis();
 			jumped = false;
 		}
@@ -103,61 +101,25 @@ public class Player extends JPanel implements ActionListener, KeyListener {
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, 50, 50);
 	}
-
-	/*
-	public void checkCollisions() {
-		
-		Rectangle r1 = getBounds();
-		
-		ImageIcon[][] platforms = Platforms.getPlatforms();
-		
-		for (ImageIcon[] row : platforms) {
-			for (ImageIcon platform : row) {
-				Rectangle r2 = ((Shape) platform).getBounds(); // doesn't work
-				
-				if (r1.intersects(r2)) {
-					if (r1.y + 50 >= r2.y && r1.y + 50 <= r2.y + 50) {
-						System.out.println("player colliding");
-					} else if (r1.y <= r2.y + 50 && r2.y <= r1.y) {
-						
-					} else {
-						
-					}
-				}
-			}
-		}
-	}
-	*/
-
-	public void checkCollisions() {
-		
-		for (int i = 0; i < 8; i++) {
-			if (Platforms.getJ() > 0) {
-				if (y + 50 >= Platforms.getYs(i, Platforms.getJ()) && y + 50 <= Platforms.getYs(i, Platforms.getJ()) + 50) { // player lower bound >= platform upper bound
-					// works when jumping
-					yPlatform = Platforms.getYs(i, Platforms.getJ());
-					jumped = true;
-				} else if (y <= Platforms.getYs(i, Platforms.getJ()) + 50 && Platforms.getYs(i, Platforms.getJ()) <= y) { // player upper bound >= platform lower bound
-					// works when jumping
-					
-				} else { // player x and platform x
-					// works when passing through every obstacle
-				}
-			}
-		}
-		
-	} // end of checkCollisions
-
 	
-	public boolean isOnPlatform() {
-		
-		for (int i = 0; i < 8; i++) {
-			if (Platforms.getJ() > 0)
-				if ((y + 50 >= Platforms.getYs(i, Platforms.getJ()) && y <= Platforms.getYs(i, Platforms.getJ()))
-					|| (x + 50 >= Platforms.getXs(i, Platforms.getJ()) && x <= Platforms.getXs(i, Platforms.getJ())))
-					return true;
-		} return false;
-		
-	} // end of isOnPlatform
+	public int getY () {
+		return y;
+	}
+	
+	public void setY (int y) {
+		this.y = y;
+	}
+	
+	public int getX () {
+		return x;
+	}
+	
+	public void setYPlatform (int y) {
+		yPlatform = y;
+	}
+	
+	public void setJumped (boolean tf) {
+		jumped = tf;
+	}
 	
 } // end of Player class
