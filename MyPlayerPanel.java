@@ -1,24 +1,53 @@
+/*
+ * Names: Simone Ghosh and Jolie Zhu
+ * Teacher: Ms. Strelkovska
+ * Course: ICS3U7-1
+ * Date: January 6, 2023
+ * Description: Player class of Jeometry Dash
+ */
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
-public class Player extends Sprite implements ActionListener, KeyListener {
+public class MyPlayerPanel extends JPanel implements ActionListener, KeyListener {
 	
-	private int yPlatform; // declare instance variables
+	private ImageIcon player; // declare instance variables
+	private int x, y, yPlatform;
 	private double speed, gravity;
 	private boolean willJump, jumped;
 	private long lastPressProcessed = 0L;
 	private long lastJump = 0L;
 	
 	
-	public Player(int x, int y) {
+	public MyPlayerPanel() throws Exception {
 		
-		super(x, y); // initialize variables
+		this.setFocusable(true); // request and add focus for keyListener
+		this.requestFocus();
+		this.addKeyListener(this);
+		
+		y = 400; // initialize variables
 		yPlatform = 400;
+		x = 100;
 		gravity = 1;
 		speed = 0;
 		
-	} // end of constructor
-	
+		if (player == null)
+			player = new ImageIcon("Images/cube01.png");
+		
+		this.setLayout(new BorderLayout(0, 0));
 
+	}
+	
+	
+	public void paintComponent(Graphics g) {
+		
+		super.paintComponent(g);
+		g.drawImage(player.getImage(), x, y, 50, 50, null); // draw the player
+		
+	} // end of paintComponent
+	
+	
 	public void actionPerformed(ActionEvent e) {
 		
 		if (willJump) {
@@ -63,13 +92,34 @@ public class Player extends Sprite implements ActionListener, KeyListener {
 		
 	} // end of keyReleased
 	
-
-	public void setYPlatform(int y) {
-		yPlatform = y;
-	} // end of setYPlatform
 	
-	public void setJumped(boolean tf) {
-		jumped = tf;
-	} // end of setJumped
+	public void setImage(String img) {
+		player = new ImageIcon(img);
+	} // end of setImage
 
+
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, 50, 50);
+	}
+	
+	public int getY () {
+		return y;
+	}
+	
+	public void setY (int y) {
+		this.y = y;
+	}
+	
+	public int getX () {
+		return x;
+	}
+	
+	public void setYPlatform (int y) {
+		yPlatform = y;
+	}
+	
+	public void setJumped (boolean tf) {
+		jumped = tf;
+	}
+	
 } // end of Player class

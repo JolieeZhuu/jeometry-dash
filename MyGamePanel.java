@@ -18,7 +18,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	private JPanel northP;
 	
 	private MovingBG bgP;
-	private Platforms lvl01;
+	private MyPlatformsPanel lvl01;
 	
 	
 	public MyGamePanel() throws Exception {
@@ -29,7 +29,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		
 		northP = new JPanel();
 		bgP = new MovingBG();
-		lvl01 = new Platforms();
+		lvl01 = new MyPlatformsPanel();
 		
 		backImg = new ImageIcon("Images/backButton.png");
 		goMenu = new JButton(backImg);
@@ -55,12 +55,12 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		if (e.getSource() == JeometryDash.gameTimer) {
 			bgP.actionPerformed(e); // add background animation
 			lvl01.actionPerformed(e); // add obstacles animation
-			Platforms.start();
+			MyPlatformsPanel.start();
 			JeometryDash.player.actionPerformed(e); // add player movement
 		}
 		
 		if (e.getSource() == goMenu) { // back button
-			Platforms.restart();
+			MyPlatformsPanel.restart();
 			JeometryDash.gameTimer.stop();
 			lvl01.setXandY();
 			lvl01.repaint();
@@ -76,7 +76,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 
 		super.paintComponent(g);
 		bgP.paintComponent(g); // add background
-		if (Platforms.getRunning()) 
+		if (MyPlatformsPanel.getRunning()) 
 			lvl01.paintComponent(g); // add obstacles
 			
 		JeometryDash.player.paintComponent(g); // add player

@@ -1,23 +1,32 @@
+/*
+ * Names: Simone Ghosh and Jolie Zhu
+ * Teacher: Ms. Strelkovska
+ * Course: ICS3U7-1
+ * Date: January 6, 2023
+ * Description: Obstacles and platforms of Jeometry Dash
+ */
+
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
-import java.util.*;
+import java.util.Scanner;
 
-public class Platforms extends Sprite implements ActionListener {
+public class MyPlatformsPanel extends JPanel implements ActionListener {
 	
-	private static int row, col;
+	private static int row, col, y;
+	private static int x;
 	private static int[][] imgID;
 	private static ImageIcon[][] platforms;
 	private static int getJ, xArr[][], yArr[][];
 	private static boolean isRunning;
 	
-	public Platforms(int x, int y) throws Exception {
+	
+	public MyPlatformsPanel() throws Exception {
 		
-		super(x, y); // initialize variables
-		
-		row = 9;
+		row = 9; // initialize variables
 		col = 360;
-		//x = 0;
+		x = 0;
 		isRunning = true;
 		imgID = new int[row][col];
 		xArr = new int[row][col];
@@ -27,9 +36,11 @@ public class Platforms extends Sprite implements ActionListener {
 		newLvl("lvl01.csv"); // call method
 		createPlatforms();
 		
+		this.setLayout(new BorderLayout(0, 0));	
+		
 	} // end of constructor
 	
-
+	
 	private void newLvl (String fileName) throws Exception {
 		
 		Scanner sc = new Scanner(new BufferedReader(new FileReader(fileName)));
@@ -65,7 +76,7 @@ public class Platforms extends Sprite implements ActionListener {
 					platforms[i][j] = new ImageIcon("Images/spikeObst02.png");
 			}
 		}
-	} // end of createPlatforms
+	}	
 	
 	
 	public void actionPerformed(ActionEvent e) {
@@ -74,9 +85,36 @@ public class Platforms extends Sprite implements ActionListener {
 		
 	} // end of actionPerformed
 	
+	
+	public void paintComponent(Graphics g) {
+		
+		super.paintComponent(g);
+		
+		for (int i = 0; i < row; i++) { // go through the 2D array and draw each platform and obstacle
+			for (int j = 0; j < col; j++) {
+				if (imgID[i][j] != 0) {
+					g.drawImage(platforms[i][j].getImage(), (j * 50)+x, i * 50, null);
+					xArr[i][j] = (j * 50)+x;
+					if (xArr[i][j] >= 100 && xArr[i][j] <= 100 + 50 && imgID[i][j] > 0) {
+						getJ = j;
+					}
+					yArr[i][j] = i * 50;
+				}
+			}
+		}
+		
+	} // end of paintComponent
+	
+	
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, 50, 50);
+	}
+	
+	
 	public static ImageIcon[][] getPlatforms() {
 		return platforms;
-	} // end of getPlatforms
+	}
+	
 	
 	public static int getJ() {
 		return getJ;
@@ -89,6 +127,7 @@ public class Platforms extends Sprite implements ActionListener {
 	public static int getYs(int i, int j) {
 		return yArr[i][j];
 	} // end of getYs
+	
 	
 	public void setXandY () {
 		
@@ -104,14 +143,14 @@ public class Platforms extends Sprite implements ActionListener {
 	public static void restart () {
 		x = 0;
 		isRunning = false;
-	} // end of restart
+	}
 	
 	public static void start () {
 		isRunning = true;
-	} // end of start
+	}
 	
 	public static boolean getRunning () {
 		return isRunning;
-	} // end of getRunning
-	
+	}
+
 } // end of Platforms class
