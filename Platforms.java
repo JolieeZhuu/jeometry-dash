@@ -14,9 +14,9 @@ import java.util.Scanner;
 
 public class Platforms extends JPanel implements ActionListener {
 	
-	private int row, col, y;
+	private static int row, col, y;
 	private static int x;
-	private int[][] imgID;
+	private static int[][] imgID;
 	private static ImageIcon[][] platforms;
 	private static int getJ, xArr[][], yArr[][];
 	private static boolean isRunning;

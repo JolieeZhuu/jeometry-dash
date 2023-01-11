@@ -65,6 +65,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 			lvl01.setXandY();
 			lvl01.repaint();
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
+			JeometryDash.player.setY(400);
 		}
 		repaint();
 		
@@ -75,9 +76,11 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 
 		super.paintComponent(g);
 		bgP.paintComponent(g); // add background
-		if (Platforms.getRunning())
+		if (Platforms.getRunning()) 
 			lvl01.paintComponent(g); // add obstacles
+			
 		JeometryDash.player.paintComponent(g); // add player
+		checkCollisions();
 	
 	} // end of paintComponent
 	
@@ -91,5 +94,36 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		JeometryDash.player.keyReleased(e); // call keyReleased method from Player class
 	} // end of keyReleased
+	
+	public void checkCollisions() {
+		
+		for (int i = 0; i < 8; i++) {
+			if (lvl01.getJ() > 0) {
+				if (JeometryDash.player.getY() + 50 >= lvl01.getYs(i, lvl01.getJ()) && JeometryDash.player.getY() + 50 <= lvl01.getYs(i, lvl01.getJ()) + 50) { // player lower bound >= platform upper bound
+					// works when jumping
+					JeometryDash.player.setYPlatform(lvl01.getYs(i, lvl01.getJ()+1));
+					JeometryDash.player.setJumped(true);
+				} else if (JeometryDash.player.getY() <= lvl01.getYs(i, lvl01.getJ()) + 50 && lvl01.getYs(i, lvl01.getJ()) <= JeometryDash.player.getY()) { // player upper bound >= platform lower bound
+					// works when jumping
+					
+				} else { // player x and platform x
+					// works when passing through every obstacle
+				}
+			}
+		}
+		
+	} // end of checkCollisions
+
+	
+	public boolean isOnPlatform() {
+		
+		for (int i = 0; i < 8; i++) {
+			if (lvl01.getJ() > 0)
+				if ((JeometryDash.player.getY() + 50 >= lvl01.getYs(i, lvl01.getJ()) && JeometryDash.player.getY() <= lvl01.getYs(i, lvl01.getJ()))
+					|| (JeometryDash.player.getX() + 50 >= lvl01.getXs(i, lvl01.getJ()) && JeometryDash.player.getX() <= lvl01.getXs(i, lvl01.getJ())))
+					return true;
+		} return false;
+		
+	} // end of isOnPlatform
   
 } // end of MyGamePanel class
