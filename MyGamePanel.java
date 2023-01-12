@@ -9,7 +9,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.ArrayList;
 
 public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	
@@ -18,12 +17,17 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	private JPanel northP;
 	
 	private MovingBG bgP;
-	private MyPlatformsPanel lvl;
 	
-	private String lvlName;
-	private boolean clicked;
+	private Platforms lvl01[][];
+	private ImageIcon platforms[][];
+	private int row = Platforms.getRows();
+	private int col = Platforms.getColumns();
+	private int imgID[][] = Platforms.getImgID();
+	private int x;
 	
-	public MyGamePanel() {
+	private Player player;
+	
+	public MyGamePanel() throws Exception {
 		
 		this.setFocusable(true); // request and add focus for keyListener
 		this.requestFocus();
@@ -31,9 +35,6 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		
 		northP = new JPanel();
 		bgP = new MovingBG();
-		lvl = new MyPlatformsPanel();
-		
-		lvlName = "";
 		
 		backImg = new ImageIcon("Images/backButton.png");
 		goMenu = new JButton(backImg);
@@ -50,6 +51,14 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		northP.setOpaque(false);
 		northP.setLayout(new BorderLayout(0,0));
 		northP.add(goMenu, BorderLayout.WEST); // add button to panel
+		
+		lvl01 = new Platforms[row][col];
+		platforms = new ImageIcon[row][col];
+		
+		player = new Player(100, 400);
+		player.setImage("Images/cube01.png");
+		createPlatforms();
+		x = 0;
 
 	} // end of constructor
 
@@ -58,24 +67,22 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		
 		if (e.getSource() == JeometryDash.gameTimer) {
 			bgP.actionPerformed(e); // add background animation
-			lvl.actionPerformed(e); // add obstacles animation
-			if (clicked) {
-				lvl.newGame();
-				lvl.setLvl(lvlName);
-				clicked = false;
-			}
+			//lvl011.actionPerformed(e); // add obstacles animation
 			MyPlatformsPanel.start();
-			JeometryDash.player.actionPerformed(e); // add player movement
+			JeometryDash.player.move(); // add player movement
 		}
 		
 		if (e.getSource() == goMenu) { // back button
 			MyPlatformsPanel.restart();
 			JeometryDash.gameTimer.stop();
-			lvl.setXandY();
-			lvl.repaint();
+			//lvl01.setXandY();
+			//lvl01.repaint();
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
 			JeometryDash.player.setY(400);
 		}
+		
+		x -= 15;
+		
 		repaint();
 		
 	} // end of actionPerformed
@@ -86,9 +93,13 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		super.paintComponent(g);
 		bgP.paintComponent(g); // add background
 		if (MyPlatformsPanel.getRunning()) 
-			lvl.paintComponent(g); // add obstacles
-			
-		JeometryDash.player.paintComponent(g); // add player
+			for (int i = 0; i < row; i++) {
+				for (int j = 0; j < col; j++) {
+					g.drawImage(platforms[i][j].getImage(), x, lvl01[i][j].getY(), null);
+				}
+			} // add obstacles
+		
+		g.drawImage(JeometryDash.player.getImage(), Player.getX(), JeometryDash.player.getY(), null); // add player
 		checkCollisions();
 	
 	} // end of paintComponent
@@ -103,44 +114,53 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		JeometryDash.player.keyReleased(e); // call keyReleased method from Player class
 	} // end of keyReleased
+
 	
 	public void checkCollisions() {
-		
-		for (int i = 0; i < 8; i++) {
-			if (lvl.getJ() > 0) {
-				if (JeometryDash.player.getY() + 50 >= lvl.getYs(i, lvl.getJ()) && JeometryDash.player.getY() + 50 <= lvl.getYs(i, lvl.getJ()) + 50) { // player lower bound >= platform upper bound
-					// works when jumping
-					JeometryDash.player.setYPlatform(lvl.getYs(i, lvl.getJ()+1));
-					JeometryDash.player.setJumped(true);
-				} else if (JeometryDash.player.getY() <= lvl.getYs(i, lvl.getJ()) + 50 && lvl.getYs(i, lvl.getJ()) <= JeometryDash.player.getY()) { // player upper bound >= platform lower bound
-					// works when jumping
-					
-				} else { // player x and platform x
-					// works when passing through every obstacle
+			
+		Rectangle r1 = getBounds();
+			
+		for (Platforms[] innerArr : lvl01) {
+			for (Platforms obstacle : innerArr) {
+				Rectangle r2 = obstacle.getBounds();
+				
+				if (r1.intersects(r2)) {
+					if (r1.y + 50 >= r2.y && r1.y + 50 <= r2.y + 50) {
+						JeometryDash.player.setYPlatform(obstacle.getY());
+						JeometryDash.player.setJumped(true);
+					} else if (r1.y <= r2.y + 50 && r2.y <= r1.y) {
+						
+					} else {
+						
+					}
 				}
 			}
 		}
-		
 	} // end of checkCollisions
+	
 
-	
-	public boolean isOnPlatform() {
+	private void createPlatforms () throws Exception { // please call this somewhere
 		
-		for (int i = 0; i < 8; i++) {
-			if (lvl.getJ() > 0)
-				if ((JeometryDash.player.getY() + 50 >= lvl.getYs(i, lvl.getJ()) && JeometryDash.player.getY() <= lvl.getYs(i, lvl.getJ()))
-					|| (JeometryDash.player.getX() + 50 >= lvl.getXs(i, lvl.getJ()) && JeometryDash.player.getX() <= lvl.getXs(i, lvl.getJ())))
-					return true;
-		} return false;
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				if (imgID[i][j] == 1)
+					platforms[i][j] = new ImageIcon("Images/triangleObst.png");
+				else if (imgID[i][j] == 2)
+					platforms[i][j] = new ImageIcon("Images/squareObst.png");
+				else if (imgID[i][j] == 3)
+					platforms[i][j] = new ImageIcon("Images/gridObst.png");
+				else if (imgID[i][j] == 4)
+					platforms[i][j] = new ImageIcon("Images/slabObst.png");
+				else if (imgID[i][j] == 5)
+					platforms[i][j] = new ImageIcon("Images/spikeObst.png");
+				else if (imgID[i][j] == 6)
+					platforms[i][j] = new ImageIcon("Images/triangleObst02.png");
+				else if (imgID[i][j] == 7)
+					platforms[i][j] = new ImageIcon("Images/spikeObst02.png");
+				lvl01[i][j] = new Platforms((j * 50) + x, i * 50); // x -= 15 later in actionListener?
+			}
+		}
 		
-	} // end of isOnPlatform
+	} // end of createPlatforms
 	
-	public void setLvlName (String lvl) {
-		lvlName = lvl;
-	}
-	
-	public void isClicked () {
-		clicked = true;
-	}
-  
 } // end of MyGamePanel class
