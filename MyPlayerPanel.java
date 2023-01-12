@@ -20,7 +20,7 @@ public class MyPlayerPanel extends JPanel implements ActionListener, KeyListener
 	private long lastJump = 0L;
 	
 	
-	public MyPlayerPanel() {
+	public MyPlayerPanel() throws Exception {
 		
 		this.setFocusable(true); // request and add focus for keyListener
 		this.requestFocus();

@@ -23,7 +23,7 @@ public class JeometryDash extends JFrame implements ActionListener {
 	
 	static Timer timer, gameTimer;
 	static int delay;
-	static MyPlayerPanel player;
+	static Player player;
 
 	
 	public JeometryDash() throws Exception {
@@ -46,7 +46,7 @@ public class JeometryDash extends JFrame implements ActionListener {
 		c.add("Instructions", instP);
 		c.add("Customization", customP);
 		
-		player = new MyPlayerPanel();
+		player = new Player(100, 400);
 		delay = 1000/30;
 		timer = new Timer(delay, this);
 		gameTimer = new Timer(delay, this);
