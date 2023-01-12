@@ -23,21 +23,26 @@ public class Platforms extends Sprite {
 	} // end of constructor
 	
 
-	private void newLvl (String fileName) throws Exception {
+	private void newLvl (String fileName) {
 		
-		Scanner sc = new Scanner(new BufferedReader(new FileReader(fileName)));
+		try {
+			Scanner sc = new Scanner(new BufferedReader(new FileReader(fileName)));
 
-		while (sc.hasNextLine()) { // read excel file to get platforms
-			for (int i = 0; i < row; i++) {
-				String[] line = sc.nextLine().trim().split(",");
-				for (int j = 0; j < line.length; j++) {
-					imgID[i][j] = Integer.parseInt(line[j]);
-				}
-			}	
+			while (sc.hasNextLine()) { // read excel file to get platforms
+				for (int i = 0; i < row; i++) {
+					String[] line = sc.nextLine().trim().split(",");
+					for (int j = 0; j < line.length; j++) {
+						imgID[i][j] = Integer.parseInt(line[j]);
+					}
+				}	
+			}		
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 		
 	} // end of newLvl
-	
+
+
 	
 	public static void restart () {
 		x = 0;
