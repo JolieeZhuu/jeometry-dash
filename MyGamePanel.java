@@ -27,6 +27,9 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	private Player player;
 	
+	private String lvlName;
+	private boolean clicked;
+	
 	public MyGamePanel() throws Exception {
 		
 		this.setFocusable(true); // request and add focus for keyListener
@@ -56,9 +59,11 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		platforms = new ImageIcon[row][col];
 		
 		player = new Player(100, 400);
-		player.setImage("Images/cube01.png");
+		player.setImg("Images/cube01.png");
 		createPlatforms();
 		x = 0;
+		
+		lvlName = "";
 
 	} // end of constructor
 
@@ -92,14 +97,14 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 
 		super.paintComponent(g);
 		bgP.paintComponent(g); // add background
-		if (MyPlatformsPanel.getRunning()) 
+		if (Platforms.getRunning()) 
 			for (int i = 0; i < row; i++) {
 				for (int j = 0; j < col; j++) {
 					g.drawImage(platforms[i][j].getImage(), x, lvl01[i][j].getY(), null);
 				}
 			} // add obstacles
 		
-		g.drawImage(JeometryDash.player.getImage(), Player.getX(), JeometryDash.player.getY(), null); // add player
+		g.drawImage(JeometryDash.player.getImg(), Player.getX(), JeometryDash.player.getY(), null); // add player
 		checkCollisions();
 	
 	} // end of paintComponent
@@ -112,7 +117,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	} // end of keyPressed
 
 	public void keyReleased(KeyEvent e) {
-		JeometryDash.player.keyReleased(e); // call keyReleased method from Player class
+		JeometryDash.player.playerJump(); // call keyReleased method from Player class
 	} // end of keyReleased
 
 	
@@ -162,5 +167,15 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		
 	} // end of createPlatforms
+	
+	
+	public void setLvlName (String lvl) {
+		lvlName = lvl;
+	}
+	
+	public void isClicked () {
+		clicked = true;
+	}
+	
 	
 } // end of MyGamePanel class
