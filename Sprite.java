@@ -38,7 +38,7 @@ public class Sprite {
 		return img;
 	} // end of getImage	
 	
-	public static int getX() {
+	public int getX() {
 		return x;
 	} // end of getX
 	

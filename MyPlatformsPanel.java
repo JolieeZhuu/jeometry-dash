@@ -14,45 +14,49 @@ import java.util.Scanner;
 
 public class MyPlatformsPanel extends JPanel implements ActionListener {
 	
-	private static int row, col, y;
-	private static int x;
+	private static int row, col, y, x;
 	private static int[][] imgID;
 	private static ImageIcon[][] platforms;
 	private static int getJ, xArr[][], yArr[][];
 	private static boolean isRunning;
+	private String lvl;
+	private boolean newLvl;
 	
 	
-	public MyPlatformsPanel() throws Exception {
+	public MyPlatformsPanel() {
 		
 		row = 9; // initialize variables
 		col = 360;
 		x = 0;
 		isRunning = true;
+		lvl = "";
 		imgID = new int[row][col];
 		xArr = new int[row][col];
 		yArr = new int[row][col];
 		platforms = new ImageIcon[row][col];
-		
-		newLvl("lvl01.csv"); // call method
-		createPlatforms();
 		
 		this.setLayout(new BorderLayout(0, 0));	
 		
 	} // end of constructor
 	
 	
-	private void newLvl (String fileName) throws Exception {
+	private void newLvl (String fileName) {
 		
-		Scanner sc = new Scanner(new BufferedReader(new FileReader(fileName)));
+		try {
+			Scanner sc = new Scanner(new BufferedReader(new FileReader(fileName)));
 
-		while (sc.hasNextLine()) { // read excel file to get platforms
-			for (int i = 0; i < row; i++) {
-				String[] line = sc.nextLine().trim().split(",");
-				for (int j = 0; j < line.length; j++) {
-					imgID[i][j] = Integer.parseInt(line[j]);
-				}
-			}	
+			while (sc.hasNextLine()) { // read excel file to get platforms
+				for (int i = 0; i < row; i++) {
+					String[] line = sc.nextLine().trim().split(",");
+					for (int j = 0; j < line.length; j++) {
+						imgID[i][j] = Integer.parseInt(line[j]);
+					}
+				}	
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
+
 		
 	} // end of newLvl
 	
@@ -82,6 +86,11 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		x -= 15;
+		if (newLvl) {
+			newLvl(lvl);
+			createPlatforms();
+			newLvl = false;
+		}
 		
 	} // end of actionPerformed
 	
@@ -152,5 +161,12 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	public static boolean getRunning () {
 		return isRunning;
 	}
-
+	
+	public void setLvl (String lvl) {
+		this.lvl = lvl;
+	}
+	
+	public void newGame () {
+		newLvl = true;
+	}
 } // end of Platforms class

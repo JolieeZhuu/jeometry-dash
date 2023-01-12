@@ -1,6 +1,6 @@
 import java.awt.event.*;
 
-public class Player extends Sprite implements KeyListener {
+public class Player extends Sprite implements ActionListener, KeyListener {
 	
 	private int yPlatform; // declare instance variables
 	private double speed, gravity;
@@ -19,7 +19,7 @@ public class Player extends Sprite implements KeyListener {
 	} // end of constructor
 	
 
-	public void move() {
+	public void actionPerformed(ActionEvent e) {
 		
 		if (willJump) {
 			y -= 75; // player jumps
@@ -45,7 +45,7 @@ public class Player extends Sprite implements KeyListener {
 		}
 		*/
 		
-	} // end of move
+	} // end of actionPerformed
 	
 	
 	public void keyTyped(KeyEvent e) { // uses keyChar
@@ -72,8 +72,4 @@ public class Player extends Sprite implements KeyListener {
 		jumped = tf;
 	} // end of setJumped
 
-	public void setY (int y) {
-		this.y = y;
-	} // end of setY
-	
 } // end of Player class
