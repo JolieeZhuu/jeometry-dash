@@ -19,7 +19,7 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 
 	private ImageIcon title, customImg, instImg, playImg, exitImg;
 	
-	public MyMenuPanel() throws Exception {
+	public MyMenuPanel() {
 
 		buttonP = new JPanel(); // initialize variables
 		buttonP2 = new JPanel();
@@ -80,11 +80,11 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		this.add(buttonP2, BorderLayout.SOUTH);
 		buttonP2.setOpaque(false);
 		
-		buttonP.add(Box.createRigidArea(new Dimension(85, 0))); // format buttons in terms of x
+		buttonP.add(Box.createRigidArea(new Dimension(120, 0))); // format buttons in terms of x
 		buttonP.add(custom);
-		buttonP.add(Box.createRigidArea(new Dimension(40, 0)));
+		buttonP.add(Box.createRigidArea(new Dimension(20, 0)));
 		buttonP.add(play);
-		buttonP.add(Box.createRigidArea(new Dimension(40, 0)));
+		buttonP.add(Box.createRigidArea(new Dimension(20, 0)));
 		buttonP.add(exit);
 		
 		buttonP2.add(inst);

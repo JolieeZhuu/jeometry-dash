@@ -20,7 +20,7 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 	private MovingBG bgP;
 
 	
-	public MyLvlPanel() throws Exception {
+	public MyLvlPanel() {
 		
 		northP = new JPanel(); // initialize variables
 		centerP = new JPanel();
@@ -101,6 +101,8 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		else if (e.getSource() == play) { // play button
 			JeometryDash.cardsL.show(JeometryDash.c, "JeometryDash");
 			JeometryDash.gameTimer.start();
+			JeometryDash.gameP.isClicked();
+			JeometryDash.gameP.setLvlName("lvl0"+(lvl+1)+".csv");
 			JeometryDash.gameP.setFocusable(true);
 			JeometryDash.gameP.requestFocus();
 		} else if (e.getSource() == next) { // next level button
