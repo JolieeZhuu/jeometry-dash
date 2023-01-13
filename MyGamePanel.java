@@ -62,14 +62,20 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 				lvl.newGame();
 				lvl.setLvl(lvlName);
 				clicked = false;
-				if (lvlName.equals("lvl01.csv")) 
-					setBackground(Color.BLUE);
-				else if (lvlName.equals("lvl02.csv")) 
-					setBackground(Color.GREEN);
-				else if (lvlName.equals("lvl03.csv")) 
-					setBackground(Color.RED);
 			}
 			
+			if (lvlName.equals("lvl01.csv"))
+				setBackground(Color.BLUE);
+			else if (lvlName.equals("lvl02.csv"))
+				setBackground(Color.GREEN);
+			else if (lvlName.equals("lvl03.csv"))
+				setBackground(Color.RED);
+			
+			//if (lvl.getReturnLvl()) {
+			//	JeometryDash.cardsL.show(JeometryDash.c, "Levels");
+			//	lvl.setReturnLvl(false);
+			//}
+		
 			MyPlatformsPanel.start();
 			JeometryDash.player.actionPerformed(e); // add player movement
 		}

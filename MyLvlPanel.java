@@ -78,9 +78,15 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		
 		this.add(centerP, BorderLayout.CENTER); // add panel to panel
 		centerP.setOpaque(false);
-		centerP.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 150));
+		centerP.setLayout(new BoxLayout(centerP, BoxLayout.X_AXIS));
+		prev.setAlignmentY(Component.CENTER_ALIGNMENT); // center-align buttons in terms of y
+		play.setAlignmentY(Component.CENTER_ALIGNMENT);
+		next.setAlignmentY(Component.CENTER_ALIGNMENT);
+		centerP.add(Box.createRigidArea(new Dimension(120, 0))); // format buttons in terms of x
 		centerP.add(prev);
+		centerP.add(Box.createRigidArea(new Dimension(40, 0)));
 		centerP.add(play);
+		centerP.add(Box.createRigidArea(new Dimension(40, 0)));
 		centerP.add(next);
 		
 	} // end of constructor

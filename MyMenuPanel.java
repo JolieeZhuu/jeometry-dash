@@ -30,16 +30,26 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		instImg = new ImageIcon("Images/instButton.png");
 		playImg = new ImageIcon("Images/playButton.png");
 		exitImg = new ImageIcon("Images/exitButton.png");
-		
+		custom = new JButton(customImg) { // set custom button size
+			{
+				setSize(100, 100);
+				setMaximumSize(getSize());
+			}
+		};
 		inst = new JButton("Instructions");
-		custom = new JButton(customImg);
-		play = new JButton(playImg);
-		exit = new JButton(exitImg);
-		
-		custom.setPreferredSize(new Dimension(100, 100)); // set button size
-		play.setPreferredSize(new Dimension(150, 150));
-		exit.setPreferredSize(new Dimension(100, 100));
-		
+		play = new JButton(playImg) { // set play button size
+			{
+				setSize(150, 150);
+				setMaximumSize(getSize());
+			}
+		};
+		exit = new JButton(exitImg) { // set exit button size
+			{
+				setSize(100, 100);
+				setMaximumSize(getSize());
+			}
+		};
+				
 		custom.setOpaque(false); // make button transparent
 		custom.setContentAreaFilled(false);
 		custom.setBorderPainted(false);
@@ -66,12 +76,15 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		
 		this.add(buttonP, BorderLayout.CENTER);  // add panels to panel
 		buttonP.setOpaque(false);
-		buttonP.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 200));
+		buttonP.setLayout(new BoxLayout(buttonP, BoxLayout.X_AXIS));
 		this.add(buttonP2, BorderLayout.SOUTH);
 		buttonP2.setOpaque(false);
 		
+		buttonP.add(Box.createRigidArea(new Dimension(120, 0))); // format buttons in terms of x
 		buttonP.add(custom);
+		buttonP.add(Box.createRigidArea(new Dimension(20, 0)));
 		buttonP.add(play);
+		buttonP.add(Box.createRigidArea(new Dimension(20, 0)));
 		buttonP.add(exit);
 		
 		buttonP2.add(inst);

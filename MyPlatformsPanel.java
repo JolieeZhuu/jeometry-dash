@@ -14,28 +14,28 @@ import java.util.Scanner;
 
 public class MyPlatformsPanel extends JPanel implements ActionListener {
 	
-	private int row, col, y, x;
+	private static int row, col, y, x;
 	private static int[][] imgID;
-	private ImageIcon[][] platforms;
+	private static ImageIcon[][] platforms;
+	private static int getJ, xArr[][], yArr[][];
 	private static boolean isRunning;
 	private String lvl;
-	private boolean newLvl;
+	private boolean newLvl, returnLvl;
 	
-	private Platforms lvl01[][];
 	
 	public MyPlatformsPanel() {
 		
-		row = Platforms.getRows(); // initialize variables
-		col = Platforms.getColumns();
+		row = 9; // initialize variables
+		col = 360;
 		x = 0;
 		isRunning = true;
 		lvl = "";
-		imgID[][] = Platforms.getImgID();
+		imgID = new int[row][col];
+		xArr = new int[row][col];
+		yArr = new int[row][col];
 		platforms = new ImageIcon[row][col];
-		lvl01 = new Platforms[row][col];
 		
 		this.setLayout(new BorderLayout(0, 0));	
-		this.setBackground(Color.BLUE);
 		
 	} // end of constructor
 	
@@ -92,17 +92,32 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 			newLvl = false;
 		}
 		
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				if (i==row && j==col)
+					returnLvl = true;
+			}
+		}
+		
 	} // end of actionPerformed
 	
 	
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		for (int i = 0; i < row; i++) {
+		
+		for (int i = 0; i < row; i++) { // go through the 2D array and draw each platform and obstacle
 			for (int j = 0; j < col; j++) {
-				g.drawImage(platforms[i][j].getImage(), x, lvl01[i][j].getY(), null);
+				if (imgID[i][j] != 0) {
+					g.drawImage(platforms[i][j].getImage(), (j * 50)+x, i * 50, null);
+					xArr[i][j] = (j * 50)+x;
+					if (xArr[i][j] >= 100 && xArr[i][j] <= 100 + 50 && imgID[i][j] > 0) {
+						getJ = j;
+					}
+					yArr[i][j] = i * 50;
+				}
 			}
-		} // add obstacles
+		}
 		
 	} // end of paintComponent
 	
@@ -120,7 +135,27 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	public static int getJ() {
 		return getJ;
 	} // end of getJ
+	
+	public static int getXs(int i, int j) {
+		return xArr[i][j];
+	} // end of getXs
+
+	public static int getYs(int i, int j) {
+		return yArr[i][j];
+	} // end of getYs
+	
+	
+	public void setXandY () {
 		
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				xArr[i][j] = j * 50;
+				yArr[i][j] = i * 50;
+			}
+		}
+		
+	} // end of setXandY 
+	
 	public static void restart () {
 		x = 0;
 		isRunning = false;
@@ -140,5 +175,13 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	
 	public void newGame () {
 		newLvl = true;
+	}
+	
+	public void setReturnLvl (boolean tf) {
+		returnLvl = tf;
+	}
+	
+	public boolean getReturnLvl () {
+		return returnLvl;
 	}
 } // end of Platforms class
