@@ -7,7 +7,8 @@ public class Sprite {
 	protected int y;
 	protected int width;
 	protected int height;
-	protected Image img;
+	protected ImageIcon img;
+	protected Image img2;
 	
 	
 	public Sprite(int x, int y) {
@@ -20,25 +21,28 @@ public class Sprite {
 	
 	protected void getImageDimensions() {
 		
-		width = img.getWidth(null);
-		width = img.getHeight(null);
+		width = img2.getWidth(null);
+		height = img2.getHeight(null);
 		
 	} // end of getImageDimensions
 	
 	
-	protected void setImage(String imgName) {
+	protected void setImg(String imgName) {
 		
-		ImageIcon img2 = new ImageIcon(imgName);
-		img = img2.getImage();
+		img = new ImageIcon(imgName);
+		img2 = img.getImage();
 		
 	} // end of setImage
 	
+	public Image getImg() {
+		return img2;
+	} // end of getImage	
 	
-	public Image getImage() {
+	public ImageIcon getImgIcon() {
 		return img;
 	} // end of getImage	
 	
-	public int getX() {
+	public static int getX() {
 		return x;
 	} // end of getX
 	
@@ -49,5 +53,9 @@ public class Sprite {
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, width, height);
 	} // end of getBounds
-
+	
+	
+	public void myDraw(Graphics g) {
+		
+	}
 }
