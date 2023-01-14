@@ -1,26 +1,31 @@
-import java.awt.event.*;
+/*
+ * Names: Simone Ghosh and Jolie Zhu
+ * Teacher: Ms. Strelkovska
+ * Course: ICS3U7-1
+ * Date: January 18, 2023
+ * Description: Player block of Jeometry Dash
+ */
 
-public class Player extends Sprite implements ActionListener, KeyListener {
-	
+import javax.swing.*;
+
+public class Player extends Platforms {
+
 	private int yPlatform; // declare instance variables
-	private double speed, gravity;
-	private boolean willJump, jumped;
-	private long lastPressProcessed = 0L;
-	private long lastJump = 0L;
+	private boolean jumped;
 	
 	
-	public Player(int x, int y) {
+	public Player(int x, int y, String imgName) throws Exception {
 		
-		super(x, y); // initialize variables
+		super(x, y, imgName); // initialize variables
+		
 		yPlatform = 400;
-		gravity = 1;
-		speed = 0;
 		
 	} // end of constructor
-	
 
-	public void actionPerformed(ActionEvent e) {
+
+	public void move() {
 		
+		/*
 		if (willJump) {
 			y -= 75; // player jumps
 			lastPressProcessed = System.currentTimeMillis();
@@ -45,31 +50,36 @@ public class Player extends Sprite implements ActionListener, KeyListener {
 		}
 		*/
 		
-	} // end of actionPerformed
-	
-	
-	public void keyTyped(KeyEvent e) { // uses keyChar
-	} // end of keyTyped
-	
-	public void keyPressed(KeyEvent e) { // uses keyCode
-	} // end of keyPressed
-
-	public void keyReleased(KeyEvent e) {
+		// add jumping action (gravity and speed)
 		
-		if (e.getKeyCode() == 32 && System.currentTimeMillis() - lastJump > 600) { // 32 is space bar
-			willJump = true;
-			lastJump = System.currentTimeMillis();
-		}
-		
-	} // end of keyReleased
+	} // end of move
 	
+	
+	public void setImage(String imgName) {
+		
+		img = new ImageIcon(imgName).getImage();
+		
+	} // end of setImage
 
+	
 	public void setYPlatform(int y) {
+		
 		yPlatform = y;
+		
 	} // end of setYPlatform
 	
+	
 	public void setJumped(boolean tf) {
+		
 		jumped = tf;
+		
 	} // end of setJumped
 
+	
+	public void setY (int y) {
+		
+		this.y = y;
+		
+	} // end of setY
+	
 } // end of Player class

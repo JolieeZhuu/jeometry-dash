@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 6, 2023
+ * Date: January 18, 2023
  * Description: Main menu panel of Jeometry Dash
 */
 
@@ -19,7 +19,8 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 
 	private ImageIcon title, customImg, instImg, playImg, exitImg;
 	
-	public MyMenuPanel() {
+	
+	public MyMenuPanel() throws Exception {
 
 		buttonP = new JPanel(); // initialize variables
 		buttonP2 = new JPanel();
@@ -35,11 +36,11 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		custom = new JButton(customImg);
 		play = new JButton(playImg);
 		exit = new JButton(exitImg);
-		
+
 		custom.setPreferredSize(new Dimension(100, 100)); // set button size
 		play.setPreferredSize(new Dimension(150, 150));
 		exit.setPreferredSize(new Dimension(100, 100));
-		
+				
 		custom.setOpaque(false); // make button transparent
 		custom.setContentAreaFilled(false);
 		custom.setBorderPainted(false);
@@ -69,12 +70,13 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		buttonP.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 200));
 		this.add(buttonP2, BorderLayout.SOUTH);
 		buttonP2.setOpaque(false);
-		
-		buttonP.add(custom);
+
+		buttonP.add(custom); // add buttons to panel
 		buttonP.add(play);
 		buttonP.add(exit);
-		
+
 		buttonP2.add(inst);
+		
 	} // end of constructor
 
 	

@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 6, 2023
+ * Date: January 18, 2023
  * Description: Instructions panel of Jeometry Dash
  */
 
@@ -13,11 +13,14 @@ import javax.swing.*;
 public class MyCustomPanel extends JPanel implements ActionListener {
 
 	private JPanel northP, playerP;  // declare instance variables
+	
 	private JButton goMenu;
 	private JButton b01, b02, b03, b04, b05;
+	
 	private ImageIcon bg, ground, backImg;
 	private ImageIcon cube01, cube02, cube03, cube04, cube05;
 
+	
 	public MyCustomPanel() {
 		
 		northP = new JPanel(); // initialize variables
@@ -33,36 +36,17 @@ public class MyCustomPanel extends JPanel implements ActionListener {
 		cube04 = new ImageIcon("Images/cube04.png");
 		cube05 = new ImageIcon("Images/cube05.png");
 		
-		b01 = new JButton(cube01) {
-			{
-				setSize(100, 100);
-				setMaximumSize(getSize());
-			}
-		};
-		b02 = new JButton(cube02) {
-			{
-				setSize(100, 100);
-				setMaximumSize(getSize());
-			}
-		};
-		b03 = new JButton(cube03) {
-			{
-				setSize(100, 100);
-				setMaximumSize(getSize());
-			}
-		};
-		b04 = new JButton(cube04) {
-			{
-				setSize(100, 100);
-				setMaximumSize(getSize());
-			}
-		};
-		b05 = new JButton(cube05) {
-			{
-				setSize(100, 100);
-				setMaximumSize(getSize());
-			}
-		};
+		b01 = new JButton(cube01);
+		b02 = new JButton(cube02);
+		b03 = new JButton(cube03);
+		b04 = new JButton(cube04);
+		b05 = new JButton(cube05);
+		
+		b01.setPreferredSize(new Dimension(100, 100)); // set button size
+		b02.setPreferredSize(new Dimension(100, 100));
+		b03.setPreferredSize(new Dimension(100, 100));
+		b04.setPreferredSize(new Dimension(100, 100));
+		b05.setPreferredSize(new Dimension(100, 100));
 		
 		goMenu = new JButton(backImg);
 		
@@ -82,7 +66,7 @@ public class MyCustomPanel extends JPanel implements ActionListener {
 		this.add(playerP, BorderLayout.CENTER);  // add panel to panel
 		playerP.setOpaque(false);
 		playerP.setLayout(new GridLayout(3, 2, 40, 40));
-		playerP.add(b01);
+		playerP.add(b01); // add buttons to panel
 		playerP.add(b02);
 		playerP.add(b03);
 		playerP.add(b04);

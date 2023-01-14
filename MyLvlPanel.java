@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 6, 2023
+ * Date: January 18, 2023
  * Description: Levels panel of Jeometry Dash
  */
 
@@ -13,14 +13,14 @@ import javax.swing.*;
 public class MyLvlPanel extends JPanel implements ActionListener {
 
 	private JButton goMenu, play, next, prev; // declare instance variables
-	private ImageIcon playImg, backImg, nextImg, lvlImg[], bg2;
+	private ImageIcon playImg, backImg, nextImg, lvlImg[];
 	private int lvl;
 	
 	private JPanel northP, centerP;
 	private MovingBG bgP;
 
 	
-	public MyLvlPanel() {
+	public MyLvlPanel() throws Exception {
 		
 		northP = new JPanel(); // initialize variables
 		centerP = new JPanel();
@@ -28,7 +28,6 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		
 		lvl = 0;
 		
-		bg2 = new ImageIcon("Images/bg02.png");
 		playImg = new ImageIcon("Images/playButton.png");
 		backImg = new ImageIcon("Images/backButton.png");
 		nextImg = new ImageIcon("Images/nextButton.png");
@@ -40,12 +39,8 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		goMenu = new JButton(backImg);
 		next = new JButton(nextImg);
 		prev = new JButton(backImg);
-		play = new JButton(playImg) { // set play button size
-			{
-				setSize(150, 150);
-				setMaximumSize(getSize());
-			}
-		};
+		play = new JButton(playImg);
+		play.setPreferredSize(new Dimension(150, 150)); // set button size
 		
 		goMenu.setOpaque(false); // make button transparent
 		goMenu.setContentAreaFilled(false);
@@ -79,7 +74,7 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		this.add(centerP, BorderLayout.CENTER); // add panel to panel
 		centerP.setOpaque(false);
 		centerP.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 150));
-		centerP.add(prev);
+		centerP.add(prev); // add buttons to panel
 		centerP.add(play);
 		centerP.add(next);
 		
@@ -95,8 +90,6 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		else if (e.getSource() == play) { // play button
 			JeometryDash.cardsL.show(JeometryDash.c, "JeometryDash");
 			JeometryDash.gameTimer.start();
-			JeometryDash.gameP.isClicked();
-			JeometryDash.gameP.setLvlName("lvl0"+(lvl+1)+".csv");
 			JeometryDash.gameP.setFocusable(true);
 			JeometryDash.gameP.requestFocus();
 		} else if (e.getSource() == next) { // next level button
