@@ -17,13 +17,14 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	private JPanel northP;
 	private MovingBG bgP;
-	private MyPlatformsPanel lvl01;
-	private MyPlayerPanel player;
+	private MyPlatformsPanel lvl;
 	
-	private Platforms PlatformsLvl01[][];
+	private Platforms PlatformsLvl[][];
+	private Player player;
 
 	private String lvlName;
 	private boolean clicked;
+	
 
 	
 	public MyGamePanel() throws Exception {
@@ -34,13 +35,14 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 
 		northP = new JPanel(); // initialize variables
 		bgP = new MovingBG();
-		lvl01 = new MyPlatformsPanel();
-		player = new MyPlayerPanel();
+		lvl = new MyPlatformsPanel();
+		
+		player = new Player(100, 400, "Images/cube03.png");
 
 		backImg = new ImageIcon("Images/backButton.png");
 		goMenu = new JButton(backImg);
 
-		PlatformsLvl01 = MyPlatformsPanel.getLvl01();
+		PlatformsLvl = MyPlatformsPanel.getLvl();
 		lvlName = "";
 		
 		goMenu.setOpaque(false); // make button transparent
@@ -63,13 +65,14 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 
 		if (e.getSource() == JeometryDash.gameTimer) {
 			bgP.actionPerformed(e); // add background animation
-			lvl01.actionPerformed(e); // add obstacle animation
+			lvl.actionPerformed(e); // add obstacle animation
 			
 			if (clicked) {
-				lvl01.newGame();
-				lvl01.setLvl(lvlName);
+				lvl.newGame();
+				lvl.setLvl(lvlName);
 				clicked = false;
 			}
+			
 			if (lvlName.equals("lvl01.csv"))
 				setBackground(Color.BLUE);
 			else if (lvlName.equals("lvl02.csv"))
@@ -77,20 +80,19 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 			else if (lvlName.equals("lvl03.csv"))
 				setBackground(Color.RED);
 
-			//if (lvl.getReturnLvl()) {
-			//	JeometryDash.cardsL.show(JeometryDash.c, "Levels");
-			//	lvl.setReturnLvl(false);
-			//}
+			/*if (lvl01.getReturnLvl()) {
+				JeometryDash.cardsL.show(JeometryDash.c, "Levels");
+				lvl01.setReturnLvl(false);
+			}*/
 			
 			MyPlatformsPanel.start();
-			JeometryDash.player.move(); // add player movement
 		}
 
 		if (e.getSource() == goMenu) { // back button
 			MyPlatformsPanel.restart(); // restart the game (back to beginning)
 			JeometryDash.gameTimer.stop();
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
-			JeometryDash.player.setY(400);
+			player.setY(400);
 		}
 		repaint();
 		
@@ -101,10 +103,12 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 
 		super.paintComponent(g);
 		bgP.paintComponent(g); // add background
+		player.draw(g);
+		
 		if (MyPlatformsPanel.getRunning())
-			lvl01.paintComponent(g); // add obstacles
-		player.paintComponent(g); // add player
-		checkCollisions();
+			lvl.paintComponent(g); // add obstacles
+		
+		//checkCollisions();
 
 	} // end of paintComponent
 	
@@ -114,34 +118,40 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	
 	public void keyPressed(KeyEvent e) { // uses keyCode
+		
+		if (e.getKeyCode() == 32)  // 32 is space bar
+			player.jump();
+		repaint();
+		
 	} // end of keyPressed
 
 	
 	public void keyReleased(KeyEvent e) {
 		
-		JeometryDash.player.move(); // call keyReleased method from Player class
+		if (e.getKeyCode() == 32) // 32 is space bar
+			player.fall();
+		repaint();
 		
 	} // end of keyReleased
 
 
 	public void checkCollisions() {
-
+/*
 		Rectangle r1 = JeometryDash.player.getBounds();
 
-		for (Platforms[] innerArr : PlatformsLvl01) {
+		for (Platforms[] innerArr : PlatformsLvl) {
 			for (Platforms obstacle : innerArr) {
 				Rectangle r2 = getBounds();
 
 				if (r1.intersects(r2)) {
 					if (r1.y + 50 >= r2.y && r1.y + 50 <= r2.y + 50) {
 						JeometryDash.player.setYPlatform(obstacle.getY());
-						JeometryDash.player.setJumped(true);
-					} else {
-
-					}
+						//JeometryDash.player.setJumped(true);
+					} else 
+						//System.out.println("Collision");
 				}
 			}
-		}
+		}*/
 		
 	} // end of checkCollisions
 

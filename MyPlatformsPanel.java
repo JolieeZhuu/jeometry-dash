@@ -20,30 +20,27 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	private static int x;
 	private int[][] imgID;
 	private static boolean isRunning;
-	private static Platforms lvl01[][];
-	private String lvl;
+	private static Platforms lvl[][];
+	private String lvlName;
 	private boolean newLvl, returnLvl;
 
 
 	public MyPlatformsPanel() throws Exception {
 
 		row = 9; // initialize variables
-		col = 360;
+		col = 175;
 		x = 0;
 		isRunning = true;
-		lvl = "";
+		lvlName = "";
 		imgID = new int[row][col];
-		lvl01 = new Platforms[row][col];
-
-		newLvl("lvl01.csv"); // call method
-		createPlatforms();
+		lvl = new Platforms[row][col];
 
 		this.setLayout(new BorderLayout(0, 0));	
 
 	} // end of constructor
 
 
-	private void newLvl (String fileName) throws Exception {
+	private void newLvl (String fileName) {
 
 		try {
 			Scanner sc = new Scanner(new BufferedReader(new FileReader(fileName)));
@@ -55,32 +52,35 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 						imgID[i][j] = Integer.parseInt(line[j]);
 				}
 			}		
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	} // end of newLvl
 
 	
-	private void createPlatforms () throws Exception {
-		
-		for (int i = 0; i < row; i++) { // create Platforms 2D array to store all platforms' information
-			for (int j = 0; j < col; j++) {
-				if (imgID[i][j] == 1)
-					lvl01[i][j] = new Platforms(j * 50 + x, i * 50, "Images/triangleObst.png");
-				else if (imgID[i][j] == 2)
-					lvl01[i][j] = new Platforms(j * 50 + x, i * 50, "Images/squareObst.png");
-				else if (imgID[i][j] == 3)
-					lvl01[i][j] = new Platforms(j * 50 + x, i * 50, "Images/gridObst.png");
-				else if (imgID[i][j] == 4)
-					lvl01[i][j] = new Platforms(j * 50 + x, i * 50, "Images/slabObst.png");
-				else if (imgID[i][j] == 5)
-					lvl01[i][j] = new Platforms(j * 50 + x, i * 50, "Images/spikeObst.png");
-				else if (imgID[i][j] == 6)
-					lvl01[i][j] = new Platforms(j * 50 + x, i * 50, "Images/triangleObst02.png");
-				else if (imgID[i][j] == 7)
-					lvl01[i][j] = new Platforms(j * 50 + x, i * 50, "Images/spikeObst02.png");
+	private void createPlatforms () {
+		try {
+			for (int i = 0; i < row; i++) { // create Platforms 2D array to store all platforms' information
+				for (int j = 0; j < col; j++) {
+					if (imgID[i][j] == 1)
+						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/triangleObst.png");
+					else if (imgID[i][j] == 2)
+						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/squareObst.png");
+					else if (imgID[i][j] == 3)
+						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/gridObst.png");
+					else if (imgID[i][j] == 4)
+						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/slabObst.png");
+					else if (imgID[i][j] == 5)
+						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/spikeObst.png");
+					else if (imgID[i][j] == 6)
+						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/triangleObst02.png");
+					else if (imgID[i][j] == 7)
+						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/spikeObst02.png");
+				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 	} // end of createPlatforms
@@ -89,22 +89,17 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		x -= 15;
-		
 		for (int i = 0; i < row; i++) { // obstacles animation
 			for (int j = 0; j < col; j++) {
 				if (imgID[i][j] != 0) {
-					lvl01[i][j].setX(j * 50 + x);
+					lvl[i][j].setX(j * 50 + x);
 				}
 			}
 		}
 		
 		if (newLvl) {
-			try {
-				newLvl(lvl);
-				createPlatforms();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			newLvl(lvlName);
+			createPlatforms();
 			newLvl = false;
 		}
 
@@ -125,7 +120,7 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 		for (int i = 0; i < row; i++) { // go through the 2D array and draw each platform and obstacle
 			for (int j = 0; j < col; j++) {
 				if (imgID[i][j] != 0) {
-					lvl01[i][j].draw(g);
+					lvl[i][j].draw(g);
 				}
 			}
 		}
@@ -133,9 +128,9 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	} // end of paintComponent
 	
 	
-	public static Platforms[][] getLvl01() {
+	public static Platforms[][] getLvl() {
 		
-		return lvl01;
+		return lvl;
 		
 	} // end of getLvl01
 	
@@ -164,7 +159,7 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	
 	public void setLvl(String lvl) {
 		
-		this.lvl = lvl;
+		lvlName = lvl;
 		
 	} // end of setLvl
 

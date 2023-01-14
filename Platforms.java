@@ -15,11 +15,14 @@ public class Platforms {
 	protected Image img;
 	
 
-	public Platforms(int x, int y, String imgName) throws Exception {
-		
-		this.x = x; // initialize variables
-		this.y = y;
-		img = new ImageIcon(imgName).getImage();
+	public Platforms(int x, int y, String imgName) {
+		try {
+			this.x = x; // initialize variables
+			this.y = y;
+			img = new ImageIcon(imgName).getImage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	} // end of constructor
 	
