@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 6, 2023
+ * Date: January 18, 2023
  * Description: Instructions panel of Jeometry Dash
  */
 
@@ -12,14 +12,14 @@ import javax.swing.*;
 
 public class MyPopupPanel extends JPanel implements ActionListener {
 	
-	private JPanel buttonP;
+	private JPanel buttonP; // declare instance variables
 	private JButton restart, backToMenu;
 	private ImageIcon bg, popUp;
 	
 	
 	public MyPopupPanel() {
 		
-		buttonP = new JPanel();
+		buttonP = new JPanel(); // initialize variables
 		
 		bg = new ImageIcon("Images/bg01.png");
 		popUp = new ImageIcon("Images/popUpImg.png");
