@@ -10,50 +10,19 @@ import javax.swing.*;
 
 public class Player extends Platforms {
 
-	private int yPlatform; // declare instance variables
-	private boolean jumped;
+	private int yPlatform, speed, gravity; // declare instance variables
+	private boolean willJump, willFall;
 	
 	
-	public Player(int x, int y, String imgName) throws Exception {
+	public Player(int x, int y, String imgName) {
 		
 		super(x, y, imgName); // initialize variables
 		
 		yPlatform = 400;
+		speed = 9;
+		gravity = 1;
 		
 	} // end of constructor
-
-
-	public void move() {
-		
-		/*
-		if (willJump) {
-			y -= 75; // player jumps
-			lastPressProcessed = System.currentTimeMillis();
-			willJump = false;
-			jumped = true;
-		}
-		
-		if (jumped && System.currentTimeMillis() - lastPressProcessed > 200) {
-			System.out.println(yPlatform);
-			for (int i=y; i<yPlatform; i++)
-				y++;
-			lastPressProcessed = System.currentTimeMillis();
-			jumped = false;
-		}
-		
-		/*
-		if (jumped && System.currentTimeMillis() - lastPressProcessed > 300) {
-			for (int i = 0; i <= 75; i++) // perform the fall (go down) action of the player
-				y += speed;
-			lastPressProcessed = System.currentTimeMillis();
-			jumped = false;
-		}
-		*/
-		
-		// add jumping action (gravity and speed)
-		
-	} // end of move
-	
 	
 	public void setImage(String imgName) {
 		
@@ -62,24 +31,45 @@ public class Player extends Platforms {
 	} // end of setImage
 
 	
-	public void setYPlatform(int y) {
+	public void setYPlatform (int y) {
 		
 		yPlatform = y;
 		
 	} // end of setYPlatform
 	
 	
-	public void setJumped(boolean tf) {
+	public void jump() {
 		
-		jumped = tf;
+		for (int i=400; i>=325; i-=speed) {
+				speed -= gravity;
+				y = i;
+			}
+			y = 325;
+			willJump = false;
+			willFall = true;
+			speed = 0;
 		
 	} // end of setJumped
-
+	
+	public void fall() {
+		
+		for (int i=325; i<=400; i+=speed) {
+			speed += gravity;
+			y = i;
+			System.out.println(x + " " + y);
+		}
+		y = 400;
+		willJump = false;
+		willFall = false;
+		speed = 0;
+		
+	}
 	
 	public void setY (int y) {
 		
 		this.y = y;
 		
 	} // end of setY
+
 	
 } // end of Player class

@@ -38,8 +38,8 @@ public class MovingBG extends JPanel implements ActionListener {
 
 	
 	public void actionPerformed(ActionEvent e) {
-		bg_x -= 10;
-		g_x -= 15;
+		bg_x -= 8;
+		g_x -= 12;
 		
 		if (bg_x == -600) { // remove and add background image
 			bg.remove(0);
