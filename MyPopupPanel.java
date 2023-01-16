@@ -13,8 +13,8 @@ import javax.swing.*;
 public class MyPopupPanel extends JPanel implements ActionListener {
 	
 	private JPanel buttonP; // declare instance variables
-	private JButton restart, backToMenu;
-	private ImageIcon bg, popUp;
+	private JButton restartB, toMenuB;
+	private ImageIcon bg, ground, popUp, restart, toMenu, title;
 	
 	
 	public MyPopupPanel() {
@@ -22,20 +22,25 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 		buttonP = new JPanel(); // initialize variables
 		
 		bg = new ImageIcon("Images/bg01.png");
+		ground = new ImageIcon("Images/ground01.png");
+		
 		popUp = new ImageIcon("Images/popUpImg.png");
+		restart = new ImageIcon("Images/restartButton.png");
+		toMenu = new ImageIcon("Images/backToMenu.png");
+		title = new ImageIcon("Images/lvlIncomp.png");
 		
-		restart = new JButton("Images/restartButton.png");
-		backToMenu = new JButton("Images/backToMenu.png");
+		restartB = new JButton(restart);
+		toMenuB = new JButton(toMenu);
 		
-		restart.setOpaque(false); // make button transparent
-		restart.setContentAreaFilled(false);
-		restart.setBorderPainted(false);
-		restart.addActionListener(this);
+		restartB.setOpaque(false); // make button transparent
+		restartB.setContentAreaFilled(false);
+		restartB.setBorderPainted(false);
+		restartB.addActionListener(this);
 		
-		backToMenu.setOpaque(false); // make button transparent
-		backToMenu.setContentAreaFilled(false);
-		backToMenu.setBorderPainted(false);
-		backToMenu.addActionListener(this);
+		toMenuB.setOpaque(false); // make button transparent
+		toMenuB.setContentAreaFilled(false);
+		toMenuB.setBorderPainted(false);
+		toMenuB.addActionListener(this);
 		
 		this.setLayout(new BorderLayout(0, 0));
 		this.setBackground(Color.BLUE);
@@ -44,20 +49,26 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 		buttonP.setOpaque(false);
 		buttonP.setLayout(new BoxLayout(buttonP, BoxLayout.X_AXIS));
 		
-		buttonP.add(Box.createRigidArea(new Dimension(45, 0))); // format buttons in terms of x
-		buttonP.add(restart);
-		buttonP.add(Box.createRigidArea(new Dimension(25, 0)));
-		buttonP.add(backToMenu);
+		buttonP.add(Box.createRigidArea(new Dimension(150, 0))); // format buttons in terms of x
+		buttonP.add(restartB);
+		buttonP.add(Box.createRigidArea(new Dimension(24, 0)));
+		buttonP.add(toMenuB);
 		
 	} // end of constructor
 
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == backToMenu) // back button
+		if (e.getSource() == toMenuB) // back button
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
-		else if (e.getSource() == restart)
+		else if (e.getSource() == restartB)
 			// do something
+		
+		if (JeometryDash.gameP.getLvlComp())
+			title = new ImageIcon("Images/lvlComp.png");
+		else
+			title = new ImageIcon("Images/lvlIncomp.png");
+		
 		repaint();
 		
 	} // end of actionPerformed
@@ -67,7 +78,9 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 		
 		super.paintComponent(g);
 		g.drawImage(bg.getImage(), 0, 0, null); // draw background image (no animation)
-		g.drawImage(popUp.getImage(), 100, 100, null); // draw pop-up image
+		g.drawImage(ground.getImage(), 0, 450, null);
+		g.drawImage(popUp.getImage(), 50, 50, null); // draw pop-up image
+		g.drawImage(title.getImage(), 100, 75, null);
 
 	} // end of paintComponent
 

@@ -14,15 +14,14 @@ public class MyInstPanel extends JPanel implements ActionListener {
 
 	private JPanel northP;  // declare instance variables
 	private JButton goMenu;
-	private ImageIcon bg, ground, backImg;
+	private ImageIcon bg, backImg;
 
 	
 	public MyInstPanel() {
 		
 		northP = new JPanel(); // initialize variables	
 		
-		bg = new ImageIcon("Images/bg01.png");
-		ground = new ImageIcon("Images/ground01.png");
+		bg = new ImageIcon("Images/instructions.png");
 		backImg = new ImageIcon("Images/backButton.png");
 		
 		goMenu = new JButton(backImg);
@@ -55,7 +54,6 @@ public class MyInstPanel extends JPanel implements ActionListener {
 		
 		super.paintComponent(g);
 		g.drawImage(bg.getImage(), 0, 0, null); // draw background image (no animation)
-		g.drawImage(ground.getImage(), 0, 450, null); // draw ground image
 
 	} // end of paintComponent
 
