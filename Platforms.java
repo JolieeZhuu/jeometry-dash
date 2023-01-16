@@ -16,13 +16,10 @@ public class Platforms {
 	
 
 	public Platforms(int x, int y, String imgName) {
-		try {
-			this.x = x; // initialize variables
-			this.y = y;
-			img = new ImageIcon(imgName).getImage();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		this.x = x; // initialize variables
+		this.y = y;
+		img = new ImageIcon(imgName).getImage();
 
 	} // end of constructor
 	

@@ -18,13 +18,12 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	private JPanel northP;
 	private MovingBG bgP;
 	private MyPlatformsPanel lvl;
-	
-	private Platforms PlatformsLvl[][];
-	private Player player;
+
+	private Platforms platformsLvl[][];
+	private int imgID[][];
 
 	private String lvlName;
 	private boolean clicked;
-	
 
 	
 	public MyGamePanel() throws Exception {
@@ -36,13 +35,12 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		northP = new JPanel(); // initialize variables
 		bgP = new MovingBG();
 		lvl = new MyPlatformsPanel();
-		
-		player = new Player(100, 400, "Images/cube03.png");
 
 		backImg = new ImageIcon("Images/backButton.png");
 		goMenu = new JButton(backImg);
 
-		PlatformsLvl = MyPlatformsPanel.getLvl();
+		platformsLvl = MyPlatformsPanel.getLvl();
+		imgID = MyPlatformsPanel.getImgID();
 		lvlName = "";
 		
 		goMenu.setOpaque(false); // make button transparent
@@ -72,19 +70,12 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 				lvl.setLvl(lvlName);
 				clicked = false;
 			}
-			
 			if (lvlName.equals("lvl01.csv"))
 				setBackground(Color.BLUE);
 			else if (lvlName.equals("lvl02.csv"))
 				setBackground(Color.GREEN);
 			else if (lvlName.equals("lvl03.csv"))
 				setBackground(Color.RED);
-
-			/*if (lvl01.getReturnLvl()) {
-				JeometryDash.cardsL.show(JeometryDash.c, "Levels");
-				lvl01.setReturnLvl(false);
-			}*/
-			
 			MyPlatformsPanel.start();
 		}
 
@@ -92,7 +83,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 			MyPlatformsPanel.restart(); // restart the game (back to beginning)
 			JeometryDash.gameTimer.stop();
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
-			player.setY(400);
+			JeometryDash.player.setY(400);
 		}
 		repaint();
 		
@@ -103,12 +94,10 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 
 		super.paintComponent(g);
 		bgP.paintComponent(g); // add background
-		player.draw(g);
-		
+		JeometryDash.player.draw(g); // add player
 		if (MyPlatformsPanel.getRunning())
 			lvl.paintComponent(g); // add obstacles
-		
-		//checkCollisions();
+		checkCollisions();
 
 	} // end of paintComponent
 	
@@ -118,44 +107,70 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	
 	public void keyPressed(KeyEvent e) { // uses keyCode
-		
+
 		if (e.getKeyCode() == 32)  // 32 is space bar
-			player.jump();
+			JeometryDash.player.jump();
 		repaint();
-		
+
 	} // end of keyPressed
 
-	
+
 	public void keyReleased(KeyEvent e) {
-		
+
 		if (e.getKeyCode() == 32) // 32 is space bar
-			player.fall();
-		repaint();
-		
+			
+		while (!isColliding() || JeometryDash.player.getY() < 400) {
+			JeometryDash.player.fall();	
+			repaint();			
+		}
+		checkCollisions();
+		JeometryDash.player.setSpeed(9);
+
 	} // end of keyReleased
 
 
 	public void checkCollisions() {
-/*
-		Rectangle r1 = JeometryDash.player.getBounds();
-
-		for (Platforms[] innerArr : PlatformsLvl) {
-			for (Platforms obstacle : innerArr) {
-				Rectangle r2 = getBounds();
-
-				if (r1.intersects(r2)) {
-					if (r1.y + 50 >= r2.y && r1.y + 50 <= r2.y + 50) {
-						JeometryDash.player.setYPlatform(obstacle.getY());
-						//JeometryDash.player.setJumped(true);
-					} else 
-						//System.out.println("Collision");
+	
+		Rectangle r1 = JeometryDash.player.getBounds(); // rectangle of player
+		
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 360; j++) {
+				if (imgID[i][j] != 0) {
+					Rectangle r2 = platformsLvl[i][j].getBounds(); // rectangle of obstacle
+					
+					if (r1.intersects(r2)) {
+						System.out.println(platformsLvl[i][j].getY());
+						if (r1.y + 50 >= r2.y) {
+							JeometryDash.player.setYPlatform(r2.y);
+						} else {
+							// pop up panel
+						}
+					}
 				}
 			}
-		}*/
+		}
 		
 	} // end of checkCollisions
 
-
+	
+	public boolean isColliding() {
+		
+		Rectangle r1 = JeometryDash.player.getBounds(); // rectangle of player
+		
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 360; j++) {
+				if (imgID[i][j] != 0) {
+					Rectangle r2 = platformsLvl[i][j].getBounds(); // rectangle of obstacle
+					
+					if (r1.intersects(r2))
+						return true;
+				}
+			}
+		} return false;
+		
+	}
+	
+	
 	public void setLvlName (String lvl) {
 		
 		lvlName = lvl;

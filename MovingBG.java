@@ -38,6 +38,7 @@ public class MovingBG extends JPanel implements ActionListener {
 
 	
 	public void actionPerformed(ActionEvent e) {
+		
 		bg_x -= 8;
 		g_x -= 12;
 		
