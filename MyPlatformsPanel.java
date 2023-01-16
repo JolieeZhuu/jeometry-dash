@@ -18,7 +18,7 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	
 	private int row, col; // declare instance variables
 	private static int x;
-	private static int[][] imgID;
+	private int[][] imgID;
 	private static boolean isRunning;
 	private static Platforms lvl[][];
 	private String lvlName;
@@ -28,15 +28,12 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	public MyPlatformsPanel() throws Exception {
 
 		row = 9; // initialize variables
-		col = 360;
+		col = 175;
 		x = 0;
 		isRunning = true;
 		lvlName = "";
 		imgID = new int[row][col];
 		lvl = new Platforms[row][col];
-
-		newLvl("lvl01.csv"); // call method
-		createPlatforms();
 
 		this.setLayout(new BorderLayout(0, 0));	
 
@@ -63,7 +60,6 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 
 	
 	private void createPlatforms () {
-		
 		try {
 			for (int i = 0; i < row; i++) { // create Platforms 2D array to store all platforms' information
 				for (int j = 0; j < col; j++) {
@@ -86,14 +82,13 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-				
+		
 	} // end of createPlatforms
 	
 	
 	public void actionPerformed(ActionEvent e) {
 		
 		x -= 15;
-		
 		for (int i = 0; i < row; i++) { // obstacles animation
 			for (int j = 0; j < col; j++) {
 				if (imgID[i][j] != 0) {
@@ -140,13 +135,6 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	} // end of getLvl01
 	
 	
-	public static int[][] getImgID() {
-		
-		return imgID;
-		
-	} // end of getImgID
-	
-	
 	public static void restart() {
 		
 		x = 0;
@@ -169,9 +157,9 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	} // end of getRunning
 
 	
-	public void setLvl(String lvlName) {
+	public void setLvl(String lvl) {
 		
-		this.lvlName = lvlName;
+		lvlName = lvl;
 		
 	} // end of setLvl
 

@@ -61,7 +61,14 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 		
 		if (e.getSource() == toMenuB) // back button
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
-		else if (e.getSource() == restartB)
+		else if (e.getSource() == restartB) {
+			JeometryDash.cardsL.show(JeometryDash.c, "JeometryDash");
+			JeometryDash.gameTimer.start();
+			JeometryDash.gameP.isClicked();
+			JeometryDash.gameP.setLvlName("lvl0"+(JeometryDash.lvlP.getLvl()+1)+".csv");
+			JeometryDash.gameP.setFocusable(true);
+			JeometryDash.gameP.requestFocus();
+		}
 			// do something
 		
 		if (JeometryDash.gameP.getLvlComp())

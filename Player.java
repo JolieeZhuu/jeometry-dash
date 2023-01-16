@@ -11,6 +11,7 @@ import javax.swing.*;
 public class Player extends Platforms {
 
 	private int yPlatform, speed, gravity; // declare instance variables
+	private boolean willJump, willFall;
 	
 	
 	public Player(int x, int y, String imgName) {
@@ -23,7 +24,6 @@ public class Player extends Platforms {
 		
 	} // end of constructor
 	
-	
 	public void setImage(String imgName) {
 		
 		img = new ImageIcon(imgName).getImage();
@@ -31,7 +31,7 @@ public class Player extends Platforms {
 	} // end of setImage
 
 	
-	public void setYPlatform(int y) {
+	public void setYPlatform (int y) {
 		
 		yPlatform = y;
 		
@@ -39,45 +39,37 @@ public class Player extends Platforms {
 	
 	
 	public void jump() {
-
-		for (int i = yPlatform; i >= yPlatform - 75; i -= speed) {
-			speed -= gravity;
-			y = i;
-		}
-		y = yPlatform - 75;
-		speed = 0;
-
-	} // end of jump
-
+		
+		for (int i=400; i>=325; i-=speed) {
+				speed -= gravity;
+				y = i;
+			}
+			y = 325;
+			willJump = false;
+			willFall = true;
+			speed = 0;
+		
+	} // end of setJumped
 	
 	public void fall() {
 		
-		speed += gravity;
-		y += speed;
-		
-		/*
-		for (int i = yPlatform - 75; i <= yPlatform; i += speed) {
+		for (int i=325; i<=400; i+=speed) {
 			speed += gravity;
 			y = i;
+			System.out.println(x + " " + y);
 		}
-		y = yPlatform;
+		y = 400;
+		willJump = false;
+		willFall = false;
 		speed = 0;
-		*/
-
-	} // end of fall
-	
+		
+	}
 	
 	public void setY (int y) {
 		
 		this.y = y;
 		
 	} // end of setY
-	
-	
-	public void setSpeed (int speed) {
-		
-		this.speed = speed;
-		
-	} // end of setSpeed
+
 	
 } // end of Player class

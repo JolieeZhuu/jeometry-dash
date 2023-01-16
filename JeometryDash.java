@@ -22,7 +22,7 @@ public class JeometryDash extends JFrame implements ActionListener {
 	static MyCustomPanel customP;
 	static MyPopupPanel endP;
 	
-	static Timer timer, gameTimer;
+	static Timer timer, gameTimer, playerTime;
 	static int delay;
 	static Player player;
 
@@ -53,7 +53,9 @@ public class JeometryDash extends JFrame implements ActionListener {
 		delay = 1000/30;
 		timer = new Timer(delay, this);
 		gameTimer = new Timer(delay, this);
+		playerTimer = new Timer (100, this);
 		timer.start();
+		playerTimer.start();
 
 	} // end of constructor
 
