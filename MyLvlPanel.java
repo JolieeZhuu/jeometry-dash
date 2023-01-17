@@ -116,6 +116,7 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		
 	} // end of paintComponent
 	
+	
 	public int getLvl () {
 		
 		return lvl;

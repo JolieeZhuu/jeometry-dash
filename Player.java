@@ -24,6 +24,7 @@ public class Player extends Platforms {
 		
 	} // end of constructor
 	
+	
 	public void setImage(String imgName) {
 		
 		img = new ImageIcon(imgName).getImage();
@@ -40,23 +41,23 @@ public class Player extends Platforms {
 	
 	public void jump() {
 		
-		for (int i=400; i>=325; i-=speed) {
-				speed -= gravity;
-				y = i;
-			}
-			y = 325;
-			willJump = false;
-			willFall = true;
-			speed = 0;
+		for (int i = 400; i >= 325; i -= speed) {
+			speed -= gravity;
+			y = i;
+		}
+		y = 325;
+		willJump = false;
+		willFall = true;
+		speed = 0;
 		
 	} // end of setJumped
 	
+	
 	public void fall() {
 		
-		for (int i=325; i<=400; i+=speed) {
+		for (int i = 325; i <= 400; i += speed) {
 			speed += gravity;
 			y = i;
-			System.out.println(x + " " + y);
 		}
 		y = 400;
 		willJump = false;
@@ -64,12 +65,5 @@ public class Player extends Platforms {
 		speed = 0;
 		
 	}
-	
-	public void setY (int y) {
 		
-		this.y = y;
-		
-	} // end of setY
-
-	
 } // end of Player class
