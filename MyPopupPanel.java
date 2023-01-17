@@ -59,20 +59,24 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == toMenuB) // back button
+		if (e.getSource() == toMenuB) { // back button
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
+			JeometryDash.gameP.setLvlComp(false);
+		}
+			
 		else if (e.getSource() == restartB) {
 			JeometryDash.cardsL.show(JeometryDash.c, "JeometryDash");
 			JeometryDash.gameTimer.start();
 			JeometryDash.gameP.isClicked();
+			JeometryDash.gameP.setLvlComp(false);
 			JeometryDash.gameP.setLvlName("lvl0"+(JeometryDash.lvlP.getLvl()+1)+".csv");
 			JeometryDash.gameP.setFocusable(true);
 			JeometryDash.gameP.requestFocus();
 		}
-			// do something
 		
-		if (JeometryDash.gameP.getLvlComp())
+		if (JeometryDash.gameP.getLvlComp()) {
 			title = new ImageIcon("Images/lvlComp.png");
+		}	
 		else
 			title = new ImageIcon("Images/lvlIncomp.png");
 		
@@ -87,7 +91,7 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 		g.drawImage(bg.getImage(), 0, 0, null); // draw background image (no animation)
 		g.drawImage(ground.getImage(), 0, 450, null);
 		g.drawImage(popUp.getImage(), 50, 50, null); // draw pop-up image
-		g.drawImage(title.getImage(), 100, 75, null);
+		g.drawImage(title.getImage(), (getWidth() - 338) / 2, 75, null);
 
 	} // end of paintComponent
 

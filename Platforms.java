@@ -16,13 +16,10 @@ public class Platforms {
 	
 
 	public Platforms(int x, int y, String imgName) {
-		try {
-			this.x = x; // initialize variables
-			this.y = y;
-			img = new ImageIcon(imgName).getImage();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		this.x = x; // initialize variables
+		this.y = y;
+		img = new ImageIcon(imgName).getImage();
 
 	} // end of constructor
 	
@@ -34,12 +31,45 @@ public class Platforms {
 	} // end of setX
 	
 	
+	public int getX(int x) {
+		
+		return x;
+		
+	} // end of getX
+	
+	
+	public void setY(int y) {
+		
+		this.y = y;
+		
+	} // end of setY
+	
+	
 	public int getY() {
 		
 		return y;
 		
 	} // end of getY
-			
+	
+	
+	public void setImage(String imgName) {
+		
+		img = new ImageIcon(imgName).getImage();
+		
+	} // end of setImage
+
+	
+	public void setYPlatform (int y) {
+	} // end of setYPlatform
+	
+	
+	public void jump() {
+	} // end of setJumped
+	
+	
+	public void fall() {
+	}
+	
 	
 	public void draw(Graphics g) {
 		

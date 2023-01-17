@@ -19,12 +19,12 @@ public class JeometryDash extends JFrame implements ActionListener {
 	static MyGamePanel gameP;
 	static MyLvlPanel lvlP;
 	static MyInstPanel instP;
-	static MyCustomPanel customP;
+	//static MyCustomPanel customP;
 	static MyPopupPanel endP;
 	
-	static Timer timer, gameTimer, playerTime;
+	static Timer timer, gameTimer;
 	static int delay;
-	static Player player;
+	static Platforms player;
 
 	
 	public JeometryDash() throws Exception {
@@ -36,7 +36,7 @@ public class JeometryDash extends JFrame implements ActionListener {
 		gameP = new MyGamePanel();
 		lvlP = new MyLvlPanel();
 		instP = new MyInstPanel();
-		customP = new MyCustomPanel();
+		//customP = new MyCustomPanel();
 		endP = new MyPopupPanel();
 		
 		gameP.addKeyListener(gameP); // gameP is focused for keyListener
@@ -46,16 +46,14 @@ public class JeometryDash extends JFrame implements ActionListener {
 		c.add("JeometryDash", gameP);
 		c.add("Levels", lvlP);
 		c.add("Instructions", instP);
-		c.add("Customization", customP);
+		//c.add("Customization", customP);
 		c.add("End", endP);
 		
 		player = new Player(100, 400, "Images/cube03.png");
 		delay = 1000/30;
 		timer = new Timer(delay, this);
 		gameTimer = new Timer(delay, this);
-		playerTimer = new Timer (100, this);
 		timer.start();
-		playerTimer.start();
 
 	} // end of constructor
 
@@ -66,7 +64,7 @@ public class JeometryDash extends JFrame implements ActionListener {
 		gameP.actionPerformed(e);
 		lvlP.actionPerformed(e);
 		instP.actionPerformed(e);
-		customP.actionPerformed(e);
+		//customP.actionPerformed(e);
 		endP.actionPerformed(e);
 		
 	} // end of actionPerformed

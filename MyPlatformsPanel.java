@@ -16,13 +16,14 @@ import java.util.Scanner;
 
 public class MyPlatformsPanel extends JPanel implements ActionListener {
 	
-	private int row, col; // declare instance variables
+	private int row, col, lastI, lastJ; // declare instance variables
 	private static int x;
-	private int[][] imgID;
+	private static int[][] imgID;
+	private int[][] newX;
 	private static boolean isRunning;
 	private static Platforms lvl[][];
 	private String lvlName;
-	private boolean newLvl, returnLvl;
+	private boolean newLvl;
 
 
 	public MyPlatformsPanel() throws Exception {
@@ -34,6 +35,7 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 		lvlName = "";
 		imgID = new int[row][col];
 		lvl = new Platforms[row][col];
+		newX = new int[row][col];
 
 		this.setLayout(new BorderLayout(0, 0));	
 
@@ -48,8 +50,13 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 			while (sc.hasNextLine()) { // read excel file to get platforms
 				for (int i = 0; i < row; i++) {
 					String[] line = sc.nextLine().trim().split(",");
-					for (int j = 0; j < line.length; j++)
+					for (int j = 0; j < line.length; j++) {
 						imgID[i][j] = Integer.parseInt(line[j]);
+						if (imgID[i][j] != 0) {
+							lastI = i;
+							lastJ = j;
+						}
+					}
 				}
 			}		
 		} catch (Exception e) {
@@ -63,20 +70,8 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 		try {
 			for (int i = 0; i < row; i++) { // create Platforms 2D array to store all platforms' information
 				for (int j = 0; j < col; j++) {
-					if (imgID[i][j] == 1)
-						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/triangleObst.png");
-					else if (imgID[i][j] == 2)
-						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/squareObst.png");
-					else if (imgID[i][j] == 3)
-						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/gridObst.png");
-					else if (imgID[i][j] == 4)
-						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/slabObst.png");
-					else if (imgID[i][j] == 5)
-						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/spikeObst.png");
-					else if (imgID[i][j] == 6)
-						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/triangleObst02.png");
-					else if (imgID[i][j] == 7)
-						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/spikeObst02.png");
+					if (imgID[i][j] != 0)
+						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/Obst0" + imgID[i][j] + ".png");
 				}
 			}
 		} catch (Exception e) {
@@ -92,7 +87,16 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 		for (int i = 0; i < row; i++) { // obstacles animation
 			for (int j = 0; j < col; j++) {
 				if (imgID[i][j] != 0) {
-					lvl[i][j].setX(j * 50 + x);
+					newX[i][j] = j * 50 + x;
+					lvl[i][j].setX(newX[i][j]);
+				}
+				
+				if (i == lastI && j == lastJ && newX[i][j] < -300) {
+					JeometryDash.gameP.setLvlComp(true);
+					lastI = 1000;
+					lastJ = 1000;
+					newX[i][j] = 1000;
+					x = 0;
 				}
 			}
 		}
@@ -101,13 +105,6 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 			newLvl(lvlName);
 			createPlatforms();
 			newLvl = false;
-		}
-
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
-				if (i == row && j == col)
-					returnLvl = true;
-			}
 		}
 
 	} // end of actionPerformed
@@ -135,6 +132,13 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	} // end of getLvl01
 	
 	
+	public static int[][] getImgID() {
+
+		return imgID;
+
+	} // end of getImgID
+
+	
 	public static void restart() {
 		
 		x = 0;
@@ -157,9 +161,9 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	} // end of getRunning
 
 	
-	public void setLvl(String lvl) {
+	public void setLvl(String lvlName) {
 		
-		lvlName = lvl;
+		this.lvlName = lvlName;
 		
 	} // end of setLvl
 
@@ -169,19 +173,5 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 		newLvl = true;
 		
 	} // end of newGame
-
-	
-	public void setReturnLvl(boolean tf) {
-		
-		returnLvl = tf;
-		
-	} // end of setReturnLvl
-
-	
-	public boolean getReturnLvl() {
-		
-		return returnLvl;
-		
-	} // returnLvl
 	
 } // end of Platforms class
