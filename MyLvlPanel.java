@@ -121,6 +121,6 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		
 		return lvl;
 	
-	}
+	} // end of getLvl
 	
 } // end of MyLvlPanel class

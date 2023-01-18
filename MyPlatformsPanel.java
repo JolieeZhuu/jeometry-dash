@@ -93,9 +93,6 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 				
 				if (i == lastI && j == lastJ && newX[i][j] < -300) {
 					JeometryDash.gameP.setLvlComp(true);
-					lastI = 1000;
-					lastJ = 1000;
-					newX[i][j] = 1000;
 					x = 0;
 				}
 			}

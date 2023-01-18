@@ -19,7 +19,6 @@ public class JeometryDash extends JFrame implements ActionListener {
 	static MyGamePanel gameP;
 	static MyLvlPanel lvlP;
 	static MyInstPanel instP;
-	//static MyCustomPanel customP;
 	static MyPopupPanel endP;
 	
 	static Timer timer, gameTimer;
@@ -64,7 +63,6 @@ public class JeometryDash extends JFrame implements ActionListener {
 		gameP.actionPerformed(e);
 		lvlP.actionPerformed(e);
 		instP.actionPerformed(e);
-		//customP.actionPerformed(e);
 		endP.actionPerformed(e);
 		
 	} // end of actionPerformed
