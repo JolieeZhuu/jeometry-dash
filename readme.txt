@@ -8,7 +8,7 @@ What is the purpose of the program “Jeometry Dash”?
 
 
 How do you use “Jeometry Dash”?
-        To run Jeometry Dash, you must have java installed into your computer. All you need to do is run the "JeometryDash.bat" file on your computer. Any java interpreter will work with our program, however, we recommend python 8 for the game to run smoothest.         
+        To run Jeometry Dash, you must have java installed into your computer. All you need to do is run the "JeometryDash.bat" file on your computer. Any Java interpreter will work with our program, however, we recommend Java 8 for the game to run smoothest.         
 
 
 Troubleshooting Tips:        
@@ -16,5 +16,5 @@ If you have tried to run our program, and it will not open a window, you have pr
 
 
 Contributions:
-Jolie: Main menu, hand drew all images, platforms, player, collisions, jumping, organizing files
-Simone: Instruction, parrallax background, level panel, levels csv files, animations, layouts
+Jolie: Main menu, hand-drawn images, platforms, player, collisions, falling, organizing files
+Simone: Instructions, parrallax background, level panel, levels csv files, animations, layouts, jumping
