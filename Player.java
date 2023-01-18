@@ -42,22 +42,20 @@ public class Player extends Platforms{
 		
 	} // end of jump
 	
-	/*
-	public void fall(int y) {
+	
+	public void fall () {
 		
-		this.y = y;
-		speed += gravity;
-		y += speed;
-		
-		for (int i = yPlatform - 75; i <= yPlatform; i += speed) {
+		for (int i = yPlatform - 75; i < 400 || !JeometryDash.gameP.isColliding(); i += speed) {
 			speed += gravity;
 			y = i;
 		}
-		y = yPlatform;
-		speed = 0;
-		
+		if (JeometryDash.gameP.isColliding())
+			JeometryDash.gameP.checkCollisions();
+		else
+			y = 400;
+				
 	} // end of fall
-	*/
+	
 	
 	public void setSpeed(int speed) {
 		

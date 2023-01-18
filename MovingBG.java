@@ -19,17 +19,22 @@ public class MovingBG extends JPanel implements ActionListener {
 	private int bg_x, g_x;
 
 	
-	public MovingBG() throws Exception{
+	public MovingBG() {
 		
 		bg = new ArrayList <ImageIcon>(); // initialize variables
 		ground = new ArrayList <ImageIcon>();
 		
 		bg_x = 0;
 		g_x = 0;
-				
-		for (int i = 0; i < 2; i++) { // add images to ArrayLists
-			bg.add(new ImageIcon("Images/bg01.png"));
-			ground.add(new ImageIcon("Images/ground01.png"));
+		
+		try {		
+			for (int i = 0; i < 2; i++) { // add images to ArrayLists
+				bg.add(new ImageIcon("Images/bg01.png"));
+				ground.add(new ImageIcon("Images/ground01.png"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		this.setLayout(new BorderLayout(0, 0));

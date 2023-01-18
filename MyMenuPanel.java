@@ -11,61 +11,50 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class MyMenuPanel extends JPanel implements ActionListener {
-
-	private JButton inst, play, exit; // declare instance variables
+	
+	// declare instance variables
+	private JButton[] buttons; 
 
 	private JPanel buttonP;
 	private MovingBG bgP;
 
-	private ImageIcon title, instImg, playImg, exitImg;
+	private ImageIcon[] imgs;
 	
 	
-	public MyMenuPanel() throws Exception {
+	public MyMenuPanel() {
 
 		buttonP = new JPanel(); // initialize variables
 		bgP = new MovingBG();
-
-		title = new ImageIcon("Images/title.png");
-		instImg = new ImageIcon("Images/instButton.png");
-		playImg = new ImageIcon("Images/playButton.png");
-		exitImg = new ImageIcon("Images/exitButton.png");
 		
-		inst = new JButton(instImg);
-		play = new JButton(playImg);
-		exit = new JButton(exitImg);
-
-		//custom.setPreferredSize(new Dimension(100, 100)); // set button size
-		play.setPreferredSize(new Dimension(150, 150));
-		exit.setPreferredSize(new Dimension(100, 100));
-				
-		inst.setOpaque(false); // make button transparent
-		inst.setContentAreaFilled(false);
-		inst.setBorderPainted(false);
+		imgs = new ImageIcon[4];
+		buttons = new JButton[3];
 		
-		play.setOpaque(false); // make button transparent
-		play.setContentAreaFilled(false);
-		play.setBorderPainted(false);
-
-		exit.setOpaque(false); // make button transparent
-		exit.setContentAreaFilled(false);
-		exit.setBorderPainted(false);
-
-		inst.addActionListener(this);
-		play.addActionListener(this);
-		exit.addActionListener(this);
+		imgs[0] = new ImageIcon("Images/instButton.png");
+		imgs[1] = new ImageIcon("Images/playButton.png");
+		imgs[2] = new ImageIcon("Images/exitButton.png");
+		imgs[3] = new ImageIcon("Images/title.png");
+		
+		//play.setPreferredSize(new Dimension(150, 150));
+		//exit.setPreferredSize(new Dimension(100, 100));
 		
 		this.setLayout(new BorderLayout(0, 0));
 		setBackground(Color.BLUE);
 		
-		this.add(buttonP, BorderLayout.CENTER);  // add panels to panel
+		// add panels to panel
+		this.add(buttonP, BorderLayout.CENTER);  
 		buttonP.setOpaque(false);
 		buttonP.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 200));
-
-		buttonP.add(inst); // add buttons to panel
-		buttonP.add(play);
-		buttonP.add(exit);
-
 		
+		// add buttons to panel
+		for (int i = 0; i < 3; i++) {
+			buttons[i] = new JButton(imgs[i]);
+			buttons[i].setOpaque(false);
+			buttons[i].setContentAreaFilled(false);
+			buttons[i].setBorderPainted(false);
+			buttons[i].addActionListener(this);
+			buttonP.add(buttons[i]);
+		}
+
 	} // end of constructor
 
 	
@@ -73,11 +62,11 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		
 		bgP.actionPerformed(e); // add background animation from MovingBG class
 		
-		if (e.getSource() == play) { // button to game panel
+		if (e.getSource() == buttons[1]) { 
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
-		} else if (e.getSource() == inst) // button to instructions panel
+		} else if (e.getSource() == buttons[0]) 
 			JeometryDash.cardsL.show(JeometryDash.c, "Instructions");
-		else if (e.getSource() == exit) // button to exit
+		else if (e.getSource() == buttons[2]) 
 			System.exit(0);
 		repaint();
 		
@@ -88,7 +77,7 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		
 		super.paintComponent(g);
 		bgP.paintComponent(g); // add background
-		g.drawImage(title.getImage(), (getWidth() - 550) / 2, 75, 550, 70, null); // title image of menu panel
+		g.drawImage(imgs[3].getImage(), (getWidth() - 550) / 2, 75, 550, 70, null); // title image of menu panel
 
 	} // end of paintComponent
 	

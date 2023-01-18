@@ -13,34 +13,32 @@ import javax.swing.*;
 public class MyPopupPanel extends JPanel implements ActionListener {
 	
 	private JPanel buttonP; // declare instance variables
-	private JButton restartB, toMenuB;
-	private ImageIcon bg, ground, popUp, restart, toMenu, title;
+	private JButton[] buttons /*restartB, toMenuB*/;
+	private ImageIcon[] imgs /*bg, ground, popUp, restart, toMenu, title*/;
 	
 	
 	public MyPopupPanel() {
 		
 		buttonP = new JPanel(); // initialize variables
 		
-		bg = new ImageIcon("Images/bg01.png");
-		ground = new ImageIcon("Images/ground01.png");
+		imgs = new ImageIcon[6];
+		buttons = new JButton[2];
 		
-		popUp = new ImageIcon("Images/popUpImg.png");
-		restart = new ImageIcon("Images/restartButton.png");
-		toMenu = new ImageIcon("Images/backToMenu.png");
-		title = new ImageIcon("Images/lvlIncomp.png");
+		imgs[0] = new ImageIcon("Images/restartButton.png");
+		imgs[1] = new ImageIcon("Images/backToMenu.png");
+		imgs[2] = new ImageIcon("Images/bg01.png");
+		imgs[3] = new ImageIcon("Images/ground01.png");
+		imgs[4] = new ImageIcon("Images/popUpImg.png");
+		imgs[5] = new ImageIcon("Images/lvlIncomp.png");
 		
-		restartB = new JButton(restart);
-		toMenuB = new JButton(toMenu);
-		
-		restartB.setOpaque(false); // make button transparent
-		restartB.setContentAreaFilled(false);
-		restartB.setBorderPainted(false);
-		restartB.addActionListener(this);
-		
-		toMenuB.setOpaque(false); // make button transparent
-		toMenuB.setContentAreaFilled(false);
-		toMenuB.setBorderPainted(false);
-		toMenuB.addActionListener(this);
+		for (int i = 0; i < 2; i++) {
+			buttons[i] = new JButton(imgs[i]);
+			buttons[i].setOpaque(false);
+			buttons[i].setContentAreaFilled(false);
+			buttons[i].setBorderPainted(false);
+			buttons[i].addActionListener(this);
+			buttonP.add(buttons[i]);
+		}
 		
 		this.setLayout(new BorderLayout(0, 0));
 		this.setBackground(Color.BLUE);
@@ -50,22 +48,22 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 		buttonP.setLayout(new BoxLayout(buttonP, BoxLayout.X_AXIS));
 		
 		buttonP.add(Box.createRigidArea(new Dimension(150, 0))); // format buttons in terms of x
-		buttonP.add(restartB);
+		buttonP.add(buttons[0]);
 		buttonP.add(Box.createRigidArea(new Dimension(24, 0)));
-		buttonP.add(toMenuB);
+		buttonP.add(buttons[1]);
 		
 	} // end of constructor
 
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == toMenuB) { // back button
+		if (e.getSource() == buttons[1]) { // back button
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
 			JeometryDash.gameP.setLvlComp(false);
 			JeometryDash.gameP.setLvlNotComp(false);
 		}
 			
-		else if (e.getSource() == restartB) {
+		else if (e.getSource() == buttons[0]) {
 			JeometryDash.cardsL.show(JeometryDash.c, "JeometryDash");
 			JeometryDash.gameTimer.start();
 			JeometryDash.gameP.isClicked();
@@ -77,9 +75,9 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 		}
 		
 		if (JeometryDash.gameP.getLvlComp()) {
-			title = new ImageIcon("Images/lvlComp.png");
+			imgs[5] = new ImageIcon("Images/lvlComp.png");
 		} else if (JeometryDash.gameP.getLvlNotComp()) {
-			title = new ImageIcon("Images/lvlIncomp.png");			
+			imgs[5] = new ImageIcon("Images/lvlIncomp.png");			
 		}
 		repaint();
 		
@@ -89,10 +87,10 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		g.drawImage(bg.getImage(), 0, 0, null); // draw background image (no animation)
-		g.drawImage(ground.getImage(), 0, 450, null);
-		g.drawImage(popUp.getImage(), 50, 50, null); // draw pop-up image
-		g.drawImage(title.getImage(), (getWidth() - 338) / 2, 75, null);
+		g.drawImage(imgs[2].getImage(), 0, 0, null); // draw background image (no animation)
+		g.drawImage(imgs[3].getImage(), 0, 450, null);
+		g.drawImage(imgs[4].getImage(), 50, 50, null); // draw pop-up image
+		g.drawImage(imgs[5].getImage(), (getWidth() - imgs[5].getIconWidth())/2, 75, null);
 
 	} // end of paintComponent
 

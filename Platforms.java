@@ -81,6 +81,9 @@ public class Platforms {
 	} // end of jump
 	
 	
+	public void fall() {
+	} // end of fall
+	
 	public void draw(Graphics g) {
 		
 		g.drawImage(img, x, y, 50, 50, null);

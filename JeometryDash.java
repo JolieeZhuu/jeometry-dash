@@ -35,7 +35,6 @@ public class JeometryDash extends JFrame implements ActionListener {
 		gameP = new MyGamePanel();
 		lvlP = new MyLvlPanel();
 		instP = new MyInstPanel();
-		//customP = new MyCustomPanel();
 		endP = new MyPopupPanel();
 		
 		gameP.addKeyListener(gameP); // gameP is focused for keyListener
@@ -45,7 +44,6 @@ public class JeometryDash extends JFrame implements ActionListener {
 		c.add("JeometryDash", gameP);
 		c.add("Levels", lvlP);
 		c.add("Instructions", instP);
-		//c.add("Customization", customP);
 		c.add("End", endP);
 		
 		player = new Player(100, 400, "Images/cube03.png");

@@ -12,8 +12,9 @@ import javax.swing.*;
 
 public class MyLvlPanel extends JPanel implements ActionListener {
 
-	private JButton goMenu, play, next, prev; // declare instance variables
-	private ImageIcon playImg, backImg, nextImg, lvlImg[];
+	private JButton[] buttons; // declare instance variables
+	private ImageIcon[] imgs;
+	private ImageIcon[] lvlImg;
 	private int lvl;
 	
 	private JPanel northP, centerP;
@@ -26,57 +27,43 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		centerP = new JPanel();
 		bgP = new MovingBG();
 		
+		imgs = new ImageIcon[4];
+		buttons = new JButton[4];
+		
 		lvl = 0;
 		
-		playImg = new ImageIcon("Images/playButton.png");
-		backImg = new ImageIcon("Images/backButton.png");
-		nextImg = new ImageIcon("Images/nextButton.png");
-		lvlImg = new ImageIcon[3];
+		imgs[0] = new ImageIcon("Images/backButton.png");
+		imgs[1] = new ImageIcon("Images/playButton.png");
+		imgs[2] = new ImageIcon("Images/nextButton.png");
 		
+		lvlImg = new ImageIcon[3];
 		for (int i = 0; i < 3; i++) // add the title images of each level
 			lvlImg[i] = new ImageIcon("Images/lvl" + (i + 1) + ".png");
-		
-		goMenu = new JButton(backImg);
-		next = new JButton(nextImg);
-		prev = new JButton(backImg);
-		play = new JButton(playImg);
-		play.setPreferredSize(new Dimension(150, 150)); // set button size
-		
-		goMenu.setOpaque(false); // make button transparent
-		goMenu.setContentAreaFilled(false);
-		goMenu.setBorderPainted(false);
-		
-		next.setOpaque(false); // make button transparent
-		next.setContentAreaFilled(false);
-		next.setBorderPainted(false);
-		
-		prev.setOpaque(false); // make button transparent
-		prev.setContentAreaFilled(false);
-		prev.setBorderPainted(false);
-		
-		play.setOpaque(false); // make button transparent
-		play.setContentAreaFilled(false);
-		play.setBorderPainted(false);
-		
-		goMenu.addActionListener(this); // add actionListener to buttons
-		prev.addActionListener(this);
-		next.addActionListener(this);
-		play.addActionListener(this);
-		
+					
 		this.setLayout(new BorderLayout(0, 0));
 		this.setBackground(Color.BLUE);
 		
 		this.add(northP, BorderLayout.NORTH); // add panel to panel
 		northP.setOpaque(false);
 		northP.setLayout(new BorderLayout(0,0));
-		northP.add(goMenu, BorderLayout.WEST); // add button to panel
 		
 		this.add(centerP, BorderLayout.CENTER); // add panel to panel
 		centerP.setOpaque(false);
 		centerP.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 150));
-		centerP.add(prev); // add buttons to panel
-		centerP.add(play);
-		centerP.add(next);
+		
+		for (int i = 0; i < 4; i++) {
+			if (i < 3) {
+				buttons[i] = new JButton(imgs[i]);
+				centerP.add(buttons[i]);
+			} else {
+				buttons[i] = new JButton(imgs[0]);
+				northP.add(buttons[i], BorderLayout.WEST);
+			}
+			buttons[i].setOpaque(false);
+			buttons[i].setContentAreaFilled(false);
+			buttons[i].setBorderPainted(false);
+			buttons[i].addActionListener(this);
+		}
 		
 	} // end of constructor
 
@@ -85,20 +72,22 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		
 		bgP.actionPerformed(e); // add background animation
 		
-		if (e.getSource() == goMenu) // back button
+		if (e.getSource() == buttons[3]) // back button
 			JeometryDash.cardsL.first(JeometryDash.c);
-		else if (e.getSource() == play) { // play button
+			
+		else if (e.getSource() == buttons[1]) { // play button
 			JeometryDash.cardsL.show(JeometryDash.c, "JeometryDash");
 			JeometryDash.gameTimer.start();
 			JeometryDash.gameP.isClicked();
 			JeometryDash.gameP.setLvlName("lvl0"+(lvl+1)+".csv");
 			JeometryDash.gameP.setFocusable(true);
 			JeometryDash.gameP.requestFocus();
-		} else if (e.getSource() == next) { // next level button
+			
+		} else if (e.getSource() == buttons[2]) { // next level button
 			++lvl;
 			if (lvl == 3)
 				lvl = 0;
-		} else if (e.getSource() == prev) { // previous level button
+		} else if (e.getSource() == buttons[0]) { // previous level button
 			--lvl;
 			if (lvl == -1)
 				lvl = 2;
@@ -112,7 +101,7 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		
 		super.paintComponent(g);
 		bgP.paintComponent(g); // add background
-		g.drawImage(lvlImg[lvl].getImage(), (getWidth() - 550) / 2, 100, null); // draw title level
+		g.drawImage(lvlImg[lvl].getImage(), (getWidth() - lvlImg[lvl].getIconWidth()) / 2, 100, null); // draw title level
 		
 	} // end of paintComponent
 	
