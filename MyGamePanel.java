@@ -23,7 +23,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	private int imgID[][];
 
 	private String lvlName;
-	private boolean clicked, lvlComp, lvlNotComp;
+	private boolean clicked, lvlComp, lvlNotComp, willJump, willFall;
 
 	
 	public MyGamePanel() throws Exception {
@@ -64,6 +64,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		if (e.getSource() == JeometryDash.gameTimer) {
 			bgP.actionPerformed(e); // add background animation
 			lvl.actionPerformed(e); // add obstacle animation
+			checkAllCollisions();
 			
 			if (clicked) {
 				lvl.newGame();
@@ -85,6 +86,18 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 				JeometryDash.player.setY(400);
 			}
 			
+			if (willJump) {
+				JeometryDash.player.jump();
+				//willJump = false;
+			}
+			
+			if (willFall) {
+				if (!willJump) 
+					fall();
+				if (isColliding() && JeometryDash.player.getY() < 400)
+					fall();
+			}
+				
 			MyPlatformsPanel.start();
 		}
 
@@ -108,7 +121,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		if (MyPlatformsPanel.getRunning())
 			lvl.paintComponent(g); // add obstacles
 		
-		checkAllCollisions();
+		
 
 	} // end of paintComponent
 	
@@ -120,48 +133,25 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent e) { // uses keyCode
 		
 		if (e.getKeyCode() == 32)  // 32 is space bar
-			JeometryDash.player.jump();
-		repaint();
+			willJump = true;
 		
 	} // end of keyPressed
 
 	
 	public void keyReleased(KeyEvent e) {
 		
-		if (e.getKeyCode() == 32) { // 32 is space bar
-			for (int i = JeometryDash.player.getYPlatform(); i < 400 || !isColliding(); i += JeometryDash.player.getSpeed()) {
-				JeometryDash.player.setSpeed(1 + JeometryDash.player.getSpeed());
-				JeometryDash.player.setY(i);
-				repaint();
-			}
-			if (isColliding())
-				checkCollisions();
-			else
-				JeometryDash.player.setY(400);
-		}
-		JeometryDash.player.setSpeed(9);
-		repaint();
+		if (e.getKeyCode() == 32)  // 32 is space bar
+			willFall = true;
 		
 	} // end of keyReleased
 
 
 	public void checkAllCollisions() { // checks all collisions: includes falling
 
-		if (isColliding()) {
+		if (isColliding())
 			checkCollisions();
-		} else if (JeometryDash.player.getY() < 400) { // no collisions and player is in the air
-				for (int i = JeometryDash.player.getYPlatform(); i < 400 || !isColliding(); i += JeometryDash.player.getSpeed()) {
-					JeometryDash.player.setSpeed(1 + JeometryDash.player.getSpeed());
-					JeometryDash.player.setY(i);
-				}
-				if (isColliding())
-					checkCollisions();
-				else
-					JeometryDash.player.setY(400);
-			}
-		JeometryDash.player.setSpeed(0);
 
-		} // end of checkEntireCollisions
+	} // end of checkEntireCollisions
 	
 	
 	public void checkCollisions() { // check simple collisions: either set yPlatform or end game
@@ -175,18 +165,14 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 
 					if (r1.intersects(r2) && (imgID[i][j] == 2 || imgID[i][j] == 3 || imgID[i][j] == 4)) {
 						JeometryDash.player.setY(r2.y - 49);
-					} else if (JeometryDash.player.getY() >= 400) {
-						JeometryDash.player.setY(400);
 					} else if (r1.intersects(r2)) {
-						/*
+						
 						MyPlatformsPanel.restart(); // restart the game (back to beginning)
 						JeometryDash.gameTimer.stop();
 						JeometryDash.cardsL.last(JeometryDash.c);
 						JeometryDash.player.setY(400);
 						lvlNotComp = true;
-						r1.y = 0;
-						r2.y = 100;
-						*/
+						
 					}
 				}
 			}
@@ -219,7 +205,23 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		
 	} // end of isColliding
 
-
+	
+	public void fall () {
+		
+		for (int i = JeometryDash.player.getYPlatform(); i < 400 || !isColliding(); i += JeometryDash.player.getSpeed()) {
+			JeometryDash.player.setSpeed(1 + JeometryDash.player.getSpeed());
+			JeometryDash.player.setY(i);
+		}
+		if (isColliding())
+			checkCollisions();
+		else
+			JeometryDash.player.setY(400);
+		
+		willJump = true;
+		
+	} // end of fall
+	
+	
 	public void setLvlName (String lvl) {
 		
 		lvlName = lvl;
