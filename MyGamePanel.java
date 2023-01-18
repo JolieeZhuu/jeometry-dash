@@ -23,7 +23,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	private int imgID[][];
 
 	private String lvlName;
-	private boolean clicked, lvlComp;
+	private boolean clicked, lvlComp, lvlNotComp;
 
 	
 	public MyGamePanel() throws Exception {
@@ -108,7 +108,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		if (MyPlatformsPanel.getRunning())
 			lvl.paintComponent(g); // add obstacles
 		
-		//checkCollisions();
+		checkAllCollisions();
 
 	} // end of paintComponent
 	
@@ -128,35 +128,96 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	public void keyReleased(KeyEvent e) {
 		
-		if (e.getKeyCode() == 32) // 32 is space bar
-			JeometryDash.player.fall();
+		if (e.getKeyCode() == 32) { // 32 is space bar
+			for (int i = JeometryDash.player.getYPlatform(); i < 400 || !isColliding(); i += JeometryDash.player.getSpeed()) {
+				JeometryDash.player.setSpeed(1 + JeometryDash.player.getSpeed());
+				JeometryDash.player.setY(i);
+				repaint();
+			}
+			if (isColliding())
+				checkCollisions();
+			else
+				JeometryDash.player.setY(400);
+		}
+		JeometryDash.player.setSpeed(9);
 		repaint();
 		
 	} // end of keyReleased
 
 
-	public void checkCollisions() {
+	public void checkAllCollisions() { // checks all collisions: includes falling
 
+		if (isColliding()) {
+			checkCollisions();
+		} else if (JeometryDash.player.getY() < 400) { // no collisions and player is in the air
+				for (int i = JeometryDash.player.getYPlatform(); i < 400 || !isColliding(); i += JeometryDash.player.getSpeed()) {
+					JeometryDash.player.setSpeed(1 + JeometryDash.player.getSpeed());
+					JeometryDash.player.setY(i);
+				}
+				if (isColliding())
+					checkCollisions();
+				else
+					JeometryDash.player.setY(400);
+			}
+		JeometryDash.player.setSpeed(0);
+
+		} // end of checkEntireCollisions
+	
+	
+	public void checkCollisions() { // check simple collisions: either set yPlatform or end game
+		
 		Rectangle r1 = JeometryDash.player.getBounds(); // rectangle of player
 
 		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 360; j++) {
+			for (int j = 0; j < 175; j++) {
 				if (imgID[i][j] != 0) {
 					Rectangle r2 = platformsLvl[i][j].getBounds(); // rectangle of obstacle
 
-					if (r1.intersects(r2)) {
-						System.out.println(platformsLvl[i][j].getY());
-						if (r1.y + 50 >= r2.y) {
-							JeometryDash.player.setYPlatform(r2.y);
-						} else {
-							// pop up panel
+					if (r1.intersects(r2) && (imgID[i][j] == 2 || imgID[i][j] == 3 || imgID[i][j] == 4)) {
+						JeometryDash.player.setY(r2.y - 49);
+					} else if (JeometryDash.player.getY() >= 400) {
+						JeometryDash.player.setY(400);
+					} else if (r1.intersects(r2)) {
+						/*
+						MyPlatformsPanel.restart(); // restart the game (back to beginning)
+						JeometryDash.gameTimer.stop();
+						JeometryDash.cardsL.last(JeometryDash.c);
+						JeometryDash.player.setY(400);
+						lvlNotComp = true;
+						r1.y = 0;
+						r2.y = 100;
+						*/
+					}
+				}
+			}
+		}
+						
+	} // end of checkCollisions
+	
+	
+	public boolean isColliding() { // returns whether any platforms are going to collide with player
+		
+		boolean collisionsExist = false;
+		
+		Rectangle r1 = JeometryDash.player.getBounds(); // rectangle of player
+		
+		myCollisions: {
+			for (int i = 0; i < 9; i++) {
+				for (int j = 0; j < 175; j++) {
+					if (imgID[i][j] != 0) {
+						Rectangle r2 = platformsLvl[i][j].getBounds(); // rectangle of obstacle
+
+						if (r1.intersects(r2) || JeometryDash.player.getY() >= 400) {
+							collisionsExist = true;
+							break myCollisions;
 						}
 					}
 				}
 			}
 		}
-
-	} // end of checkCollisions
+		return collisionsExist;
+		
+	} // end of isColliding
 
 
 	public void setLvlName (String lvl) {
@@ -185,5 +246,19 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		lvlComp = tf;
 		
 	} // end of setLvlComp
-
+	
+	
+	public boolean getLvlNotComp () {
+		
+		return lvlNotComp;
+		
+	} // end of getLvlNotComp
+	
+	
+	public void setLvlNotComp (boolean tf) {
+		
+		lvlNotComp = tf;
+		
+	} // end of setLvlNotComp
+	
 } // end of MyGamePanel class

@@ -62,6 +62,7 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 		if (e.getSource() == toMenuB) { // back button
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
 			JeometryDash.gameP.setLvlComp(false);
+			JeometryDash.gameP.setLvlNotComp(false);
 		}
 			
 		else if (e.getSource() == restartB) {
@@ -69,6 +70,7 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 			JeometryDash.gameTimer.start();
 			JeometryDash.gameP.isClicked();
 			JeometryDash.gameP.setLvlComp(false);
+			JeometryDash.gameP.setLvlNotComp(false);
 			JeometryDash.gameP.setLvlName("lvl0"+(JeometryDash.lvlP.getLvl()+1)+".csv");
 			JeometryDash.gameP.setFocusable(true);
 			JeometryDash.gameP.requestFocus();
@@ -76,10 +78,9 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 		
 		if (JeometryDash.gameP.getLvlComp()) {
 			title = new ImageIcon("Images/lvlComp.png");
-		}	
-		else
-			title = new ImageIcon("Images/lvlIncomp.png");
-		
+		} else if (JeometryDash.gameP.getLvlNotComp()) {
+			title = new ImageIcon("Images/lvlIncomp.png");			
+		}
 		repaint();
 		
 	} // end of actionPerformed

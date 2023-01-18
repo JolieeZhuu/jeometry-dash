@@ -52,23 +52,33 @@ public class Platforms {
 	} // end of getY
 	
 	
+	public int getYPlatform() {
+		
+		return 0;
+		
+	} // end of getYPlatform
+
+	
+	public int getSpeed() {
+		
+		return 0;
+		
+	} // end of getSpeed
+	
+
+	public void setSpeed(int speed) {
+	} // end of setSpeed
+	
+	
 	public void setImage(String imgName) {
 		
 		img = new ImageIcon(imgName).getImage();
 		
 	} // end of setImage
-
-	
-	public void setYPlatform (int y) {
-	} // end of setYPlatform
 	
 	
 	public void jump() {
-	} // end of setJumped
-	
-	
-	public void fall() {
-	}
+	} // end of jump
 	
 	
 	public void draw(Graphics g) {
