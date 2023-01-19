@@ -24,6 +24,8 @@ public class JeometryDash extends JFrame implements ActionListener {
 	static Timer timer, gameTimer;
 	static int delay;
 	static Platforms player;
+	
+	static private ImageIcon icon;
 
 	
 	public JeometryDash() {
@@ -45,6 +47,8 @@ public class JeometryDash extends JFrame implements ActionListener {
 		c.add("Levels", lvlP);
 		c.add("Instructions", instP);
 		c.add("End", endP);
+		
+		icon = new ImageIcon("Images/cube03.png");
 		
 		player = new Player(100, 400, "Images/cube03.png");
 		delay = 1000/30;
@@ -73,6 +77,7 @@ public class JeometryDash extends JFrame implements ActionListener {
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // make frame closed when x button is pressed
+		frame.setIconImage(icon.getImage());
 		
 	} // end of main
 
