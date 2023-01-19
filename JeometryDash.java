@@ -26,7 +26,7 @@ public class JeometryDash extends JFrame implements ActionListener {
 	static Platforms player;
 
 	
-	public JeometryDash() throws Exception {
+	public JeometryDash() {
 		
 		c = getContentPane(); // initialize variables
 		cardsL = new CardLayout();

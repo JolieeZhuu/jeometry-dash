@@ -24,50 +24,24 @@ public class Platforms {
 	} // end of constructor
 	
 	
-	public void setX(int x) {
+	public void setX (int x) {
 		
 		this.x = x;
+	
+	}
+	
+	public int getY () {
 		
-	} // end of setX
-	
-	
-	public int getX(int x) {
+		return y;
 		
-		return x;
-		
-	} // end of getX
+	}
 	
 	
-	public void setY(int y) {
+	public void setYs(int yPlatform, int y) {
 		
 		this.y = y;
 		
 	} // end of setY
-	
-	
-	public int getY() {
-		
-		return y;
-		
-	} // end of getY
-	
-	
-	public int getYPlatform() {
-		
-		return 0;
-		
-	} // end of getYPlatform
-
-	
-	public int getSpeed() {
-		
-		return 0;
-		
-	} // end of getSpeed
-	
-
-	public void setSpeed(int speed) {
-	} // end of setSpeed
 	
 	
 	public void setImage(String imgName) {
@@ -76,13 +50,6 @@ public class Platforms {
 		
 	} // end of setImage
 	
-	
-	public void jump() {
-	} // end of jump
-	
-	
-	public void fall() {
-	} // end of fall
 	
 	public void draw(Graphics g) {
 		
@@ -96,5 +63,12 @@ public class Platforms {
 		return new Rectangle(x, y, 50, 50);
 		
 	} // end of getBounds
+	
+	
+	public void jump() { } // end of jump
+	
+	
+	public void fall() { } // end of fall
+
 
 } // end of Platforms class

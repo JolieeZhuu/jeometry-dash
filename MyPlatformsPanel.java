@@ -26,7 +26,7 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	private boolean newLvl;
 
 
-	public MyPlatformsPanel() throws Exception {
+	public MyPlatformsPanel() {
 
 		row = 9; // initialize variables
 		col = 175;
@@ -37,7 +37,7 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 		lvl = new Platforms[row][col];
 		newX = new int[row][col];
 
-		this.setLayout(new BorderLayout(0, 0));	
+		this.setLayout(new BorderLayout(0, 0));	// new panel
 
 	} // end of constructor
 
@@ -60,7 +60,7 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 				}
 			}		
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Please redownload the JeometryDash.zip application");
 		}
 
 	} // end of newLvl
@@ -75,7 +75,7 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Please redownload the JeometryDash.zip application");
 		}
 		
 	} // end of createPlatforms
@@ -98,7 +98,7 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 			}
 		}
 		
-		if (newLvl) {
+		if (newLvl) { 
 			newLvl(lvlName);
 			createPlatforms();
 			newLvl = false;
@@ -170,5 +170,6 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 		newLvl = true;
 		
 	} // end of newGame
+	
 	
 } // end of Platforms class

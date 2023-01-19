@@ -26,25 +26,25 @@ public class MyInstPanel extends JPanel implements ActionListener {
 		
 		goMenu = new JButton(backImg);
 		
-		goMenu.setOpaque(false); // make button transparent
+		goMenu.setOpaque(false); // button info
 		goMenu.setContentAreaFilled(false);
 		goMenu.setBorderPainted(false);
-		goMenu.addActionListener(this); // add actionListener to button
+		goMenu.addActionListener(this); 
 		
-		this.setLayout(new BorderLayout(0, 0));
+		this.setLayout(new BorderLayout(0, 0)); // new panels
 		this.setBackground(Color.BLUE);
 		
-		this.add(northP, BorderLayout.NORTH); // add panel to panel
-		northP.setOpaque(false); // formatting
+		this.add(northP, BorderLayout.NORTH); 
+		northP.setOpaque(false);
 		northP.setLayout(new BorderLayout(0,0));
-		northP.add(goMenu, BorderLayout.WEST); // add button to panel
+		northP.add(goMenu, BorderLayout.WEST); 
 		
 	} // end of constructor
 
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == goMenu) // back button
+		if (e.getSource() == goMenu) //button events
 			JeometryDash.cardsL.first(JeometryDash.c);
 
 	} // end of actionPerformed
@@ -53,7 +53,7 @@ public class MyInstPanel extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		g.drawImage(bg.getImage(), 0, 0, null); // draw background image (no animation)
+		g.drawImage(bg.getImage(), 0, 0, null); 
 
 	} // end of paintComponent
 

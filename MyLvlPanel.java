@@ -21,7 +21,7 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 	private MovingBG bgP;
 
 	
-	public MyLvlPanel() throws Exception {
+	public MyLvlPanel() {
 		
 		northP = new JPanel(); // initialize variables
 		centerP = new JPanel();
@@ -32,26 +32,26 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		
 		lvl = 0;
 		
-		imgs[0] = new ImageIcon("Images/backButton.png");
+		imgs[0] = new ImageIcon("Images/backButton.png"); // images
 		imgs[1] = new ImageIcon("Images/playButton.png");
 		imgs[2] = new ImageIcon("Images/nextButton.png");
 		
 		lvlImg = new ImageIcon[3];
-		for (int i = 0; i < 3; i++) // add the title images of each level
+		for (int i = 0; i < 3; i++) 
 			lvlImg[i] = new ImageIcon("Images/lvl" + (i + 1) + ".png");
 					
-		this.setLayout(new BorderLayout(0, 0));
+		this.setLayout(new BorderLayout(0, 0)); // new panels
 		this.setBackground(Color.BLUE);
 		
-		this.add(northP, BorderLayout.NORTH); // add panel to panel
+		this.add(northP, BorderLayout.NORTH); 
 		northP.setOpaque(false);
 		northP.setLayout(new BorderLayout(0,0));
 		
-		this.add(centerP, BorderLayout.CENTER); // add panel to panel
+		this.add(centerP, BorderLayout.CENTER);
 		centerP.setOpaque(false);
 		centerP.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 150));
 		
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) { // buttons 
 			if (i < 3) {
 				buttons[i] = new JButton(imgs[i]);
 				centerP.add(buttons[i]);
@@ -70,12 +70,12 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		bgP.actionPerformed(e); // add background animation
+		bgP.actionPerformed(e); 
 		
-		if (e.getSource() == buttons[3]) // back button
+		if (e.getSource() == buttons[3]) // button events
 			JeometryDash.cardsL.first(JeometryDash.c);
 			
-		else if (e.getSource() == buttons[1]) { // play button
+		else if (e.getSource() == buttons[1]) { 
 			JeometryDash.cardsL.show(JeometryDash.c, "JeometryDash");
 			JeometryDash.gameTimer.start();
 			JeometryDash.gameP.isClicked();
@@ -83,11 +83,11 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 			JeometryDash.gameP.setFocusable(true);
 			JeometryDash.gameP.requestFocus();
 			
-		} else if (e.getSource() == buttons[2]) { // next level button
+		} else if (e.getSource() == buttons[2]) { 
 			++lvl;
 			if (lvl == 3)
 				lvl = 0;
-		} else if (e.getSource() == buttons[0]) { // previous level button
+		} else if (e.getSource() == buttons[0]) { 
 			--lvl;
 			if (lvl == -1)
 				lvl = 2;
@@ -100,7 +100,7 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		bgP.paintComponent(g); // add background
+		bgP.paintComponent(g); 
 		g.drawImage(lvlImg[lvl].getImage(), (getWidth() - lvlImg[lvl].getIconWidth()) / 2, 100, null); // draw title level
 		
 	} // end of paintComponent
@@ -111,5 +111,6 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		return lvl;
 	
 	} // end of getLvl
+	
 	
 } // end of MyLvlPanel class

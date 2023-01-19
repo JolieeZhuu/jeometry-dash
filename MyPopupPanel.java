@@ -13,8 +13,8 @@ import javax.swing.*;
 public class MyPopupPanel extends JPanel implements ActionListener {
 	
 	private JPanel buttonP; // declare instance variables
-	private JButton[] buttons /*restartB, toMenuB*/;
-	private ImageIcon[] imgs /*bg, ground, popUp, restart, toMenu, title*/;
+	private JButton[] buttons;
+	private ImageIcon[] imgs;
 	
 	
 	public MyPopupPanel() {
@@ -24,14 +24,14 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 		imgs = new ImageIcon[6];
 		buttons = new JButton[2];
 		
-		imgs[0] = new ImageIcon("Images/restartButton.png");
+		imgs[0] = new ImageIcon("Images/restartButton.png"); // images
 		imgs[1] = new ImageIcon("Images/backToMenu.png");
 		imgs[2] = new ImageIcon("Images/bg01.png");
 		imgs[3] = new ImageIcon("Images/ground01.png");
 		imgs[4] = new ImageIcon("Images/popUpImg.png");
 		imgs[5] = new ImageIcon("Images/lvlIncomp.png");
 		
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 2; i++) { // buttons
 			buttons[i] = new JButton(imgs[i]);
 			buttons[i].setOpaque(false);
 			buttons[i].setContentAreaFilled(false);
@@ -40,7 +40,7 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 			buttonP.add(buttons[i]);
 		}
 		
-		this.setLayout(new BorderLayout(0, 0));
+		this.setLayout(new BorderLayout(0, 0)); // new panels
 		this.setBackground(Color.BLUE);
 		
 		this.add(buttonP, BorderLayout.CENTER);
@@ -57,10 +57,11 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == buttons[1]) { // back button
+		if (e.getSource() == buttons[1]) { // button events
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
 			JeometryDash.gameP.setLvlComp(false);
 			JeometryDash.gameP.setLvlNotComp(false);
+			JeometryDash.player.setYs(400, 400);
 		}
 			
 		else if (e.getSource() == buttons[0]) {
@@ -69,12 +70,13 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 			JeometryDash.gameP.isClicked();
 			JeometryDash.gameP.setLvlComp(false);
 			JeometryDash.gameP.setLvlNotComp(false);
+			JeometryDash.player.setYs(400, 400);
 			JeometryDash.gameP.setLvlName("lvl0"+(JeometryDash.lvlP.getLvl()+1)+".csv");
 			JeometryDash.gameP.setFocusable(true);
 			JeometryDash.gameP.requestFocus();
 		}
 		
-		if (JeometryDash.gameP.getLvlComp()) {
+		if (JeometryDash.gameP.getLvlComp()) { // title image
 			imgs[5] = new ImageIcon("Images/lvlComp.png");
 		} else if (JeometryDash.gameP.getLvlNotComp()) {
 			imgs[5] = new ImageIcon("Images/lvlIncomp.png");			

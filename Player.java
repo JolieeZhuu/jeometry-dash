@@ -51,30 +51,21 @@ public class Player extends Platforms{
 		}
 		if (JeometryDash.gameP.isColliding())
 			JeometryDash.gameP.checkCollisions();
-		else
+		else {
 			y = 400;
+			yPlatform = 400;
+		}
+		speed = 9;
 				
 	} // end of fall
-	
-	
-	public void setSpeed(int speed) {
-		
-		this.speed = speed;
-		
-	} // end of setWillJump
-		
-	
-	public int getYPlatform() {
-		
-		return yPlatform;
-		
-	} // end of getYPlatform
 
 	
-	public int getSpeed() {
+	public void setYs(int yPlatform, int y) {	
 		
-		return speed;
+		this.yPlatform = yPlatform;
+		this.y = y;
 		
-	} // end of getSpeed	
+	} // end of setYs
+	
 	
 } // end of Player class

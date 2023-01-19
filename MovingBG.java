@@ -34,7 +34,7 @@ public class MovingBG extends JPanel implements ActionListener {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Please redownload the JeometryDash.zip application");
 		}
 		
 		this.setLayout(new BorderLayout(0, 0));
@@ -43,7 +43,7 @@ public class MovingBG extends JPanel implements ActionListener {
 
 	
 	public void actionPerformed(ActionEvent e) {
-		bg_x -= 8;
+		bg_x -= 8; // animation
 		g_x -= 12;
 		
 		if (bg_x == -600) { // remove and add background image

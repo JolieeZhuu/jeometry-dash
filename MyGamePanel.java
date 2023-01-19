@@ -26,7 +26,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	private boolean clicked, lvlComp, lvlNotComp, willJump, willFall;
 
 	
-	public MyGamePanel() throws Exception {
+	public MyGamePanel() {
 
 		this.setFocusable(true); // request and add focus for keyListener
 		this.requestFocus();
@@ -43,18 +43,18 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		imgID = MyPlatformsPanel.getImgID();
 		lvlName = "";
 		
-		goMenu.setOpaque(false); // make button transparent
+		goMenu.setOpaque(false); // button info
 		goMenu.setContentAreaFilled(false);
 		goMenu.setBorderPainted(false);
-
-		goMenu.addActionListener(this); // add actionListener to button
-		this.setLayout(new BorderLayout(0, 0));
+		goMenu.addActionListener(this); 
+	
+		this.setLayout(new BorderLayout(0, 0)); // new panels
 		this.setBackground(Color.BLUE);
 
-		this.add(northP, BorderLayout.NORTH); // add panel to panel
+		this.add(northP, BorderLayout.NORTH); 
 		northP.setOpaque(false);
 		northP.setLayout(new BorderLayout(0, 0));
-		northP.add(goMenu, BorderLayout.WEST); // add button to panel
+		northP.add(goMenu, BorderLayout.WEST); 
 		
 	} // end of constructor
 
@@ -62,10 +62,9 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == JeometryDash.gameTimer) {
-			bgP.actionPerformed(e); // add background animation
-			lvl.actionPerformed(e); // add obstacle animation
-			if (isColliding()) //Check all COllisions
-				checkCollisions();
+			bgP.actionPerformed(e); // animations
+			lvl.actionPerformed(e);
+			checkCollisions(); 
 			
 			if (clicked) {
 				lvl.newGame();
@@ -73,18 +72,19 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 				clicked = false;
 			}
 			
-			if (lvlName.equals("lvl01.csv"))
+			if (lvlName.equals("lvl01.csv")) // panel colour
 				setBackground(Color.GREEN);
 			else if (lvlName.equals("lvl02.csv"))
 				setBackground(Color.MAGENTA);
 			else if (lvlName.equals("lvl03.csv"))
 				setBackground(Color.RED);
 
-			if (lvlComp) { // restart the game (back to beginning)
+			if (lvlComp) { // restart the game
 				MyPlatformsPanel.restart(); 
 				JeometryDash.gameTimer.stop();
 				JeometryDash.cardsL.last(JeometryDash.c);
-				JeometryDash.player.setY(400);
+				willJump = false;
+				willFall = false;
 			}
 			
 			if (willJump) {
@@ -93,22 +93,23 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 			
 			if (willFall) {
-				if (!willJump) 
-					JeometryDash.player.fall();
-				if (isColliding() && JeometryDash.player.getY() < 400)
-					JeometryDash.player.fall();
+				checkCollisions();
+				JeometryDash.player.fall();
 				willFall = false;
 				willJump = false;
 			}
-				
+			
 			MyPlatformsPanel.start();
+			
 		}
 
 		if (e.getSource() == goMenu) { // back button
-			MyPlatformsPanel.restart(); // restart the game (back to beginning)
+			MyPlatformsPanel.restart(); 
 			JeometryDash.gameTimer.stop();
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
-			JeometryDash.player.setY(400);
+			JeometryDash.player.setYs(400, 400);
+			willJump = false;
+			willFall = false;
 		}
 		repaint();
 		
@@ -118,7 +119,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
-		bgP.paintComponent(g); // add background
+		bgP.paintComponent(g); 
 		JeometryDash.player.draw(g);
 		
 		if (MyPlatformsPanel.getRunning())
@@ -127,11 +128,11 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	} // end of paintComponent
 	
 	
-	public void keyTyped(KeyEvent e) { // uses keyChar
+	public void keyTyped(KeyEvent e) {
 	} // end of keyTyped
 	
 	
-	public void keyPressed(KeyEvent e) { // uses keyCode
+	public void keyPressed(KeyEvent e) {
 		
 		if (e.getKeyCode() == 32)  // 32 is space bar
 			willJump = true;
@@ -141,7 +142,7 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	public void keyReleased(KeyEvent e) {
 		
-		if (e.getKeyCode() == 32)  // 32 is space bar
+		if (e.getKeyCode() == 32) 
 			willFall = true;
 		
 	} // end of keyReleased
@@ -151,21 +152,25 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		
 		Rectangle r1 = JeometryDash.player.getBounds(); // rectangle of player
 
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 175; j++) {
-				if (imgID[i][j] != 0) {
-					Rectangle r2 = platformsLvl[i][j].getBounds(); // rectangle of obstacle
+		myCollisions: {
+			for (int i = 0; i < 9; i++) {
+				for (int j = 0; j < 175; j++) {
+					if (imgID[i][j] != 0) {
+						Rectangle r2 = platformsLvl[i][j].getBounds(); // rectangle of obstacle
 
-					if (r1.intersects(r2) && (imgID[i][j] == 2 || imgID[i][j] == 3 || imgID[i][j] == 4)) {
-						JeometryDash.player.setY(r2.y - 49);
-						
-					} else if (r1.intersects(r2)) {
-						MyPlatformsPanel.restart(); // restart the game (back to beginning)
-						JeometryDash.gameTimer.stop();
-						JeometryDash.cardsL.last(JeometryDash.c);
-						JeometryDash.player.setY(400);
-						lvlNotComp = true;
-						
+						if (r1.intersects(r2) && (imgID[i][j] == 2 || imgID[i][j] == 3 || imgID[i][j] == 4)) {
+							JeometryDash.player.setYs(r2.y - 49, r2.y - 49);
+							break myCollisions;
+						} else if (r1.intersects(r2)) {
+							MyPlatformsPanel.restart(); // restart the game (back to beginning)
+							JeometryDash.gameTimer.stop();
+							JeometryDash.cardsL.last(JeometryDash.c);
+							lvlNotComp = true;
+							willJump = false;
+							willFall = false;
+						} else if (JeometryDash.player.getY() >= 400) {
+							JeometryDash.player.setYs(400,400);
+						}
 					}
 				}
 			}
@@ -197,22 +202,8 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		return collisionsExist;
 		
 	} // end of isColliding
+	
 
-	
-	public void fall () {
-		
-		for (int i = JeometryDash.player.getYPlatform()-75; i < 400 || !isColliding(); i += JeometryDash.player.getSpeed()) {
-			JeometryDash.player.setSpeed(1 + JeometryDash.player.getSpeed());
-			JeometryDash.player.setY(i);
-		}
-		if (isColliding())
-			checkCollisions();
-		else
-			JeometryDash.player.setY(400);
-				
-	} // end of fall
-	
-	
 	public void setLvlName (String lvl) {
 		
 		lvlName = lvl;
@@ -253,5 +244,6 @@ public class MyGamePanel extends JPanel implements ActionListener, KeyListener {
 		lvlNotComp = tf;
 		
 	} // end of setLvlNotComp
+	
 	
 } // end of MyGamePanel class

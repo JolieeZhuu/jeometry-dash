@@ -12,8 +12,7 @@ import javax.swing.*;
 
 public class MyMenuPanel extends JPanel implements ActionListener {
 	
-	// declare instance variables
-	private JButton[] buttons; 
+	private JButton[] buttons; // declare instance variables
 
 	private JPanel buttonP;
 	private MovingBG bgP;
@@ -29,24 +28,19 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		imgs = new ImageIcon[4];
 		buttons = new JButton[3];
 		
-		imgs[0] = new ImageIcon("Images/instButton.png");
+		imgs[0] = new ImageIcon("Images/instButton.png"); // images
 		imgs[1] = new ImageIcon("Images/playButton.png");
 		imgs[2] = new ImageIcon("Images/exitButton.png");
 		imgs[3] = new ImageIcon("Images/title.png");
 		
-		//play.setPreferredSize(new Dimension(150, 150));
-		//exit.setPreferredSize(new Dimension(100, 100));
-		
-		this.setLayout(new BorderLayout(0, 0));
+		this.setLayout(new BorderLayout(0, 0)); // new panels
 		setBackground(Color.BLUE);
 		
-		// add panels to panel
 		this.add(buttonP, BorderLayout.CENTER);  
 		buttonP.setOpaque(false);
 		buttonP.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 200));
 		
-		// add buttons to panel
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++) { // buttons
 			buttons[i] = new JButton(imgs[i]);
 			buttons[i].setOpaque(false);
 			buttons[i].setContentAreaFilled(false);
@@ -62,7 +56,7 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		
 		bgP.actionPerformed(e); // add background animation from MovingBG class
 		
-		if (e.getSource() == buttons[1]) { 
+		if (e.getSource() == buttons[1]) { // button events
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
 		} else if (e.getSource() == buttons[0]) 
 			JeometryDash.cardsL.show(JeometryDash.c, "Instructions");
@@ -76,9 +70,11 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		bgP.paintComponent(g); // add background
-		g.drawImage(imgs[3].getImage(), (getWidth() - 550) / 2, 75, 550, 70, null); // title image of menu panel
+		bgP.paintComponent(g); 
+		JeometryDash.player.draw(g);
+		g.drawImage(imgs[3].getImage(), (getWidth() - 550) / 2, 75, 550, 70, null); // title image
 
 	} // end of paintComponent
+	
 	
 } // end of MyMenuPanel
