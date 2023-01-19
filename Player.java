@@ -2,13 +2,11 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 18, 2023
+ * Date: January 19, 2023
  * Description: Player block of Jeometry Dash
  */
 
-import javax.swing.*;
-
-public class Player extends Platforms{
+public class Player extends Platforms {
 
 	private int yPlatform, speed, gravity; // declare instance variables
 	
@@ -24,15 +22,17 @@ public class Player extends Platforms{
 	} // end of constructor
 	
 	
-	public void setImage(String imgName) {
+	public void setYs(int yPlatform, int y) {	
 		
-		img = new ImageIcon(imgName).getImage();
+		this.yPlatform = yPlatform;
+		this.y = y;
 		
-	} // end of setImage
+	} // end of setYs
 	
 	
 	public void jump() {
 		
+		// player jumps up 75 pixels
 		for (int i = yPlatform; i >= yPlatform - 75; i -= speed) {
 			speed -= gravity;
 			y = i;
@@ -45,6 +45,7 @@ public class Player extends Platforms{
 	
 	public void fall () {
 		
+		// player falls until it collides with the ground or a platform
 		for (int i = yPlatform - 75; i < 400 || !JeometryDash.gameP.isColliding(); i += speed) {
 			speed += gravity;
 			y = i;
@@ -58,14 +59,6 @@ public class Player extends Platforms{
 		speed = 9;
 				
 	} // end of fall
-
-	
-	public void setYs(int yPlatform, int y) {	
-		
-		this.yPlatform = yPlatform;
-		this.y = y;
-		
-	} // end of setYs
 	
 	
 } // end of Player class

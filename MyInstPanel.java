@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 18, 2023
+ * Date: January 19, 2023
  * Description: Instructions panel of Jeometry Dash
  */
 
@@ -21,7 +21,7 @@ public class MyInstPanel extends JPanel implements ActionListener {
 		
 		northP = new JPanel(); // initialize variables	
 		
-		bg = new ImageIcon("Images/instructions.png");
+		bg = new ImageIcon("Images/instructions.png"); // images
 		backImg = new ImageIcon("Images/backButton.png");
 		
 		goMenu = new JButton(backImg);
@@ -44,7 +44,7 @@ public class MyInstPanel extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == goMenu) //button events
+		if (e.getSource() == goMenu) // go back to main menu
 			JeometryDash.cardsL.first(JeometryDash.c);
 
 	} // end of actionPerformed
@@ -53,8 +53,9 @@ public class MyInstPanel extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		g.drawImage(bg.getImage(), 0, 0, null); 
+		g.drawImage(bg.getImage(), 0, 0, null);
 
 	} // end of paintComponent
 
+	
 } // end of MyInstPanel class

@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 18, 2023
+ * Date: January 19, 2023
  * Description: Blocks of Jeometry Dash
  */
 
@@ -24,33 +24,6 @@ public class Platforms {
 	} // end of constructor
 	
 	
-	public void setX (int x) {
-		
-		this.x = x;
-	
-	}
-	
-	public int getY () {
-		
-		return y;
-		
-	}
-	
-	
-	public void setYs(int yPlatform, int y) {
-		
-		this.y = y;
-		
-	} // end of setY
-	
-	
-	public void setImage(String imgName) {
-		
-		img = new ImageIcon(imgName).getImage();
-		
-	} // end of setImage
-	
-	
 	public void draw(Graphics g) {
 		
 		g.drawImage(img, x, y, 50, 50, null);
@@ -63,6 +36,27 @@ public class Platforms {
 		return new Rectangle(x, y, 50, 50);
 		
 	} // end of getBounds
+	
+	
+	public void setX (int x) {
+		
+		this.x = x;
+	
+	} // end of setX
+	
+	
+	public int getY () {
+		
+		return y;
+		
+	} // end of getY
+	
+	
+	public void setYs(int yPlatform, int y) {
+		
+		this.y = y;
+		
+	} // end of setYs
 	
 	
 	public void jump() { } // end of jump

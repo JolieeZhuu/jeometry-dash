@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 18, 2023
+ * Date: January 19, 2023
  * Description: Main menu panel of Jeometry Dash
 */
 
@@ -56,11 +56,11 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		
 		bgP.actionPerformed(e); // add background animation from MovingBG class
 		
-		if (e.getSource() == buttons[1]) { // button events
+		if (e.getSource() == buttons[1]) // go to levels panel
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
-		} else if (e.getSource() == buttons[0]) 
+		else if (e.getSource() == buttons[0]) // go to instructions panel
 			JeometryDash.cardsL.show(JeometryDash.c, "Instructions");
-		else if (e.getSource() == buttons[2]) 
+		else if (e.getSource() == buttons[2])  // exit the game
 			System.exit(0);
 		repaint();
 		
@@ -70,8 +70,7 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		bgP.paintComponent(g); 
-		JeometryDash.player.draw(g);
+		bgP.paintComponent(g);
 		g.drawImage(imgs[3].getImage(), (getWidth() - 550) / 2, 75, 550, 70, null); // title image
 
 	} // end of paintComponent

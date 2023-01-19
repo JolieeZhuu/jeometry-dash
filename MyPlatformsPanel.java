@@ -1,10 +1,8 @@
-	
-
 /*
 * Names: Simone Ghosh and Jolie Zhu
 * Teacher: Ms. Strelkovska
 * Course: ICS3U7-1
-* Date: January 18, 2023
+* Date: January 19, 2023
 * Description: Obstacles and platforms of Jeometry Dash
 */
 
@@ -92,13 +90,13 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 				}
 				
 				if (i == lastI && j == lastJ && newX[i][j] < -300) {
-					JeometryDash.gameP.setLvlComp(true);
+					JeometryDash.gameP.setIsLvlComp(true);
 					x = 0;
 				}
 			}
 		}
 		
-		if (newLvl) { 
+		if (newLvl) { // creates obstacles and platforms of appropriate level
 			newLvl(lvlName);
 			createPlatforms();
 			newLvl = false;

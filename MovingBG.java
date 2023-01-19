@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 18, 2023
+ * Date: January 19, 2023
  * Description: Background animations of Jeometry Dash
  */
 
@@ -34,7 +34,7 @@ public class MovingBG extends JPanel implements ActionListener {
 			}
 			
 		} catch (Exception e) {
-			System.out.println("Please redownload the JeometryDash.zip application");
+			System.out.println("Please redownload the JeometryDash.zip application.");
 		}
 		
 		this.setLayout(new BorderLayout(0, 0));
@@ -70,5 +70,6 @@ public class MovingBG extends JPanel implements ActionListener {
 		}
 		
 	} // end of paintComponent
+	
 	
 } // end of MovingBG class

@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 18, 2023
+ * Date: January 19, 2023
  * Description: Main (running) program of Jeometry Dash
  */
 
@@ -25,7 +25,7 @@ public class JeometryDash extends JFrame implements ActionListener {
 	static int delay;
 	static Platforms player;
 	
-	static private ImageIcon icon;
+	private static ImageIcon icon;
 
 	
 	public JeometryDash() {
@@ -38,9 +38,6 @@ public class JeometryDash extends JFrame implements ActionListener {
 		lvlP = new MyLvlPanel();
 		instP = new MyInstPanel();
 		endP = new MyPopupPanel();
-		
-		gameP.addKeyListener(gameP); // gameP is focused for keyListener
-		gameP.setFocusable(true);
 		
 		c.add("MainMenu", menuP); // add panels to container
 		c.add("JeometryDash", gameP);
@@ -61,11 +58,10 @@ public class JeometryDash extends JFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		menuP.actionPerformed(e);
-		gameP.actionPerformed(e);
-		lvlP.actionPerformed(e);
-		instP.actionPerformed(e);
-		endP.actionPerformed(e);
+		menuP.actionPerformed(e); // button actions
+		gameP.actionPerformed(e); // game actions
+		lvlP.actionPerformed(e); // switch between level actions
+		endP.actionPerformed(e); // popUp panel actions
 		
 	} // end of actionPerformed
 	
@@ -81,4 +77,5 @@ public class JeometryDash extends JFrame implements ActionListener {
 		
 	} // end of main
 
+	
 } // end of JeometryDash class

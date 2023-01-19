@@ -2,7 +2,7 @@
  * Names: Simone Ghosh and Jolie Zhu
  * Teacher: Ms. Strelkovska
  * Course: ICS3U7-1
- * Date: January 18, 2023
+ * Date: January 19, 2023
  * Description: Levels panel of Jeometry Dash
  */
 
@@ -72,22 +72,22 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		
 		bgP.actionPerformed(e); 
 		
-		if (e.getSource() == buttons[3]) // button events
+		if (e.getSource() == buttons[3]) // go back to main menu
 			JeometryDash.cardsL.first(JeometryDash.c);
 			
-		else if (e.getSource() == buttons[1]) { 
+		else if (e.getSource() == buttons[1]) { // start the game
 			JeometryDash.cardsL.show(JeometryDash.c, "JeometryDash");
 			JeometryDash.gameTimer.start();
-			JeometryDash.gameP.isClicked();
-			JeometryDash.gameP.setLvlName("lvl0"+(lvl+1)+".csv");
+			JeometryDash.gameP.setIsClicked();
+			JeometryDash.gameP.setLvlName("lvl0" + (lvl + 1) + ".csv");
 			JeometryDash.gameP.setFocusable(true);
 			JeometryDash.gameP.requestFocus();
 			
-		} else if (e.getSource() == buttons[2]) { 
+		} else if (e.getSource() == buttons[2]) { // switch between levels
 			++lvl;
 			if (lvl == 3)
 				lvl = 0;
-		} else if (e.getSource() == buttons[0]) { 
+		} else if (e.getSource() == buttons[0]) { // switch between levels
 			--lvl;
 			if (lvl == -1)
 				lvl = 2;
@@ -100,8 +100,8 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		bgP.paintComponent(g); 
-		g.drawImage(lvlImg[lvl].getImage(), (getWidth() - lvlImg[lvl].getIconWidth()) / 2, 100, null); // draw title level
+		bgP.paintComponent(g);
+		g.drawImage(lvlImg[lvl].getImage(), (getWidth() - lvlImg[lvl].getIconWidth()) / 2, 100, null); // title level
 		
 	} // end of paintComponent
 	
