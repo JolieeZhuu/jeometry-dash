@@ -33,18 +33,18 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 		
 		for (int i = 0; i < 2; i++) { // buttons
 			buttons[i] = new JButton(imgs[i]);
-			buttons[i].setOpaque(false);
+			buttons[i].setOpaque(false); // transparent format
 			buttons[i].setContentAreaFilled(false);
 			buttons[i].setBorderPainted(false);
 			buttons[i].addActionListener(this);
-			buttonP.add(buttons[i]);
+			buttonP.add(buttons[i]); // add buttons to panel
 		}
 		
-		this.setLayout(new BorderLayout(0, 0)); // new panels
-		this.setBackground(Color.BLUE);
+		this.setLayout(new BorderLayout(0, 0));
+		this.setBackground(Color.BLUE); // set base panel to be blue
 		
 		this.add(buttonP, BorderLayout.CENTER);
-		buttonP.setOpaque(false);
+		buttonP.setOpaque(false); // set buttonP to be transparent
 		buttonP.setLayout(new BoxLayout(buttonP, BoxLayout.X_AXIS));
 		
 		buttonP.add(Box.createRigidArea(new Dimension(150, 0))); // format buttons in terms of x
@@ -61,22 +61,23 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 			JeometryDash.cardsL.show(JeometryDash.c, "Levels");
 			JeometryDash.gameP.setIsLvlComp(false);
 			JeometryDash.gameP.setIsLvlIncomp(false);
-			JeometryDash.player.setYs(400, 400);
+			JeometryDash.player.setYs(400, 400); // set player yPlatform and y to be 400
+			
 		} else if (e.getSource() == buttons[0]) { // restart the game
 			JeometryDash.cardsL.show(JeometryDash.c, "JeometryDash");
 			JeometryDash.gameTimer.start();
-			JeometryDash.gameP.setIsClicked();
+			JeometryDash.gameP.setIsClicked(); // reset all variables
 			JeometryDash.gameP.setIsLvlComp(false);
 			JeometryDash.gameP.setIsLvlIncomp(false);
-			JeometryDash.player.setYs(400, 400);
+			JeometryDash.player.setYs(400, 400); // reset player yPlatform and y to be 400
 			JeometryDash.gameP.setLvlName("lvl0" + (JeometryDash.lvlP.getLvl() + 1) + ".csv");
-			JeometryDash.gameP.setFocusable(true);
+			JeometryDash.gameP.setFocusable(true); // make sure that keyListener is focused in MyGamePanel
 			JeometryDash.gameP.requestFocus();
 		}
 		
-		if (JeometryDash.gameP.getIsLvlComp()) { // title image
+		if (JeometryDash.gameP.getIsLvlComp()) { // title image if game is incomplete
 			imgs[5] = new ImageIcon("Images/lvlComp.png");
-		} else if (JeometryDash.gameP.getIsLvlIncomp()) {
+		} else if (JeometryDash.gameP.getIsLvlIncomp()) { // title image if game is complete
 			imgs[5] = new ImageIcon("Images/lvlIncomp.png");			
 		}
 		repaint();
@@ -87,10 +88,10 @@ public class MyPopupPanel extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		g.drawImage(imgs[2].getImage(), 0, 0, null); // draw background image (no animation)
-		g.drawImage(imgs[3].getImage(), 0, 450, null);
-		g.drawImage(imgs[4].getImage(), 50, 50, null); // draw pop-up image
-		g.drawImage(imgs[5].getImage(), (getWidth() - imgs[5].getIconWidth()) / 2, 75, null);
+		g.drawImage(imgs[2].getImage(), 0, 0, null); // background image
+		g.drawImage(imgs[3].getImage(), 0, 450, null); // ground image
+		g.drawImage(imgs[4].getImage(), 50, 50, null); // pop-up (board) image
+		g.drawImage(imgs[5].getImage(), (getWidth() - imgs[5].getIconWidth()) / 2, 75, null); // title image
 
 	} // end of paintComponent
 

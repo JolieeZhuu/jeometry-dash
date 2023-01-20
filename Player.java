@@ -37,7 +37,7 @@ public class Player extends Platforms {
 			speed -= gravity;
 			y = i;
 		}
-		y = yPlatform - 75;
+		y = yPlatform - 75; // officially set y to 75 pixels above, to show the "jump"
 		speed = 0;
 		
 	} // end of jump
@@ -50,8 +50,10 @@ public class Player extends Platforms {
 			speed += gravity;
 			y = i;
 		}
+		// if player collides, then check collisions (and set y and yPlatform appropriately)
 		if (JeometryDash.gameP.isColliding())
 			JeometryDash.gameP.checkCollisions();
+		// if player does not collide, then it means player is on the ground; ground level = 400
 		else {
 			y = 400;
 			yPlatform = 400;

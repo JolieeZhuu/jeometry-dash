@@ -35,7 +35,7 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 		lvl = new Platforms[row][col];
 		newX = new int[row][col];
 
-		this.setLayout(new BorderLayout(0, 0));	// new panel
+		this.setLayout(new BorderLayout(0, 0));
 
 	} // end of constructor
 
@@ -44,13 +44,14 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 
 		try {
 			Scanner sc = new Scanner(new BufferedReader(new FileReader(fileName)));
-
-			while (sc.hasNextLine()) { // read excel file to get platforms
+			
+			// read excel file to get the numbers or imgID (excel file is filled with numbers from 0 to 9) 
+			while (sc.hasNextLine()) {
 				for (int i = 0; i < row; i++) {
-					String[] line = sc.nextLine().trim().split(",");
+					String[] line = sc.nextLine().trim().split(","); // read each line
 					for (int j = 0; j < line.length; j++) {
-						imgID[i][j] = Integer.parseInt(line[j]);
-						if (imgID[i][j] != 0) {
+						imgID[i][j] = Integer.parseInt(line[j]); // store each number
+						if (imgID[i][j] != 0) { // finds the occurrences of the last obstacles in the 2D array
 							lastI = i;
 							lastJ = j;
 						}
@@ -66,9 +67,10 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	
 	private void createPlatforms () {
 		try {
-			for (int i = 0; i < row; i++) { // create Platforms 2D array to store all platforms' information
+			// store each platform's information (x, y, imgStringName) in a Platforms 2D array
+			for (int i = 0; i < row; i++) {
 				for (int j = 0; j < col; j++) {
-					if (imgID[i][j] != 0)
+					if (imgID[i][j] != 0) // imgID 0 does not have useful information, so it is skipped
 						lvl[i][j] = new Platforms(j * 50 + x, i * 50, "Images/Obst0" + imgID[i][j] + ".png");
 				}
 			}
@@ -81,14 +83,15 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		x -= 15;
+		x -= 15; // obstacles and platforms move 15 pixels to the left every tick
 		for (int i = 0; i < row; i++) { // obstacles animation
 			for (int j = 0; j < col; j++) {
 				if (imgID[i][j] != 0) {
-					newX[i][j] = j * 50 + x;
+					newX[i][j] = j * 50 + x; // set each x again, since x has changed
 					lvl[i][j].setX(newX[i][j]);
 				}
 				
+				// level is completed when the last obstacle disappears off the screen
 				if (i == lastI && j == lastJ && newX[i][j] < -300) {
 					JeometryDash.gameP.setIsLvlComp(true);
 					x = 0;
@@ -120,21 +123,21 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	} // end of paintComponent
 	
 	
-	public static Platforms[][] getLvl() {
+	public static Platforms[][] getLvl() { // used to check collisions in gameP
 		
 		return lvl;
 		
 	} // end of getLvl01
 	
 	
-	public static int[][] getImgID() {
+	public static int[][] getImgID() { // used to check collision in gameP
 
 		return imgID;
 
 	} // end of getImgID
 
 	
-	public static void restart() {
+	public static void restart() { // allows user to restart game by stopping all loops and resetting variables
 		
 		x = 0;
 		isRunning = false;
@@ -142,28 +145,28 @@ public class MyPlatformsPanel extends JPanel implements ActionListener {
 	} // end of restart
 	
 	
-	public static void start() {
+	public static void start() { // restarts all loops from begining
 		
 		isRunning = true;
 		
 	} // end of start
 	
 	
-	public static boolean getRunning() {
+	public static boolean getRunning() { // used in gameP to check if platforms should be painted or not
 		
 		return isRunning;
 		
 	} // end of getRunning
 
 	
-	public void setLvl(String lvlName) {
+	public void setLvl(String lvlName) { // allows to create platforms objects for specific levels
 		
 		this.lvlName = lvlName;
 		
 	} // end of setLvl
 
 	
-	public void newGame() {
+	public void newGame() { // reloads arrays with newLvl values
 		
 		newLvl = true;
 		

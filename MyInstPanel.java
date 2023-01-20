@@ -26,18 +26,18 @@ public class MyInstPanel extends JPanel implements ActionListener {
 		
 		goMenu = new JButton(backImg);
 		
-		goMenu.setOpaque(false); // button info
+		goMenu.setOpaque(false); // buttons: transparent format
 		goMenu.setContentAreaFilled(false);
 		goMenu.setBorderPainted(false);
 		goMenu.addActionListener(this); 
 		
-		this.setLayout(new BorderLayout(0, 0)); // new panels
-		this.setBackground(Color.BLUE);
+		this.setLayout(new BorderLayout(0, 0));
+		this.setBackground(Color.BLUE); // set base panel to be blue
 		
 		this.add(northP, BorderLayout.NORTH); 
-		northP.setOpaque(false);
-		northP.setLayout(new BorderLayout(0,0));
-		northP.add(goMenu, BorderLayout.WEST); 
+		northP.setOpaque(false); // set northP to be transparent
+		northP.setLayout(new BorderLayout(0, 0));
+		northP.add(goMenu, BorderLayout.WEST); // add button to northP
 		
 	} // end of constructor
 
@@ -53,7 +53,7 @@ public class MyInstPanel extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		g.drawImage(bg.getImage(), 0, 0, null);
+		g.drawImage(bg.getImage(), 0, 0, null); // background image
 
 	} // end of paintComponent
 

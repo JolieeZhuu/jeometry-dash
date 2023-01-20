@@ -32,34 +32,34 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 		
 		lvl = 0;
 		
-		imgs[0] = new ImageIcon("Images/backButton.png"); // images
+		imgs[0] = new ImageIcon("Images/backButton.png"); // images for buttons
 		imgs[1] = new ImageIcon("Images/playButton.png");
 		imgs[2] = new ImageIcon("Images/nextButton.png");
 		
-		lvlImg = new ImageIcon[3];
+		lvlImg = new ImageIcon[3]; // images for level names
 		for (int i = 0; i < 3; i++) 
-			lvlImg[i] = new ImageIcon("Images/lvl" + (i + 1) + ".png");
+			lvlImg[i] = new ImageIcon("Images/lvl" + (i + 1) + ".png"); // store each level title in array
 					
-		this.setLayout(new BorderLayout(0, 0)); // new panels
-		this.setBackground(Color.BLUE);
+		this.setLayout(new BorderLayout(0, 0));
+		this.setBackground(Color.BLUE); // set base panel to be blue
 		
 		this.add(northP, BorderLayout.NORTH); 
-		northP.setOpaque(false);
-		northP.setLayout(new BorderLayout(0,0));
+		northP.setOpaque(false); // set northP to be transparent
+		northP.setLayout(new BorderLayout(0, 0));
 		
 		this.add(centerP, BorderLayout.CENTER);
-		centerP.setOpaque(false);
-		centerP.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 150));
+		centerP.setOpaque(false); // set centerP to be transparent
+		centerP.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 150)); // FlowLayout: align, horizontal gap, vertical gap
 		
 		for (int i = 0; i < 4; i++) { // buttons 
 			if (i < 3) {
-				buttons[i] = new JButton(imgs[i]);
+				buttons[i] = new JButton(imgs[i]); // 3 buttons for each level of the level menu (previous, play, next)
 				centerP.add(buttons[i]);
 			} else {
-				buttons[i] = new JButton(imgs[0]);
+				buttons[i] = new JButton(imgs[0]); // back to main menu button
 				northP.add(buttons[i], BorderLayout.WEST);
 			}
-			buttons[i].setOpaque(false);
+			buttons[i].setOpaque(false); // transparent format
 			buttons[i].setContentAreaFilled(false);
 			buttons[i].setBorderPainted(false);
 			buttons[i].addActionListener(this);
@@ -70,7 +70,7 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		bgP.actionPerformed(e); 
+		bgP.actionPerformed(e); // background movement and animations
 		
 		if (e.getSource() == buttons[3]) // go back to main menu
 			JeometryDash.cardsL.first(JeometryDash.c);
@@ -80,14 +80,14 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 			JeometryDash.gameTimer.start();
 			JeometryDash.gameP.setIsClicked();
 			JeometryDash.gameP.setLvlName("lvl0" + (lvl + 1) + ".csv");
-			JeometryDash.gameP.setFocusable(true);
+			JeometryDash.gameP.setFocusable(true); // make sure that keyListener is focused in MyGamePanel
 			JeometryDash.gameP.requestFocus();
 			
-		} else if (e.getSource() == buttons[2]) { // switch between levels
+		} else if (e.getSource() == buttons[2]) { // switch between levels (click "next" button)
 			++lvl;
 			if (lvl == 3)
 				lvl = 0;
-		} else if (e.getSource() == buttons[0]) { // switch between levels
+		} else if (e.getSource() == buttons[0]) { // switch between levels (click "previous" button)
 			--lvl;
 			if (lvl == -1)
 				lvl = 2;
@@ -100,13 +100,13 @@ public class MyLvlPanel extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		bgP.paintComponent(g);
-		g.drawImage(lvlImg[lvl].getImage(), (getWidth() - lvlImg[lvl].getIconWidth()) / 2, 100, null); // title level
+		bgP.paintComponent(g); // background and ground images
+		g.drawImage(lvlImg[lvl].getImage(), (getWidth() - lvlImg[lvl].getIconWidth()) / 2, 100, null); // title of level image
 		
 	} // end of paintComponent
 	
 	
-	public int getLvl () {
+	public int getLvl () { // used in gameP to set up level platforms
 		
 		return lvl;
 	

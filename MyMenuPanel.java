@@ -33,20 +33,20 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 		imgs[2] = new ImageIcon("Images/exitButton.png");
 		imgs[3] = new ImageIcon("Images/title.png");
 		
-		this.setLayout(new BorderLayout(0, 0)); // new panels
-		setBackground(Color.BLUE);
+		this.setLayout(new BorderLayout(0, 0));
+		setBackground(Color.BLUE); // set base panel to be blue
 		
 		this.add(buttonP, BorderLayout.CENTER);  
-		buttonP.setOpaque(false);
-		buttonP.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 200));
+		buttonP.setOpaque(false); // set buttonP to be transparent
+		buttonP.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 200)); // FlowLayout: align, horizontal gap, vertical gap
 		
 		for (int i = 0; i < 3; i++) { // buttons
 			buttons[i] = new JButton(imgs[i]);
-			buttons[i].setOpaque(false);
+			buttons[i].setOpaque(false); // transparent format
 			buttons[i].setContentAreaFilled(false);
 			buttons[i].setBorderPainted(false);
 			buttons[i].addActionListener(this);
-			buttonP.add(buttons[i]);
+			buttonP.add(buttons[i]); // add buttons to panel
 		}
 
 	} // end of constructor
@@ -70,7 +70,7 @@ public class MyMenuPanel extends JPanel implements ActionListener {
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		bgP.paintComponent(g);
+		bgP.paintComponent(g); // background and ground images
 		g.drawImage(imgs[3].getImage(), (getWidth() - 550) / 2, 75, 550, 70, null); // title image
 
 	} // end of paintComponent

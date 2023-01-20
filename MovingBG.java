@@ -22,9 +22,9 @@ public class MovingBG extends JPanel implements ActionListener {
 	public MovingBG() {
 		
 		bg = new ArrayList <ImageIcon>(); // initialize variables
-		ground = new ArrayList <ImageIcon>();
+		ground = new ArrayList <ImageIcon>(); 
 		
-		bg_x = 0;
+		bg_x = 0; // x val used for animations
 		g_x = 0;
 		
 		try {		
@@ -43,16 +43,16 @@ public class MovingBG extends JPanel implements ActionListener {
 
 	
 	public void actionPerformed(ActionEvent e) {
-		bg_x -= 8; // animation
-		g_x -= 12;
+		bg_x -= 8; // parallax animation - images move 8 or 12 pixels to the left every tick
+		g_x -= 12; // different animation speeds to give effect of faster ground
 		
-		if (bg_x == -600) { // remove and add background image
+		if (bg_x == -600) { // when image is off the panel remove and add background image in ArrayList, creating the infinite animation
 			bg.remove(0);
 			bg.add(new ImageIcon("Images/bg01.png"));
 			bg_x = 0;
 		}
 		
-		if (g_x == -600) { // remove and add ground image
+		if (g_x == -600) { // when image is off the panel remove and add ground image in ArrayList, creating the infinite animation
 			ground.remove(0);
 			ground.add(new ImageIcon("Images/ground01.png"));
 			g_x = 0;
