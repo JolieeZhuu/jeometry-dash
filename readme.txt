@@ -23,5 +23,4 @@ Press spacebar to jump. If you are finding it difficult to complete the game, yo
 
 Contributions:
 Jolie: Main menu, hand-drawn images, platforms, player, collisions, falling, organizing files
-
 Simone: Instructions, parallax background, level panel, levels csv files, animations, layouts, jumping
